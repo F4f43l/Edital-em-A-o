@@ -1,0 +1,27 @@
+{
+  "name": "edital-em-acao-backend",
+  "version": "1.0.0",
+  "description": "API RESTful para a plataforma Edital em Ação - Recode Pro AI",
+  "type": "module",
+  "main": "src/servidor.js",
+  "scripts": {
+    "start": "node src/servidor.js",
+    "dev": "node --watch src/servidor.js",
+    "db:init": "node src/scripts/inicializarBanco.js",
+    "test": "node testes/executarTestes.js && node testes/testarUploadPdf.js && node testes/testarFluxoPrincipalPdf.js"
+  },
+  "dependencies": {
+    "@google/genai": "^0.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.12.0",
+    "pdf-parse": "^1.1.1",
+    "zod": "^3.24.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
