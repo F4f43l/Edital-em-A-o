@@ -101,3 +101,109 @@ export const ROTULOS_STATUS_TAREFA = {
   bloqueada: { texto: 'Bloqueada', variante: 'perigo' },
   nao_se_aplica: { texto: 'Não se aplica', variante: 'neutro' },
 };
+
+/**
+ * Rótulos para as 6 etapas distintas de progresso dos documentos
+ */
+export const ROTULOS_STATUS_ETAPA_DOCUMENTO = {
+  pendente_obtencao: {
+    texto: 'Pendente de Obtenção',
+    variante: 'atencao',
+    rotuloCurto: '1. Obtenção',
+    badge: '⏳ Pendente de Obtenção',
+    descricao: 'Documento ainda não providenciado ou aguardando emissão pelo órgão competente.',
+    fase: 'preparacao',
+  },
+  obtido: {
+    texto: 'Documento Obtido',
+    variante: 'info',
+    rotuloCurto: '2. Obtido',
+    badge: '📄 Documento Obtido',
+    descricao: 'Documento emitido e em posse do candidato (físico ou arquivo digital).',
+    fase: 'preparacao',
+  },
+  conferido: {
+    texto: 'Documento Conferido',
+    variante: 'info',
+    rotuloCurto: '3. Conferido',
+    badge: '🔍 Documento Conferido',
+    descricao: 'Legibilidade, período de validade, assinaturas e formato técnico (PDF) conferidos.',
+    fase: 'preparacao',
+  },
+  enviado: {
+    texto: 'Documento Enviado',
+    variante: 'sucesso',
+    rotuloCurto: '4. Enviado',
+    badge: '🚀 Documento Enviado',
+    descricao: 'Anexo transmitido pelo canal oficial correto dentro do prazo estipulado.',
+    fase: 'envio',
+  },
+  recebimento_confirmado: {
+    texto: 'Recebimento Confirmado',
+    variante: 'sucesso',
+    rotuloCurto: '5. Recebido',
+    badge: '📬 Recebimento Confirmado',
+    descricao: 'Protocolo de entrega ou recibo emitido pelo sistema/órgão e arquivado pelo candidato.',
+    fase: 'envio',
+  },
+  validado_instituicao: {
+    texto: 'Validado pela Instituição',
+    variante: 'primario',
+    rotuloCurto: '6. Validado Oficialmente',
+    badge: '🏛️ Validado pela Instituição',
+    descricao: 'Documento deferido e aprovado pela banca examinadora em resultado oficial homologado.',
+    fase: 'institucional',
+  },
+};
+
+/**
+ * Rótulos e cores para classificação da fonte de informação e evidências
+ */
+export const ROTULOS_CLASSIFICACAO_FONTE = {
+  confirmado_edital: {
+    texto: 'Confirmado no Edital',
+    variante: 'info',
+    badge: '📘 Confirmado no Edital',
+    cor: '#18324b',
+    fundo: '#e0f2fe',
+    borda: '#bae6fd',
+    descricao: 'Informação extraída e sustentada com citação literal no texto original do edital.',
+  },
+  confirmado_outra_fonte: {
+    texto: 'Confirmado em Outra Fonte Oficial',
+    variante: 'sucesso',
+    badge: '🌐 Fonte Oficial Externa',
+    cor: '#0369a1',
+    fundo: '#f0f9ff',
+    borda: '#7dd3fc',
+    descricao: 'Informação confirmada em página, manual ou comunicado oficial da instituição parceira.',
+  },
+  recomendacao_organizacao: {
+    texto: 'Recomendação de Organização',
+    variante: 'atencao',
+    badge: '💡 Sugestão de Organização',
+    cor: '#b45309',
+    fundo: '#fef3c7',
+    borda: '#fde68a',
+    descricao: 'Boa prática recomendada pela plataforma para evitar perda de prazos (não é obrigação do edital).',
+  },
+  nao_localizado: {
+    texto: 'Não Localizado no Edital',
+    variante: 'perigo',
+    badge: '❓ Não Localizado',
+    cor: '#dc2626',
+    fundo: '#fee2e2',
+    borda: '#fecaca',
+    descricao: 'Informação não explicitada no documento. Pendência sinalizada para conferência com a instituição.',
+  },
+  ambiguo_pendente: {
+    texto: 'Ambíguo ou Pendente de Confirmação',
+    variante: 'atencao',
+    badge: '⚠️ Pendente de Confirmação',
+    cor: '#d97706',
+    fundo: '#fffbeb',
+    borda: '#fde68a',
+    descricao: 'Informação com redação dúbia, prazos conflitantes ou que depende de publicação de retificação.',
+  },
+};
+

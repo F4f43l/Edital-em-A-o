@@ -13,6 +13,7 @@ USE edital_em_acao;
 -- Desativar verificação de FK temporariamente para recriação limpa quando executado
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP TABLE IF EXISTS documentos_exigidos;
 DROP TABLE IF EXISTS tarefas;
 DROP TABLE IF EXISTS requisitos;
 DROP TABLE IF EXISTS analises;
@@ -112,17 +113,84 @@ CREATE TABLE requisitos (
   pagina_origem INT NULL,
   origem_dado ENUM('ia', 'manual', 'extraido_pdf', 'exemplo') NOT NULL DEFAULT 'manual',
   observacao TEXT NULL,
+  procedimento_detalhado JSON NULL,
+  classificacao_fonte ENUM('confirmado_edital', 'confirmado_outra_fonte', 'recomendacao_organizacao', 'nao_localizado', 'ambiguo_pendente') NOT NULL DEFAULT 'confirmado_edital',
+  secao_edital VARCHAR(150) NULL,
+  link_fonte_oficial VARCHAR(500) NULL,
+  data_verificacao_externa DATE NULL,
+  observacao_pendencia TEXT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_requisitos_analise FOREIGN KEY (analise_id)
     REFERENCES analises (id) ON DELETE CASCADE,
   INDEX idx_requisitos_analise (analise_id),
   INDEX idx_requisitos_tipo (tipo),
-  INDEX idx_requisitos_status_perfil (status_perfil)
+  INDEX idx_requisitos_status_perfil (status_perfil),
+  INDEX idx_requisitos_fonte (classificacao_fonte)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- -----------------------------------------------------------------------------
--- 5. TABELA: tarefas (Plano de Ação / Checklist)
+-- 5. TABELA: documentos_exigidos
+-- Armazena o tratamento individual de cada documento com seu procedimento completo,
+-- canal de entrega, condições de validade, etapas de progresso e checklist independente.
+-- -----------------------------------------------------------------------------
+CREATE TABLE documentos_exigidos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  analise_id INT NOT NULL,
+  requisito_id INT NULL,
+  nome VARCHAR(255) NOT NULL,
+  finalidade TEXT NULL,
+  quem_fornece VARCHAR(255) NULL,
+  orgao_emissor VARCHAR(255) NULL,
+  como_obter TEXT NULL,
+  documentos_alternativos TEXT NULL,
+  formato_aceito VARCHAR(255) NULL,
+  exigencias_validade TEXT NULL,
+  local_entrega VARCHAR(255) NULL,
+  url_entrega VARCHAR(500) NULL,
+  secao_entrega VARCHAR(255) NULL,
+  etapa_processo VARCHAR(150) NULL,
+  prazo_envio DATE NULL,
+  prazo_envio_descricao VARCHAR(255) NULL,
+  como_confirmar_envio TEXT NULL,
+  instrucoes_protocolo TEXT NULL,
+  status_etapa ENUM(
+    'pendente_obtencao',
+    'obtido',
+    'conferido',
+    'enviado',
+    'recebimento_confirmado',
+    'validado_instituicao'
+  ) NOT NULL DEFAULT 'pendente_obtencao',
+  checklist_etapas JSON NULL,
+  protocolo_comprovante VARCHAR(255) NULL,
+  classificacao_fonte ENUM(
+    'confirmado_edital',
+    'confirmado_outra_fonte',
+    'recomendacao_organizacao',
+    'nao_localizado',
+    'ambiguo_pendente'
+  ) NOT NULL DEFAULT 'confirmado_edital',
+  secao_edital VARCHAR(150) NULL,
+  pagina_origem INT NULL,
+  trecho_evidencia TEXT NULL,
+  link_fonte_oficial VARCHAR(500) NULL,
+  data_verificacao_externa DATE NULL,
+  observacao_pendencia TEXT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_documentos_analise FOREIGN KEY (analise_id)
+    REFERENCES analises (id) ON DELETE CASCADE,
+  CONSTRAINT fk_documentos_requisito FOREIGN KEY (requisito_id)
+    REFERENCES requisitos (id) ON DELETE SET NULL,
+  INDEX idx_documentos_analise (analise_id),
+  INDEX idx_documentos_requisito (requisito_id),
+  INDEX idx_documentos_status (status_etapa),
+  INDEX idx_documentos_fonte (classificacao_fonte)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------------------------------------------------------
+-- 6. TABELA: tarefas (Plano de Ação / Checklist)
 -- Tarefas práticas geradas a partir da análise ou criadas pelo usuário.
 -- Vínculo com análise por CASCADE. Vínculo com requisito opcional (SET NULL).
 -- -----------------------------------------------------------------------------

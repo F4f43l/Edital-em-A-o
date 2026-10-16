@@ -2,6 +2,7 @@ import { repositorioAnalises } from '../repositorios/repositorioAnalises.js';
 import { repositorioEditais } from '../repositorios/repositorioEditais.js';
 import { repositorioPerfis } from '../repositorios/repositorioPerfis.js';
 import { repositorioRequisitos } from '../repositorios/repositorioRequisitos.js';
+import { repositorioDocumentos } from '../repositorios/repositorioDocumentos.js';
 import { repositorioTarefas } from '../repositorios/repositorioTarefas.js';
 import { servicoInteligenciaArtificial } from './servicoInteligenciaArtificial.js';
 import { ErroAplicacao } from '../intermediarios/manipuladorErros.js';
@@ -18,11 +19,13 @@ export const servicoAnalises = {
     }
 
     const requisitos = await repositorioRequisitos.buscarPorAnaliseId(id);
+    const documentos = await repositorioDocumentos.buscarTodos({ analise_id: id });
     const tarefas = await repositorioTarefas.buscarTodas({ analise_id: id });
 
     return {
       ...analise,
       requisitos,
+      documentos,
       tarefas,
     };
   },
@@ -78,7 +81,7 @@ export const servicoAnalises = {
       custos_logistica: resultadoIa.custos_logistica || null,
     });
 
-    // 4. Salva os requisitos vinculados
+    // 4. Salva os requisitos vinculados com seus procedimentos completos
     const requisitosParaSalvar = (resultadoIa.requisitos || []).map((req) => ({
       analise_id: analiseSalva.id,
       titulo: req.titulo,
@@ -90,6 +93,12 @@ export const servicoAnalises = {
       pagina_origem: req.pagina_origem,
       origem_dado: req.origem_dado || 'ia',
       observacao: req.observacao,
+      procedimento_detalhado: req.procedimento_detalhado || null,
+      classificacao_fonte: req.classificacao_fonte || 'confirmado_edital',
+      secao_edital: req.secao_edital || null,
+      link_fonte_oficial: req.link_fonte_oficial || null,
+      data_verificacao_externa: req.data_verificacao_externa || null,
+      observacao_pendencia: req.observacao_pendencia || null,
     }));
 
     let requisitosCriados = [];
@@ -97,20 +106,78 @@ export const servicoAnalises = {
       requisitosCriados = await repositorioRequisitos.criarVarios(requisitosParaSalvar);
     }
 
-    // 5. Gera automaticamente as tarefas do plano de ação correspondentes
+    // 5. Salva os documentos exigidos vinculados com tratamento individual
+    const documentosParaSalvar = (resultadoIa.documentos || []).map((doc) => {
+      // Tenta correlacionar com o requisito correspondente
+      const reqVinculado = requisitosCriados.find(
+        (r) =>
+          (doc.requisito_relacionado && r.titulo.toLowerCase().includes(doc.requisito_relacionado.toLowerCase())) ||
+          (doc.nome && r.titulo.toLowerCase().includes(doc.nome.toLowerCase())) ||
+          (r.tipo === 'documento' && doc.nome.toLowerCase().includes(r.titulo.toLowerCase()))
+      );
+
+      return {
+        analise_id: analiseSalva.id,
+        requisito_id: reqVinculado ? reqVinculado.id : null,
+        nome: doc.nome,
+        finalidade: doc.finalidade || null,
+        quem_fornece: doc.quem_fornece || null,
+        orgao_emissor: doc.orgao_emissor || null,
+        como_obter: doc.como_obter || null,
+        documentos_alternativos: doc.documentos_alternativos || null,
+        formato_aceito: doc.formato_aceito || null,
+        exigencias_validade: doc.exigencias_validade || null,
+        local_entrega: doc.local_entrega || null,
+        url_entrega: doc.url_entrega || null,
+        secao_entrega: doc.secao_entrega || null,
+        etapa_processo: doc.etapa_processo || 'Inscrição Inicial',
+        prazo_envio: doc.prazo_envio || edital.prazo_inscricao || null,
+        prazo_envio_descricao: doc.prazo_envio_descricao || null,
+        como_confirmar_envio: doc.como_confirmar_envio || null,
+        instrucoes_protocolo: doc.instrucoes_protocolo || null,
+        status_etapa: doc.status_etapa || 'pendente_obtencao',
+        checklist_etapas: doc.checklist_etapas || {
+          entender_necessidade: false,
+          obter_documento: false,
+          conferir_validade_formato: false,
+          enviar_canal_correto: false,
+          registrar_protocolo: false,
+        },
+        protocolo_comprovante: doc.protocolo_comprovante || null,
+        classificacao_fonte: doc.classificacao_fonte || 'confirmado_edital',
+        secao_edital: doc.secao_edital || null,
+        pagina_origem: doc.pagina_origem || null,
+        trecho_evidencia: doc.trecho_evidencia || null,
+        link_fonte_oficial: doc.link_fonte_oficial || null,
+        data_verificacao_externa: doc.data_verificacao_externa || null,
+        observacao_pendencia: doc.observacao_pendencia || null,
+      };
+    });
+
+    let documentosCriados = [];
+    if (documentosParaSalvar.length > 0) {
+      documentosCriados = await repositorioDocumentos.criarVarios(documentosParaSalvar);
+    }
+
+    // 6. Gera automaticamente as tarefas do plano de ação correspondentes
     const tarefasIniciais = [];
+
+    // Tarefas para documentos individuais
+    for (const doc of documentosCriados) {
+      tarefasIniciais.push({
+        analise_id: analiseSalva.id,
+        requisito_id: doc.requisito_id || null,
+        titulo: `Obter e conferir: ${doc.nome}`,
+        descricao: `Emitir documento junto a ${doc.orgao_emissor || 'órgão competente'} (${doc.como_obter || 'conforme edital'}). Conferir formato (${doc.formato_aceito || 'PDF'}) e condições de validade (${doc.exigencias_validade || 'recente'}).`,
+        data_limite: doc.prazo_envio || edital.prazo_inscricao || null,
+        prioridade: 'alta',
+        status: doc.status_etapa === 'conferido' || doc.status_etapa === 'obtido' ? 'em_andamento' : 'pendente',
+      });
+    }
+
+    // Tarefas para requisitos de elegibilidade que demandam confirmação
     for (const req of requisitosCriados) {
-      if (req.tipo === 'documento') {
-        tarefasIniciais.push({
-          analise_id: analiseSalva.id,
-          requisito_id: req.id,
-          titulo: `Separar e digitalizar: ${req.titulo}`,
-          descricao: `Providenciar cópia legível do documento solicitado (${req.descricao || req.titulo}).`,
-          data_limite: edital.prazo_inscricao || null,
-          prioridade: req.obrigatorio ? 'alta' : 'media',
-          status: 'pendente',
-        });
-      } else if (req.tipo === 'elegibilidade' && req.status_perfil === 'confirmar') {
+      if (req.tipo === 'elegibilidade' && req.status_perfil === 'confirmar') {
         tarefasIniciais.push({
           analise_id: analiseSalva.id,
           requisito_id: req.id,
@@ -123,12 +190,12 @@ export const servicoAnalises = {
       }
     }
 
-    // Tarefa final de envio
+    // Tarefa final de envio e protocolo
     tarefasIniciais.push({
       analise_id: analiseSalva.id,
       requisito_id: null,
       titulo: `Conferir checklist final e submeter inscrição: ${edital.titulo}`,
-      descricao: 'Realizar a conferência de todos os anexos e submeter a inscrição no portal oficial do edital.',
+      descricao: 'Realizar a conferência de todos os anexos e submeter a inscrição no portal oficial do edital. Salvar e registrar o comprovante/protocolo.',
       data_limite: edital.prazo_inscricao || null,
       prioridade: 'urgente',
       status: 'pendente',

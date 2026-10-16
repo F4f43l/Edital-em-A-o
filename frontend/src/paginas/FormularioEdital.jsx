@@ -245,6 +245,55 @@ export function FormularioEdital() {
     }));
   };
 
+  const atualizarDocumentoRevisao = (index, campo, valor) => {
+    setDadosRevisao((ant) => {
+      const novos = [...(ant.documentos || [])];
+      novos[index] = { ...novos[index], [campo]: valor };
+      return { ...ant, documentos: novos };
+    });
+  };
+
+  const removerDocumentoRevisao = (index) => {
+    setDadosRevisao((ant) => ({
+      ...ant,
+      documentos: (ant.documentos || []).filter((_, i) => i !== index),
+    }));
+  };
+
+  const adicionarDocumentoRevisao = () => {
+    setDadosRevisao((ant) => ({
+      ...ant,
+      documentos: [
+        ...(ant.documentos || []),
+        {
+          nome: 'Novo Documento Exigido',
+          finalidade: '',
+          quem_fornece: 'Candidato',
+          orgao_emissor: '',
+          como_obter: '',
+          documentos_alternativos: '',
+          formato_aceito: 'PDF legível',
+          exigencias_validade: '',
+          local_entrega: 'Portal de Inscrições Oficial',
+          url_entrega: null,
+          secao_entrega: '',
+          etapa_processo: 'Inscrição',
+          prazo_envio: null,
+          prazo_envio_descricao: '',
+          como_confirmar_envio: 'Verificar comprovante gerado',
+          instrucoes_protocolo: 'Baixar e salvar recibo',
+          status_etapa: 'pendente_obtencao',
+          classificacao_fonte: 'confirmado_edital',
+          secao_edital: null,
+          pagina_origem: null,
+          trecho_evidencia: null,
+          link_fonte_oficial: null,
+          observacao_pendencia: null,
+        },
+      ],
+    }));
+  };
+
   // ---------------------------------------------------------------------------
   // CONFIRMAÇÃO E SALVAMENTO DEFINITIVO NO MYSQL
   // ---------------------------------------------------------------------------
@@ -292,6 +341,40 @@ export function FormularioEdital() {
           pagina_origem: r.pagina_origem || null,
           origem_dado: r.origem_dado || 'ia',
           observacao: r.observacao || null,
+          procedimento_detalhado: r.procedimento_detalhado || null,
+          classificacao_fonte: r.classificacao_fonte || 'confirmado_edital',
+          secao_edital: r.secao_edital || null,
+          link_fonte_oficial: r.link_fonte_oficial || null,
+          data_verificacao_externa: r.data_verificacao_externa || null,
+          observacao_pendencia: r.observacao_pendencia || null,
+        })),
+        documentos: (dadosRevisao.documentos || []).map((d) => ({
+          nome: d.nome,
+          finalidade: d.finalidade || null,
+          quem_fornece: d.quem_fornece || null,
+          orgao_emissor: d.orgao_emissor || null,
+          como_obter: d.como_obter || null,
+          documentos_alternativos: d.documentos_alternativos || null,
+          formato_aceito: d.formato_aceito || null,
+          exigencias_validade: d.exigencias_validade || null,
+          local_entrega: d.local_entrega || null,
+          url_entrega: d.url_entrega || null,
+          secao_entrega: d.secao_entrega || null,
+          etapa_processo: d.etapa_processo || null,
+          prazo_envio: d.prazo_envio || null,
+          prazo_envio_descricao: d.prazo_envio_descricao || null,
+          como_confirmar_envio: d.como_confirmar_envio || null,
+          instrucoes_protocolo: d.instrucoes_protocolo || null,
+          status_etapa: d.status_etapa || 'pendente_obtencao',
+          checklist_etapas: d.checklist_etapas || null,
+          protocolo_comprovante: d.protocolo_comprovante || null,
+          classificacao_fonte: d.classificacao_fonte || 'confirmado_edital',
+          secao_edital: d.secao_edital || null,
+          pagina_origem: d.pagina_origem || null,
+          trecho_evidencia: d.trecho_evidencia || null,
+          link_fonte_oficial: d.link_fonte_oficial || null,
+          data_verificacao_externa: d.data_verificacao_externa || null,
+          observacao_pendencia: d.observacao_pendencia || null,
         })),
       };
 
@@ -943,6 +1026,90 @@ export function FormularioEdital() {
                 </div>
               ))}
             </div>
+          </Cartao>
+
+          {/* SEÇÃO 4: Documentos Exigidos Identificados Individualmente */}
+          <Cartao
+            titulo={`4. Documentos Exigidos Identificados (${dadosRevisao.documentos?.length || 0})`}
+            subtitulo="Orientações individuais sobre emissão, canal de envio, formatos e exigências de validade"
+            acoes={
+              <Botao
+                variante="secundario"
+                tamanho="sm"
+                icone={<PlusCircle size={15} />}
+                onClick={adicionarDocumentoRevisao}
+              >
+                Adicionar Documento
+              </Botao>
+            }
+          >
+            {(!dadosRevisao.documentos || dadosRevisao.documentos.length === 0) ? (
+              <p style={{ textAlign: 'center', color: 'var(--cor-texto-mutado)', padding: '1rem' }}>
+                Nenhum documento específico identificado no edital.
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                {dadosRevisao.documentos.map((doc, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      border: '1px solid var(--cor-borda)',
+                      borderRadius: 'var(--raio-md)',
+                      padding: '0.85rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.5rem',
+                      backgroundColor: '#ffffff',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        <FileText size={16} style={{ color: 'var(--cor-secundaria)' }} />
+                        <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--cor-primaria)' }}>
+                          Documento #{index + 1}
+                        </span>
+                        {doc.formato_aceito && (
+                          <span className="cracha cracha-neutro" style={{ fontSize: '0.72rem' }}>
+                            {doc.formato_aceito}
+                          </span>
+                        )}
+                        {doc.local_entrega && (
+                          <span className="cracha cracha-sucesso" style={{ fontSize: '0.72rem' }}>
+                            {doc.local_entrega}
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removerDocumentoRevisao(index)}
+                        title="Remover documento"
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--cor-erro)', padding: '0.2rem' }}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.6rem' }}>
+                      <input
+                        type="text"
+                        value={doc.nome}
+                        onChange={(e) => atualizarDocumentoRevisao(index, 'nome', e.target.value)}
+                        className="entrada-texto"
+                        placeholder="Nome do documento"
+                        style={{ fontWeight: 600 }}
+                      />
+                      <input
+                        type="text"
+                        value={doc.como_obter || ''}
+                        onChange={(e) => atualizarDocumentoRevisao(index, 'como_obter', e.target.value)}
+                        className="entrada-texto"
+                        placeholder="Como obter (procedimento)"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </Cartao>
 
           {/* Botões Finais de Confirmação e Salvamento */}

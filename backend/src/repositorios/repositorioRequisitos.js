@@ -29,12 +29,24 @@ export const repositorioRequisitos = {
       pagina_origem = null,
       origem_dado = 'manual',
       observacao = null,
+      procedimento_detalhado = null,
+      classificacao_fonte = 'confirmado_edital',
+      secao_edital = null,
+      link_fonte_oficial = null,
+      data_verificacao_externa = null,
+      observacao_pendencia = null,
     } = dados;
+
+    const procedimentoJson = procedimento_detalhado
+      ? (typeof procedimento_detalhado === 'string' ? procedimento_detalhado : JSON.stringify(procedimento_detalhado))
+      : null;
 
     const [resultado] = await pool.query(
       `INSERT INTO requisitos 
-       (analise_id, titulo, descricao, tipo, obrigatorio, status_perfil, evidencia_texto, pagina_origem, origem_dado, observacao) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       (analise_id, titulo, descricao, tipo, obrigatorio, status_perfil, evidencia_texto, pagina_origem,
+        origem_dado, observacao, procedimento_detalhado, classificacao_fonte, secao_edital,
+        link_fonte_oficial, data_verificacao_externa, observacao_pendencia) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         analise_id,
         titulo,
@@ -46,6 +58,12 @@ export const repositorioRequisitos = {
         pagina_origem,
         origem_dado,
         observacao,
+        procedimentoJson,
+        classificacao_fonte,
+        secao_edital,
+        link_fonte_oficial,
+        data_verificacao_externa,
+        observacao_pendencia,
       ]
     );
 
@@ -62,10 +80,16 @@ export const repositorioRequisitos = {
       const idsCriados = [];
 
       for (const item of itens) {
+        const procedimentoJson = item.procedimento_detalhado
+          ? (typeof item.procedimento_detalhado === 'string' ? item.procedimento_detalhado : JSON.stringify(item.procedimento_detalhado))
+          : null;
+
         const [resultado] = await conexao.query(
           `INSERT INTO requisitos 
-           (analise_id, titulo, descricao, tipo, obrigatorio, status_perfil, evidencia_texto, pagina_origem, origem_dado, observacao) 
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+           (analise_id, titulo, descricao, tipo, obrigatorio, status_perfil, evidencia_texto, pagina_origem,
+            origem_dado, observacao, procedimento_detalhado, classificacao_fonte, secao_edital,
+            link_fonte_oficial, data_verificacao_externa, observacao_pendencia) 
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             item.analise_id,
             item.titulo,
@@ -77,6 +101,12 @@ export const repositorioRequisitos = {
             item.pagina_origem || null,
             item.origem_dado || 'ia',
             item.observacao || null,
+            procedimentoJson,
+            item.classificacao_fonte || 'confirmado_edital',
+            item.secao_edital || null,
+            item.link_fonte_oficial || null,
+            item.data_verificacao_externa || null,
+            item.observacao_pendencia || null,
           ]
         );
         idsCriados.push(resultado.insertId);
@@ -109,6 +139,12 @@ export const repositorioRequisitos = {
       'pagina_origem',
       'origem_dado',
       'observacao',
+      'procedimento_detalhado',
+      'classificacao_fonte',
+      'secao_edital',
+      'link_fonte_oficial',
+      'data_verificacao_externa',
+      'observacao_pendencia',
     ];
 
     for (const campo of camposPermitidos) {
@@ -116,6 +152,8 @@ export const repositorioRequisitos = {
         campos.push(`${campo} = ?`);
         if (campo === 'obrigatorio') {
           parametros.push(dados[campo] ? 1 : 0);
+        } else if (campo === 'procedimento_detalhado' && dados[campo] !== null && typeof dados[campo] === 'object') {
+          parametros.push(JSON.stringify(dados[campo]));
         } else {
           parametros.push(dados[campo]);
         }

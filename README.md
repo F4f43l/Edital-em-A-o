@@ -5,7 +5,7 @@
 
 ---
 
-## 📌 Visão Geral do Produto
+##  Visão Geral do Produto
 
 O **Edital em Ação** é uma plataforma web desenvolvida para auxiliar estudantes e candidatos a compreenderem editais complexos de bolsas de estudo, auxílios estudantis, cursos de capacitação e programas de oportunidade.
 
@@ -17,7 +17,7 @@ A plataforma elimina as barreiras da linguagem burocrática e excesso de página
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 - **Frontend:** ReactJS 18 + Vite + JavaScript (ES Modules), React Router v6, Lucide Icons e Vanilla CSS customizado (sem frameworks genéricos, seguindo a paleta oficial: Azul-Marinho `#18324B`, Verde-Petróleo `#287A72` e Fundo Claro `#F4F6F8`).
 - **Backend:** Node.js + Express, arquitetura RESTful organizada em camadas (rotas, controladores, serviços, repositórios, validadores, intermediários e utilitários).
@@ -79,7 +79,7 @@ c:\Edital em ação\
 
 ---
 
-## 🚀 Passo a Passo para Execução Local
+##  Passo a Passo para Execução Local
 
 ### 1. Pré-requisitos
 - **Node.js**: Versão 20 LTS ou superior instalada (`node -v`).
@@ -123,7 +123,7 @@ c:\Edital em ação\
 
 ---
 
-## 🧪 Como Executar a Suíte de Testes Automatizados
+##  Como Executar a Suíte de Testes Automatizados
 
 No diretório `backend`, execute:
 ```bash

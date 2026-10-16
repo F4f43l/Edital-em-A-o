@@ -3,6 +3,7 @@ import path from 'path';
 import { repositorioEditais } from '../repositorios/repositorioEditais.js';
 import { repositorioAnalises } from '../repositorios/repositorioAnalises.js';
 import { repositorioRequisitos } from '../repositorios/repositorioRequisitos.js';
+import { repositorioDocumentos } from '../repositorios/repositorioDocumentos.js';
 import { repositorioTarefas } from '../repositorios/repositorioTarefas.js';
 import { repositorioPerfis } from '../repositorios/repositorioPerfis.js';
 import { servicoExtracaoPdf } from './servicoExtracaoPdf.js';
@@ -89,7 +90,12 @@ export const servicoEditais = {
    * Salva o edital revisado pelo usuário no MySQL e gera a análise e o plano de ação
    */
   async confirmarCadastroComAnalise(dados) {
-    const { edital: dadosEdital, analise: dadosAnalise, requisitos: listaRequisitos = [] } = dados;
+    const {
+      edital: dadosEdital,
+      analise: dadosAnalise,
+      requisitos: listaRequisitos = [],
+      documentos: listaDocumentos = [],
+    } = dados;
 
     if (!dadosEdital || !dadosEdital.titulo) {
       throw new ErroAplicacao('Os dados do edital são obrigatórios para a confirmação.', 400, 'DADOS_INVALIDOS');
@@ -126,7 +132,7 @@ export const servicoEditais = {
       custos_logistica: custosLogisticaConsolidados,
     });
 
-    // 3. Salva os Requisitos validados pelo usuário
+    // 3. Salva os Requisitos validados pelo usuário com procedimentos
     const requisitosParaSalvar = listaRequisitos.map((r) => ({
       analise_id: analiseCriada.id,
       titulo: r.titulo,
@@ -138,6 +144,12 @@ export const servicoEditais = {
       pagina_origem: r.pagina_origem || null,
       origem_dado: r.origem_dado || 'ia',
       observacao: r.observacao || null,
+      procedimento_detalhado: r.procedimento_detalhado || null,
+      classificacao_fonte: r.classificacao_fonte || 'confirmado_edital',
+      secao_edital: r.secao_edital || null,
+      link_fonte_oficial: r.link_fonte_oficial || null,
+      data_verificacao_externa: r.data_verificacao_externa || null,
+      observacao_pendencia: r.observacao_pendencia || null,
     }));
 
     let requisitosCriados = [];
@@ -145,22 +157,94 @@ export const servicoEditais = {
       requisitosCriados = await repositorioRequisitos.criarVarios(requisitosParaSalvar);
     }
 
-    // 4. Gera automaticamente as tarefas no Plano de Ação (Checklist)
+    // 4. Salva os Documentos Exigidos validados pelo usuário com tratamento individual
+    const documentosParaSalvar = listaDocumentos.map((doc) => {
+      const reqVinculado = requisitosCriados.find(
+        (r) =>
+          (doc.requisito_relacionado && r.titulo.toLowerCase().includes(doc.requisito_relacionado.toLowerCase())) ||
+          (doc.nome && r.titulo.toLowerCase().includes(doc.nome.toLowerCase())) ||
+          (r.tipo === 'documento' && doc.nome.toLowerCase().includes(r.titulo.toLowerCase()))
+      );
+
+      return {
+        analise_id: analiseCriada.id,
+        requisito_id: doc.requisito_id || (reqVinculado ? reqVinculado.id : null),
+        nome: doc.nome,
+        finalidade: doc.finalidade || null,
+        quem_fornece: doc.quem_fornece || null,
+        orgao_emissor: doc.orgao_emissor || null,
+        como_obter: doc.como_obter || null,
+        documentos_alternativos: doc.documentos_alternativos || null,
+        formato_aceito: doc.formato_aceito || null,
+        exigencias_validade: doc.exigencias_validade || null,
+        local_entrega: doc.local_entrega || null,
+        url_entrega: doc.url_entrega || null,
+        secao_entrega: doc.secao_entrega || null,
+        etapa_processo: doc.etapa_processo || 'Inscrição Inicial',
+        prazo_envio: doc.prazo_envio || editalCriado.prazo_inscricao || null,
+        prazo_envio_descricao: doc.prazo_envio_descricao || null,
+        como_confirmar_envio: doc.como_confirmar_envio || null,
+        instrucoes_protocolo: doc.instrucoes_protocolo || null,
+        status_etapa: doc.status_etapa || 'pendente_obtencao',
+        checklist_etapas: doc.checklist_etapas || {
+          entender_necessidade: false,
+          obter_documento: false,
+          conferir_validade_formato: false,
+          enviar_canal_correto: false,
+          registrar_protocolo: false,
+        },
+        protocolo_comprovante: doc.protocolo_comprovante || null,
+        classificacao_fonte: doc.classificacao_fonte || 'confirmado_edital',
+        secao_edital: doc.secao_edital || null,
+        pagina_origem: doc.pagina_origem || null,
+        trecho_evidencia: doc.trecho_evidencia || null,
+        link_fonte_oficial: doc.link_fonte_oficial || null,
+        data_verificacao_externa: doc.data_verificacao_externa || null,
+        observacao_pendencia: doc.observacao_pendencia || null,
+      };
+    });
+
+    let documentosCriados = [];
+    if (documentosParaSalvar.length > 0) {
+      documentosCriados = await repositorioDocumentos.criarVarios(documentosParaSalvar);
+    }
+
+    // 5. Gera automaticamente as tarefas no Plano de Ação (Checklist)
     const tarefasIniciais = [];
 
-    // Tarefas para documentos exigidos
-    for (const req of requisitosCriados) {
-      if (req.tipo === 'documento') {
+    // Tarefas para documentos individuais
+    if (documentosCriados.length > 0) {
+      for (const doc of documentosCriados) {
         tarefasIniciais.push({
           analise_id: analiseCriada.id,
-          requisito_id: req.id,
-          titulo: `Separar e digitalizar: ${req.titulo}`,
-          descricao: `Providenciar cópia legível do documento exigido (${req.descricao || req.titulo}).`,
-          data_limite: editalCriado.prazo_inscricao || null,
-          prioridade: req.obrigatorio ? 'alta' : 'media',
+          requisito_id: doc.requisito_id || null,
+          titulo: `Obter e conferir documento: ${doc.nome}`,
+          descricao: `Obter junto a ${doc.orgao_emissor || 'órgão emissor'} (${doc.como_obter || 'conforme edital'}). Validar formato (${doc.formato_aceito || 'PDF'}) e condições (${doc.exigencias_validade || 'recente'}).`,
+          data_limite: doc.prazo_envio || editalCriado.prazo_inscricao || null,
+          prioridade: 'alta',
           status: 'pendente',
         });
-      } else if (req.tipo === 'elegibilidade' && req.status_perfil === 'confirmar') {
+      }
+    } else {
+      // Fallback para requisitos do tipo documento se nenhum documento individual tiver sido passado
+      for (const req of requisitosCriados) {
+        if (req.tipo === 'documento') {
+          tarefasIniciais.push({
+            analise_id: analiseCriada.id,
+            requisito_id: req.id,
+            titulo: `Separar e digitalizar: ${req.titulo}`,
+            descricao: `Providenciar cópia legível do documento exigido (${req.descricao || req.titulo}).`,
+            data_limite: editalCriado.prazo_inscricao || null,
+            prioridade: req.obrigatorio ? 'alta' : 'media',
+            status: 'pendente',
+          });
+        }
+      }
+    }
+
+    // Tarefas para elegibilidade
+    for (const req of requisitosCriados) {
+      if (req.tipo === 'elegibilidade' && req.status_perfil === 'confirmar') {
         tarefasIniciais.push({
           analise_id: analiseCriada.id,
           requisito_id: req.id,
@@ -173,12 +257,12 @@ export const servicoEditais = {
       }
     }
 
-    // Tarefa para submissão final da inscrição
+    // Tarefa para submissão final da inscrição e protocolo
     tarefasIniciais.push({
       analise_id: analiseCriada.id,
       requisito_id: null,
       titulo: `Submeter inscrição no edital: ${editalCriado.titulo}`,
-      descricao: 'Conferir todos os documentos e submeter a inscrição no portal oficial antes do prazo final.',
+      descricao: 'Conferir todos os documentos e submeter a inscrição no portal oficial antes do prazo final. Salvar e arquivar o número de protocolo gerado.',
       data_limite: editalCriado.prazo_inscricao || null,
       prioridade: 'urgente',
       status: 'pendente',
@@ -216,6 +300,7 @@ export const servicoEditais = {
       edital: editalCriado,
       analise: analiseCriada,
       totalRequisitos: requisitosCriados.length,
+      totalDocumentos: documentosCriados.length,
       totalTarefas: tarefasIniciais.length,
     };
   },

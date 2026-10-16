@@ -110,6 +110,23 @@ export const api = {
   atualizarRequisito: (id, dados) => requisicao(`/requisitos/${id}`, { method: 'PUT', body: dados }),
   excluirRequisito: (id) => requisicao(`/requisitos/${id}`, { method: 'DELETE' }),
 
+  // Documentos Exigidos (Tratamento Individual e Checklist de 5 Etapas)
+  listarDocumentos: (filtros = {}) => {
+    const params = new URLSearchParams();
+    if (filtros.analise_id) params.append('analise_id', filtros.analise_id);
+    if (filtros.requisito_id) params.append('requisito_id', filtros.requisito_id);
+    if (filtros.status_etapa) params.append('status_etapa', filtros.status_etapa);
+    const query = params.toString() ? `?${params.toString()}` : '';
+    return requisicao(`/documentos${query}`);
+  },
+  buscarDocumentoPorId: (id) => requisicao(`/documentos/${id}`),
+  criarDocumento: (analiseId, dados) => requisicao(`/analises/${analiseId}/documentos`, { method: 'POST', body: dados }),
+  atualizarDocumento: (id, dados) => requisicao(`/documentos/${id}`, { method: 'PUT', body: dados }),
+  alterarStatusEtapaDocumento: (id, status_etapa) => requisicao(`/documentos/${id}/etapa`, { method: 'PATCH', body: { status_etapa } }),
+  atualizarChecklistDocumento: (id, checklist_etapas) => requisicao(`/documentos/${id}/checklist`, { method: 'PATCH', body: { checklist_etapas } }),
+  atualizarProtocoloDocumento: (id, protocolo_comprovante) => requisicao(`/documentos/${id}/protocolo`, { method: 'PATCH', body: { protocolo_comprovante } }),
+  excluirDocumento: (id) => requisicao(`/documentos/${id}`, { method: 'DELETE' }),
+
   // Tarefas / Checklist
   listarTarefas: (filtros = {}) => {
     const params = new URLSearchParams();

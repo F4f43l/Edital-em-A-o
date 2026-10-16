@@ -134,9 +134,11 @@ export const repositorioAnalises = {
   async contarDependentes(id) {
     const pool = obterPoolConexoes();
     const [linhasReqs] = await pool.query('SELECT COUNT(*) as total FROM requisitos WHERE analise_id = ?', [id]);
+    const [linhasDocs] = await pool.query('SELECT COUNT(*) as total FROM documentos_exigidos WHERE analise_id = ?', [id]);
     const [linhasTarefas] = await pool.query('SELECT COUNT(*) as total FROM tarefas WHERE analise_id = ?', [id]);
     return {
       quantidadeRequisitos: linhasReqs[0]?.total || 0,
+      quantidadeDocumentos: linhasDocs[0]?.total || 0,
       quantidadeTarefas: linhasTarefas[0]?.total || 0,
     };
   },

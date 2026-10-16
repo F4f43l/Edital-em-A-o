@@ -5,6 +5,7 @@ import { rotasPerfis } from './rotasPerfis.js';
 import { rotasAnalises } from './rotasAnalises.js';
 import { rotasRequisitos } from './rotasRequisitos.js';
 import { rotasTarefas } from './rotasTarefas.js';
+import { rotasDocumentos } from './rotasDocumentos.js';
 
 const rotasPrincipais = Router();
 
@@ -14,5 +15,6 @@ rotasPrincipais.use('/perfis', rotasPerfis);
 rotasPrincipais.use('/analises', rotasAnalises);
 rotasPrincipais.use('/requisitos', rotasRequisitos);
 rotasPrincipais.use('/tarefas', rotasTarefas);
+rotasPrincipais.use('/documentos', rotasDocumentos);
 
 export { rotasPrincipais };
