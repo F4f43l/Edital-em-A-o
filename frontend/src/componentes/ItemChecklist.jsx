@@ -1,5 +1,18 @@
-import React from 'react';
-import { Check, Clock, Trash2, Edit3, Link2 } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Check,
+  Clock,
+  Trash2,
+  Edit3,
+  Link2,
+  FileText,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+  Smartphone,
+  FileCheck,
+  Building,
+} from 'lucide-react';
 import { CrachaStatus } from './CrachaStatus.jsx';
 import { CrachaPrazo } from './CrachaPrazo.jsx';
 
@@ -11,6 +24,7 @@ export function ItemChecklist({
   aoExcluir,
   bloqueado = false,
 }) {
+  const [mostrarDetalhesDoc, setMostrarDetalhesDoc] = useState(false);
   const concluida = tarefa.status === 'concluida';
 
   return (
@@ -147,7 +161,161 @@ export function ItemChecklist({
               Requisito: {tarefa.requisito_titulo}
             </span>
           )}
+
+          {tarefa.documento_id && (
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                padding: '0.2rem 0.55rem',
+                borderRadius: 'var(--raio-full)',
+                backgroundColor: '#eff6ff',
+                color: '#1d4ed8',
+                fontWeight: 600,
+                fontSize: '0.78rem',
+                border: '1px solid #bfdbfe',
+              }}
+            >
+              <FileText size={12} />
+              <span>Doc: {tarefa.documento_nome_simples || tarefa.documento_nome}</span>
+            </span>
+          )}
         </div>
+
+        {/* Tutorial & Orientações Práticas do Documento Vinculado */}
+        {tarefa.documento_id && (
+          <div style={{ marginTop: '0.75rem' }}>
+            <button
+              type="button"
+              onClick={() => setMostrarDetalhesDoc(!mostrarDetalhesDoc)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                padding: '0.35rem 0.75rem',
+                borderRadius: 'var(--raio-sm)',
+                border: '1px solid var(--cor-borda)',
+                backgroundColor: mostrarDetalhesDoc ? '#f1f5f9' : '#ffffff',
+                color: 'var(--cor-primaria)',
+                fontSize: '0.8rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <FileCheck size={14} />
+              <span>
+                {mostrarDetalhesDoc
+                  ? 'Ocultar orientações detalhadas'
+                  : '📋 Ver passo a passo completo (Como obter, preparar e entregar)'}
+              </span>
+              {mostrarDetalhesDoc ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+            </button>
+
+            {mostrarDetalhesDoc && (
+              <div
+                style={{
+                  marginTop: '0.65rem',
+                  padding: '0.85rem',
+                  backgroundColor: '#f8fafc',
+                  border: '1px solid var(--cor-borda)',
+                  borderRadius: 'var(--raio-sm)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.65rem',
+                  fontSize: '0.84rem',
+                }}
+              >
+                {tarefa.documento_como_obter && (
+                  <div>
+                    <strong style={{ color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.15rem' }}>
+                      🏢 Onde e como obter:
+                    </strong>
+                    <span style={{ color: 'var(--cor-texto-secundario)', lineHeight: 1.4 }}>
+                      {tarefa.documento_orgao_emissor ? `[${tarefa.documento_orgao_emissor}] ` : ''}
+                      {tarefa.documento_como_obter}
+                    </span>
+                    {tarefa.documento_link_fonte_oficial && (
+                      <div style={{ marginTop: '0.3rem' }}>
+                        <a
+                          href={tarefa.documento_link_fonte_oficial}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.25rem',
+                            fontSize: '0.78rem',
+                            color: 'var(--cor-secundaria)',
+                            fontWeight: 600,
+                          }}
+                        >
+                          <ExternalLink size={12} />
+                          <span>Acessar portal oficial de emissão</span>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {tarefa.documento_instrucoes_preparacao && (
+                  <div style={{ backgroundColor: '#ffffff', padding: '0.6rem', borderRadius: 'var(--raio-sm)', border: '1px solid #e2e8f0' }}>
+                    <strong style={{ color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.15rem' }}>
+                      📋 Como preparar e conferir:
+                    </strong>
+                    <span style={{ color: 'var(--cor-texto-secundario)', whiteSpace: 'pre-line', lineHeight: 1.4 }}>
+                      {tarefa.documento_instrucoes_preparacao}
+                    </span>
+                  </div>
+                )}
+
+                {tarefa.documento_como_digitalizar && (
+                  <div style={{ backgroundColor: '#eff6ff', padding: '0.6rem', borderRadius: 'var(--raio-sm)', border: '1px solid #bfdbfe' }}>
+                    <strong style={{ color: '#1d4ed8', display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.15rem' }}>
+                      <Smartphone size={14} />
+                      <span>Tutorial para digitalizar no celular:</span>
+                    </strong>
+                    <span style={{ color: '#1e3a8a', whiteSpace: 'pre-line', lineHeight: 1.4 }}>
+                      {tarefa.documento_como_digitalizar}
+                    </span>
+                  </div>
+                )}
+
+                {tarefa.documento_local_entrega && (
+                  <div>
+                    <strong style={{ color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.15rem' }}>
+                      📬 Canal oficial de entrega:
+                    </strong>
+                    <span style={{ color: 'var(--cor-texto-secundario)' }}>
+                      {tarefa.documento_local_entrega}
+                    </span>
+                    {tarefa.documento_url_entrega && (
+                      <div style={{ marginTop: '0.2rem' }}>
+                        <a
+                          href={tarefa.documento_url_entrega}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.25rem',
+                            fontSize: '0.78rem',
+                            color: 'var(--cor-secundaria)',
+                            fontWeight: 600,
+                          }}
+                        >
+                          <ExternalLink size={12} />
+                          <span>Link do sistema de envio</span>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Ações da Tarefa */}

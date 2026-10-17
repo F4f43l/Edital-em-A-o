@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   DollarSign,
   Gift,
@@ -14,6 +14,11 @@ import {
   CheckCircle2,
   XCircle,
   HelpCircle,
+  Search,
+  ChevronDown,
+  ChevronUp,
+  Layers,
+  Tag,
 } from 'lucide-react';
 import { Cartao } from './Cartao.jsx';
 import { CampoTexto } from './CampoTexto.jsx';
@@ -24,6 +29,9 @@ export function PainelCustosLogistica({
   editavel = false,
   aoMudarCampo,
 }) {
+  const [filtroCargo, setFiltroCargo] = useState('');
+  const [tabelaExpandida, setTabelaExpandida] = useState(false);
+
   if (!custosLogistica && !editavel) {
     return (
       <div className="alerta alerta-info" style={{ margin: '1rem 0' }}>
@@ -49,6 +57,23 @@ export function PainelCustosLogistica({
 
   const possuiIsencao = isencao.possui_isencao;
 
+  // Tabela de taxas detalhadas (se houver variação por cargo/nível)
+  const listaTabelaTaxas = Array.isArray(taxa.tabela_taxas) ? taxa.tabela_taxas : [];
+  const resumoNiveis = taxa.resumo_niveis && typeof taxa.resumo_niveis === 'object' ? taxa.resumo_niveis : null;
+
+  const taxasFiltradas = useMemo(() => {
+    if (!filtroCargo.trim()) return listaTabelaTaxas;
+    const termo = filtroCargo.toLowerCase();
+    return listaTabelaTaxas.filter(
+      (item) =>
+        (item.cargo && item.cargo.toLowerCase().includes(termo)) ||
+        (item.nivel && item.nivel.toLowerCase().includes(termo)) ||
+        (item.valor && item.valor.toLowerCase().includes(termo))
+    );
+  }, [listaTabelaTaxas, filtroCargo]);
+
+  const itensExibidos = tabelaExpandida || filtroCargo.trim() ? taxasFiltradas : taxasFiltradas.slice(0, 8);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {/* Banner de Conformidade ODS 10 e Factualidade */}
@@ -68,7 +93,7 @@ export function PainelCustosLogistica({
         <Compass size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
         <div>
           <strong>Transparência em Custos e Logística (ODS 10):</strong> Todas as informações abaixo foram extraídas
-          exclusivamente das cláusulas do edital. Informações não expressas no texto permanecem como{' '}
+          exclusivamente das cláusulas, tabelas e anexos do edital. Informações não expressas no texto permanecem como{' '}
           <em>«Não identificado no edital»</em>, evitando presunções indevidas.
         </div>
       </div>
@@ -113,17 +138,24 @@ export function PainelCustosLogistica({
               <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)' }}>Taxa de Inscrição</h3>
             </div>
 
-            <span
-              className={`cracha ${
-                ehGratuito
-                  ? 'cracha-sucesso'
-                  : taxa.possui_taxa
-                  ? 'cracha-info'
-                  : 'cracha-neutro'
-              }`}
-            >
-              {ehGratuito ? 'Gratuito' : taxa.possui_taxa ? 'Cobrança Prevista' : 'Não Identificado'}
-            </span>
+            <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+              {taxa.pagina_origem && (
+                <span className="cracha cracha-neutro" style={{ fontSize: '0.72rem' }}>
+                  Pág. {taxa.pagina_origem}
+                </span>
+              )}
+              <span
+                className={`cracha ${
+                  ehGratuito
+                    ? 'cracha-sucesso'
+                    : taxa.possui_taxa
+                    ? 'cracha-info'
+                    : 'cracha-neutro'
+                }`}
+              >
+                {ehGratuito ? 'Gratuito' : taxa.possui_taxa ? 'Cobrança Prevista' : 'Não Identificado'}
+              </span>
+            </div>
           </div>
 
           {editavel ? (
@@ -151,20 +183,74 @@ export function PainelCustosLogistica({
               />
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.88rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.88rem' }}>
+              {/* Destaque para o perfil do candidato se definido */}
+              {taxa.taxa_perfil_candidato && (
+                <div
+                  style={{
+                    backgroundColor: '#eff6ff',
+                    border: '1px solid #bfdbfe',
+                    borderRadius: 'var(--raio-sm)',
+                    padding: '0.5rem 0.75rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                  }}
+                >
+                  <Tag size={16} color="var(--cor-info)" />
+                  <div>
+                    <span style={{ fontSize: '0.78rem', color: '#1e40af', display: 'block' }}>
+                      Taxa aplicável ao seu perfil:
+                    </span>
+                    <strong style={{ fontSize: '1.05rem', color: '#1e3a8a' }}>
+                      {taxa.taxa_perfil_candidato}
+                    </strong>
+                  </div>
+                </div>
+              )}
+
               <div>
                 <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontSize: '0.8rem' }}>
                   Valor da Inscrição:
                 </span>
                 <strong
                   style={{
-                    fontSize: '1.15rem',
+                    fontSize: '1.08rem',
                     color: ehGratuito ? 'var(--cor-sucesso)' : 'var(--cor-primaria)',
+                    lineHeight: 1.4,
+                    display: 'block',
                   }}
                 >
                   {taxa.valor || 'Não identificado no edital'}
                 </strong>
               </div>
+
+              {/* Resumo por escolaridade / nível */}
+              {resumoNiveis && Object.keys(resumoNiveis).length > 0 && (
+                <div style={{ marginTop: '0.2rem' }}>
+                  <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontSize: '0.78rem', marginBottom: '0.35rem' }}>
+                    Valores por Escolaridade / Categoria:
+                  </span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                    {Object.entries(resumoNiveis).map(([nivel, v]) => (
+                      <span
+                        key={nivel}
+                        style={{
+                          backgroundColor: '#f1f5f9',
+                          border: '1px solid #cbd5e1',
+                          borderRadius: 'var(--raio-sm)',
+                          padding: '0.25rem 0.5rem',
+                          fontSize: '0.76rem',
+                          color: '#334155',
+                          fontWeight: 500,
+                        }}
+                      >
+                        <strong>{nivel}:</strong> {v}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div>
                 <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontSize: '0.8rem' }}>
@@ -183,6 +269,17 @@ export function PainelCustosLogistica({
                   {taxa.instrucoes_pagamento || 'Não identificado no edital'}
                 </span>
               </div>
+
+              {taxa.secao_edital && (
+                <div>
+                  <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontSize: '0.78rem' }}>
+                    Seção / Cláusula:
+                  </span>
+                  <span style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.82rem' }}>
+                    {taxa.secao_edital}
+                  </span>
+                </div>
+              )}
 
               {taxa.trecho_evidencia && (
                 <div
@@ -236,21 +333,28 @@ export function PainelCustosLogistica({
               <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)' }}>Isenção de Taxa</h3>
             </div>
 
-            <span
-              className={`cracha ${
-                possuiIsencao === true
-                  ? 'cracha-sucesso'
+            <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+              {isencao.pagina_origem && (
+                <span className="cracha cracha-neutro" style={{ fontSize: '0.72rem' }}>
+                  Pág. {isencao.pagina_origem}
+                </span>
+              )}
+              <span
+                className={`cracha ${
+                  possuiIsencao === true
+                    ? 'cracha-sucesso'
+                    : possuiIsencao === false
+                    ? 'cracha-neutro'
+                    : 'cracha-atencao'
+                }`}
+              >
+                {possuiIsencao === true
+                  ? 'Isenção Prevista'
                   : possuiIsencao === false
-                  ? 'cracha-neutro'
-                  : 'cracha-atencao'
-              }`}
-            >
-              {possuiIsencao === true
-                ? 'Isenção Prevista'
-                : possuiIsencao === false
-                ? 'Sem Isenção / Gratuito'
-                : 'Não Identificado'}
-            </span>
+                  ? 'Sem Isenção / Gratuito'
+                  : 'Não Identificado'}
+              </span>
+            </div>
           </div>
 
           {editavel ? (
@@ -267,7 +371,7 @@ export function PainelCustosLogistica({
                 rotulo="Regras e Critérios de Isenção"
                 multilinha
                 rows={2}
-                valor={isencao.regras_isencao || ''}
+                valor={isencao.regras_isencao || isencao.criterios || ''}
                 aoMudar={(e) => aoMudarCampo('isencao', 'regras_isencao', e.target.value)}
                 placeholder="Ex: Inscritos no CadÚnico ou doadores de medula óssea"
               />
@@ -287,10 +391,32 @@ export function PainelCustosLogistica({
                 <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontSize: '0.8rem' }}>
                   Regras e Condições de Isenção:
                 </span>
-                <span style={{ color: 'var(--cor-texto-secundario)' }}>
-                  {isencao.regras_isencao || 'Não identificado no edital'}
+                <span style={{ color: 'var(--cor-texto-secundario)', lineHeight: 1.5 }}>
+                  {isencao.criterios || isencao.regras_isencao || 'Não identificado no edital'}
                 </span>
               </div>
+
+              {isencao.como_solicitar && isencao.como_solicitar !== 'Não identificado no edital' && (
+                <div>
+                  <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontSize: '0.8rem' }}>
+                    Procedimento de Solicitação:
+                  </span>
+                  <span style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.84rem' }}>
+                    {isencao.como_solicitar}
+                  </span>
+                </div>
+              )}
+
+              {isencao.secao_edital && (
+                <div>
+                  <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontSize: '0.78rem' }}>
+                    Seção / Cláusula:
+                  </span>
+                  <span style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.82rem' }}>
+                    {isencao.secao_edital}
+                  </span>
+                </div>
+              )}
 
               {isencao.trecho_evidencia && (
                 <div
@@ -344,9 +470,16 @@ export function PainelCustosLogistica({
               <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)' }}>Etapa / Prova</h3>
             </div>
 
-            <span className="cracha cracha-neutro">
-              {etapa.modalidade || 'Não identificado'}
-            </span>
+            <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+              {etapa.pagina_origem && (
+                <span className="cracha cracha-neutro" style={{ fontSize: '0.72rem' }}>
+                  Pág. {etapa.pagina_origem}
+                </span>
+              )}
+              <span className="cracha cracha-neutro">
+                {etapa.modalidade || 'Não identificado'}
+              </span>
+            </div>
           </div>
 
           {editavel ? (
@@ -521,6 +654,176 @@ export function PainelCustosLogistica({
           )}
         </div>
       </div>
+
+      {/* SEÇÃO COMPLEMENTAR: Tabela Discriminada de Taxas por Cargo (se disponível) */}
+      {listaTabelaTaxas.length > 0 && (
+        <div
+          style={{
+            border: '1px solid var(--cor-borda)',
+            borderRadius: 'var(--raio-md)',
+            backgroundColor: '#ffffff',
+            padding: '1.25rem',
+            boxShadow: 'var(--sombra-sm)',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: '0.75rem',
+              marginBottom: '1rem',
+              borderBottom: '1px solid var(--cor-borda)',
+              paddingBottom: '0.75rem',
+            }}
+          >
+            <div>
+              <h4 style={{ fontSize: '1rem', color: 'var(--cor-primaria)', margin: 0 }}>
+                Quadro de Taxas de Inscrição por Cargo e Categoria ({listaTabelaTaxas.length} cargos)
+              </h4>
+              <span style={{ fontSize: '0.8rem', color: 'var(--cor-texto-mutado)' }}>
+                Valores oficiais extraídos diretamente do quadro de cargos do edital
+                {taxa.pagina_origem ? ` (Páginas ${taxa.pagina_origem})` : ''}
+              </span>
+            </div>
+
+            {/* Campo de Busca Rápida de Cargo */}
+            <div style={{ display: 'flex', alignItems: 'center', position: 'relative', minWidth: '220px' }}>
+              <Search
+                size={16}
+                style={{ position: 'absolute', left: '0.65rem', color: 'var(--cor-texto-mutado)' }}
+              />
+              <input
+                type="text"
+                placeholder="Filtrar por cargo ou nível..."
+                value={filtroCargo}
+                onChange={(e) => setFiltroCargo(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.4rem 0.65rem 0.4rem 2.1rem',
+                  fontSize: '0.84rem',
+                  border: '1px solid var(--cor-borda)',
+                  borderRadius: 'var(--raio-sm)',
+                  backgroundColor: '#f8fafc',
+                }}
+              />
+            </div>
+          </div>
+
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.86rem' }}>
+              <thead>
+                <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '2px solid var(--cor-borda)' }}>
+                  <th style={{ padding: '0.6rem 0.75rem', textAlign: 'left', fontWeight: 600, color: '#334155' }}>
+                    Cargo / Função
+                  </th>
+                  <th style={{ padding: '0.6rem 0.75rem', textAlign: 'left', fontWeight: 600, color: '#334155' }}>
+                    Escolaridade / Nível
+                  </th>
+                  <th style={{ padding: '0.6rem 0.75rem', textAlign: 'right', fontWeight: 600, color: '#334155' }}>
+                    Taxa de Inscrição
+                  </th>
+                  <th style={{ padding: '0.6rem 0.75rem', textAlign: 'center', fontWeight: 600, color: '#334155' }}>
+                    Pág. Origem
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {itensExibidos.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} style={{ padding: '1rem', textAlign: 'center', color: 'var(--cor-texto-mutado)' }}>
+                      Nenhum cargo encontrado para o termo "{filtroCargo}".
+                    </td>
+                  </tr>
+                ) : (
+                  itensExibidos.map((item, idx) => {
+                    const ehPerfilCandidato =
+                      taxa.taxa_perfil_candidato &&
+                      item.valor &&
+                      taxa.taxa_perfil_candidato.includes(item.valor);
+
+                    return (
+                      <tr
+                        key={idx}
+                        style={{
+                          borderBottom: '1px solid var(--cor-borda)',
+                          backgroundColor: ehPerfilCandidato ? '#eff6ff' : idx % 2 === 0 ? '#ffffff' : '#f8fafc',
+                        }}
+                      >
+                        <td style={{ padding: '0.55rem 0.75rem', fontWeight: ehPerfilCandidato ? 600 : 500, color: '#1e293b' }}>
+                          {item.cargo}
+                        </td>
+                        <td style={{ padding: '0.55rem 0.75rem', color: '#475569' }}>
+                          <span
+                            style={{
+                              display: 'inline-block',
+                              padding: '0.15rem 0.45rem',
+                              borderRadius: '4px',
+                              backgroundColor: '#e2e8f0',
+                              fontSize: '0.78rem',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {item.nivel || 'Geral'}
+                          </span>
+                        </td>
+                        <td
+                          style={{
+                            padding: '0.55rem 0.75rem',
+                            textAlign: 'right',
+                            fontWeight: 700,
+                            color: 'var(--cor-primaria)',
+                          }}
+                        >
+                          {item.valor}
+                        </td>
+                        <td style={{ padding: '0.55rem 0.75rem', textAlign: 'center', color: '#64748b', fontSize: '0.8rem' }}>
+                          {item.pagina || taxa.pagina_origem || '-'}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {listaTabelaTaxas.length > 8 && !filtroCargo.trim() && (
+            <div style={{ textAlign: 'center', marginTop: '0.75rem' }}>
+              <button
+                type="button"
+                onClick={() => setTabelaExpandida(!tabelaExpandida)}
+                style={{
+                  background: 'none',
+                  border: '1px solid var(--cor-borda)',
+                  borderRadius: 'var(--raio-sm)',
+                  padding: '0.4rem 0.85rem',
+                  fontSize: '0.82rem',
+                  color: 'var(--cor-primaria)',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  fontWeight: 600,
+                }}
+              >
+                {tabelaExpandida ? (
+                  <>
+                    <ChevronUp size={16} />
+                    Recolher tabela (mostrar apenas os primeiros)
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown size={16} />
+                    Ver todos os {listaTabelaTaxas.length} cargos listados no edital
+                  </>
+                )}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

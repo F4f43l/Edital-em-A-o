@@ -9,8 +9,11 @@ export function normalizarData(valor) {
     return valor.toISOString().slice(0, 10);
   }
 
-  const texto = String(valor).trim();
+  let texto = String(valor).trim();
   if (!texto) return null;
+
+  // Remove espaços internos em barras e hífens de datas (ex: "31 / 08 / 2026" ou "31 /08/2026" -> "31/08/2026")
+  texto = texto.replace(/(\d{1,4})\s*[\/\.-]\s*(\d{1,2})\s*[\/\.-]\s*(\d{2,4})/, '$1/$2/$3');
 
   // Formato ISO: YYYY-MM-DD
   const correspondenciaIso = texto.match(/^(\d{4})-(\d{2})-(\d{2})/);

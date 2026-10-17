@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const esquemaCriarTarefa = z.object({
   analise_id: z.coerce.number().int().positive('O identificador da análise é obrigatório.'),
   requisito_id: z.coerce.number().int().positive().nullable().optional(),
+  documento_id: z.coerce.number().int().positive().nullable().optional(),
   titulo: z.string().min(2, 'O título da tarefa é obrigatório.').max(255),
   descricao: z.string().nullable().optional(),
   data_limite: z
@@ -16,6 +17,7 @@ export const esquemaCriarTarefa = z.object({
 
 export const esquemaAtualizarTarefa = z.object({
   requisito_id: z.coerce.number().int().positive().nullable().optional(),
+  documento_id: z.coerce.number().int().positive().nullable().optional(),
   titulo: z.string().min(2).max(255).optional(),
   descricao: z.string().nullable().optional(),
   data_limite: z

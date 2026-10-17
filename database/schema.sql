@@ -139,13 +139,17 @@ CREATE TABLE documentos_exigidos (
   analise_id INT NOT NULL,
   requisito_id INT NULL,
   nome VARCHAR(255) NOT NULL,
+  nome_simples VARCHAR(255) NULL,
   finalidade TEXT NULL,
   quem_fornece VARCHAR(255) NULL,
   orgao_emissor VARCHAR(255) NULL,
   como_obter TEXT NULL,
+  dados_solicitacao TEXT NULL,
   documentos_alternativos TEXT NULL,
   formato_aceito VARCHAR(255) NULL,
   exigencias_validade TEXT NULL,
+  instrucoes_preparacao TEXT NULL,
+  como_digitalizar TEXT NULL,
   local_entrega VARCHAR(255) NULL,
   url_entrega VARCHAR(500) NULL,
   secao_entrega VARCHAR(255) NULL,
@@ -193,11 +197,13 @@ CREATE TABLE documentos_exigidos (
 -- 6. TABELA: tarefas (Plano de Ação / Checklist)
 -- Tarefas práticas geradas a partir da análise ou criadas pelo usuário.
 -- Vínculo com análise por CASCADE. Vínculo com requisito opcional (SET NULL).
+-- Vínculo direto com documento_id para acesso imediato ao tutorial e checklist.
 -- -----------------------------------------------------------------------------
 CREATE TABLE tarefas (
   id INT AUTO_INCREMENT PRIMARY KEY,
   analise_id INT NOT NULL,
   requisito_id INT NULL,
+  documento_id INT NULL,
   titulo VARCHAR(255) NOT NULL,
   descricao TEXT NULL,
   data_limite DATE NULL,
@@ -209,7 +215,10 @@ CREATE TABLE tarefas (
     REFERENCES analises (id) ON DELETE CASCADE,
   CONSTRAINT fk_tarefas_requisito FOREIGN KEY (requisito_id)
     REFERENCES requisitos (id) ON DELETE SET NULL,
+  CONSTRAINT fk_tarefas_documento FOREIGN KEY (documento_id)
+    REFERENCES documentos_exigidos (id) ON DELETE CASCADE,
   INDEX idx_tarefas_analise (analise_id),
+  INDEX idx_tarefas_documento (documento_id),
   INDEX idx_tarefas_status (status),
   INDEX idx_tarefas_prioridade (prioridade),
   INDEX idx_tarefas_data_limite (data_limite)

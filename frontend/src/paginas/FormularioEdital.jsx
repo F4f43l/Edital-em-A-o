@@ -179,6 +179,9 @@ export function FormularioEdital() {
 
         // Requisitos e critérios
         requisitos: extraidos.requisitos || [],
+
+        // Documentos individuais identificados com procedimentos e fontes
+        documentos: extraidos.documentos || [],
       });
 
       setEtapaFluxo('revisao');
@@ -350,13 +353,17 @@ export function FormularioEdital() {
         })),
         documentos: (dadosRevisao.documentos || []).map((d) => ({
           nome: d.nome,
+          nome_simples: d.nome_simples || d.nome,
           finalidade: d.finalidade || null,
           quem_fornece: d.quem_fornece || null,
           orgao_emissor: d.orgao_emissor || null,
           como_obter: d.como_obter || null,
+          dados_solicitacao: d.dados_solicitacao || null,
           documentos_alternativos: d.documentos_alternativos || null,
-          formato_aceito: d.formato_aceito || null,
+          formato_aceito: d.formato_aceito || 'PDF legível',
           exigencias_validade: d.exigencias_validade || null,
+          instrucoes_preparacao: d.instrucoes_preparacao || null,
+          como_digitalizar: d.como_digitalizar || null,
           local_entrega: d.local_entrega || null,
           url_entrega: d.url_entrega || null,
           secao_entrega: d.secao_entrega || null,
@@ -1089,21 +1096,72 @@ export function FormularioEdital() {
                       </button>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.6rem' }}>
-                      <input
-                        type="text"
-                        value={doc.nome}
-                        onChange={(e) => atualizarDocumentoRevisao(index, 'nome', e.target.value)}
-                        className="entrada-texto"
-                        placeholder="Nome do documento"
-                        style={{ fontWeight: 600 }}
-                      />
-                      <input
-                        type="text"
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.6rem' }}>
+                      <div>
+                        <label style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--cor-texto-secundario)', display: 'block', marginBottom: '0.2rem' }}>
+                          Nome Oficial do Documento:
+                        </label>
+                        <input
+                          type="text"
+                          value={doc.nome}
+                          onChange={(e) => atualizarDocumentoRevisao(index, 'nome', e.target.value)}
+                          className="entrada-texto"
+                          placeholder="Nome do documento no edital"
+                          style={{ fontWeight: 600 }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--cor-texto-secundario)', display: 'block', marginBottom: '0.2rem' }}>
+                          Nome em Linguagem Simples:
+                        </label>
+                        <input
+                          type="text"
+                          value={doc.nome_simples || doc.nome}
+                          onChange={(e) => atualizarDocumentoRevisao(index, 'nome_simples', e.target.value)}
+                          className="entrada-texto"
+                          placeholder="Ex: Documento de Identidade com Foto"
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--cor-texto-secundario)', display: 'block', marginBottom: '0.2rem' }}>
+                          Órgão Emissor / Quem Emite:
+                        </label>
+                        <input
+                          type="text"
+                          value={doc.orgao_emissor || ''}
+                          onChange={(e) => atualizarDocumentoRevisao(index, 'orgao_emissor', e.target.value)}
+                          className="entrada-texto"
+                          placeholder="Ex: Polícia Federal, Cartório, Concessionária"
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--cor-texto-secundario)', display: 'block', marginBottom: '0.2rem' }}>
+                          Local / Portal de Envio:
+                        </label>
+                        <input
+                          type="text"
+                          value={doc.local_entrega || ''}
+                          onChange={(e) => atualizarDocumentoRevisao(index, 'local_entrega', e.target.value)}
+                          className="entrada-texto"
+                          placeholder="Ex: Portal do Candidato"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--cor-texto-secundario)', display: 'block', marginBottom: '0.2rem' }}>
+                        Como Obter (Procedimento detalhado para leigos):
+                      </label>
+                      <textarea
                         value={doc.como_obter || ''}
                         onChange={(e) => atualizarDocumentoRevisao(index, 'como_obter', e.target.value)}
                         className="entrada-texto"
-                        placeholder="Como obter (procedimento)"
+                        rows={2}
+                        placeholder="Explique o passo a passo de como solicitar e obter este documento..."
+                        style={{ fontSize: '0.85rem' }}
                       />
                     </div>
                   </div>

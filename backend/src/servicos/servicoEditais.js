@@ -58,7 +58,8 @@ export const servicoEditais = {
       // 3. Executa a análise com IA / Heurística
       const resultadoAnalise = await servicoInteligenciaArtificial.analisarTextoEdital(
         resultadoPdf.textoExtraido,
-        perfil
+        perfil,
+        resultadoPdf
       );
 
       return {
@@ -170,13 +171,17 @@ export const servicoEditais = {
         analise_id: analiseCriada.id,
         requisito_id: doc.requisito_id || (reqVinculado ? reqVinculado.id : null),
         nome: doc.nome,
+        nome_simples: doc.nome_simples || doc.nome,
         finalidade: doc.finalidade || null,
         quem_fornece: doc.quem_fornece || null,
         orgao_emissor: doc.orgao_emissor || null,
         como_obter: doc.como_obter || null,
+        dados_solicitacao: doc.dados_solicitacao || null,
         documentos_alternativos: doc.documentos_alternativos || null,
-        formato_aceito: doc.formato_aceito || null,
+        formato_aceito: doc.formato_aceito || 'PDF legível',
         exigencias_validade: doc.exigencias_validade || null,
+        instrucoes_preparacao: doc.instrucoes_preparacao || null,
+        como_digitalizar: doc.como_digitalizar || null,
         local_entrega: doc.local_entrega || null,
         url_entrega: doc.url_entrega || null,
         secao_entrega: doc.secao_entrega || null,
@@ -212,14 +217,17 @@ export const servicoEditais = {
     // 5. Gera automaticamente as tarefas no Plano de Ação (Checklist)
     const tarefasIniciais = [];
 
-    // Tarefas para documentos individuais
+    // Tarefas para documentos individuais (1 tarefa acionável e explicativa para cada documento)
     if (documentosCriados.length > 0) {
       for (const doc of documentosCriados) {
+        const resumoComoObter = doc.como_obter ? `${doc.como_obter.slice(0, 180)}...` : 'Conforme orientações oficiais';
+        const canalEntrega = doc.local_entrega || 'Portal oficial';
         tarefasIniciais.push({
           analise_id: analiseCriada.id,
           requisito_id: doc.requisito_id || null,
-          titulo: `Obter e conferir documento: ${doc.nome}`,
-          descricao: `Obter junto a ${doc.orgao_emissor || 'órgão emissor'} (${doc.como_obter || 'conforme edital'}). Validar formato (${doc.formato_aceito || 'PDF'}) e condições (${doc.exigencias_validade || 'recente'}).`,
+          documento_id: doc.id,
+          titulo: `Obter e preparar: ${doc.nome_simples || doc.nome}`,
+          descricao: `Órgão emissor: ${doc.orgao_emissor || 'Órgão competente'}. Procedimento: ${resumoComoObter} Formato: ${doc.formato_aceito || 'PDF'}. Entrega: ${canalEntrega}.`,
           data_limite: doc.prazo_envio || editalCriado.prazo_inscricao || null,
           prioridade: 'alta',
           status: 'pendente',
@@ -232,6 +240,7 @@ export const servicoEditais = {
           tarefasIniciais.push({
             analise_id: analiseCriada.id,
             requisito_id: req.id,
+            documento_id: null,
             titulo: `Separar e digitalizar: ${req.titulo}`,
             descricao: `Providenciar cópia legível do documento exigido (${req.descricao || req.titulo}).`,
             data_limite: editalCriado.prazo_inscricao || null,
@@ -255,6 +264,48 @@ export const servicoEditais = {
           status: 'pendente',
         });
       }
+    }
+
+    // Tarefa para pagamento da taxa de inscrição (se houver cobrança prevista)
+    const custosEdital = dados.custos_logistica || analiseCriada.custos_logistica;
+    if (
+      custosEdital?.taxa_inscricao?.possui_taxa &&
+      custosEdital.taxa_inscricao.valor &&
+      !/gratuito|isento/i.test(custosEdital.taxa_inscricao.valor)
+    ) {
+      const valorExibicao = custosEdital.taxa_inscricao.taxa_perfil_candidato || custosEdital.taxa_inscricao.valor;
+      const rawPrazoPagto = custosEdital.taxa_inscricao.prazo_pagamento;
+      const prazoPagto = rawPrazoPagto && /^\d{4}-\d{2}-\d{2}/.test(rawPrazoPagto)
+        ? rawPrazoPagto.slice(0, 10)
+        : (editalCriado.prazo_inscricao || null);
+      const instrucoes = custosEdital.taxa_inscricao.instrucoes_pagamento || 'Efetuar pagamento da taxa via boleto ou canal oficial.';
+      tarefasIniciais.push({
+        analise_id: analiseCriada.id,
+        requisito_id: null,
+        titulo: `Efetuar pagamento da taxa de inscrição (${valorExibicao})`,
+        descricao: `${instrucoes} Verifique o vencimento exato do boleto no cronograma do edital.`,
+        data_limite: prazoPagto,
+        prioridade: 'urgente',
+        status: 'pendente',
+      });
+    }
+
+    // Tarefa para pedido de isenção de taxa (se previsto)
+    if (custosEdital?.isencao?.possui_isencao) {
+      const rawPrazoIsencao = custosEdital.isencao.prazo_solicitacao;
+      const prazoIsencao = rawPrazoIsencao && /^\d{4}-\d{2}-\d{2}/.test(rawPrazoIsencao)
+        ? rawPrazoIsencao.slice(0, 10)
+        : null;
+      const condicoes = custosEdital.isencao.criterios || custosEdital.isencao.regras_isencao || 'Conforme regras do edital';
+      tarefasIniciais.push({
+        analise_id: analiseCriada.id,
+        requisito_id: null,
+        titulo: 'Solicitar isenção da taxa de inscrição (se aplicável)',
+        descricao: `Critérios de isenção: ${condicoes}.`,
+        data_limite: prazoIsencao,
+        prioridade: 'alta',
+        status: 'pendente',
+      });
     }
 
     // Tarefa para submissão final da inscrição e protocolo

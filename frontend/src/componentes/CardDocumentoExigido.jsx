@@ -18,6 +18,9 @@ import {
   Trash2,
   Edit3,
   Info,
+  Smartphone,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { CrachaFonte } from './CrachaFonte.jsx';
 import {
@@ -39,6 +42,8 @@ export function CardDocumentoExigido({
   const [protocoloTexto, setProtocoloTexto] = useState(documento.protocolo_comprovante || '');
   const [salvandoProtocolo, setSalvandoProtocolo] = useState(false);
   const [mensagemSucesso, setMensagemSucesso] = useState(null);
+  const [mostrarGuiaDigitalizacao, setMostrarGuiaDigitalizacao] = useState(false);
+  const [mostrarGuiaPreparacao, setMostrarGuiaPreparacao] = useState(false);
 
   // Parse do checklist_etapas
   let checklist = {
@@ -161,8 +166,13 @@ export function CardDocumentoExigido({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
               <h3 style={{ fontSize: '1.15rem', color: 'var(--cor-primaria)', fontWeight: 700 }}>
-                {documento.nome}
+                {documento.nome_simples || documento.nome}
               </h3>
+              {documento.nome_simples && documento.nome_simples !== documento.nome && (
+                <span style={{ fontSize: '0.8rem', color: 'var(--cor-texto-mutado)', fontStyle: 'italic' }}>
+                  (Exigência oficial: <strong>{documento.nome}</strong>)
+                </span>
+              )}
               <CrachaFonte
                 classificacao={documento.classificacao_fonte}
                 secao={documento.secao_edital}
@@ -303,6 +313,21 @@ export function CardDocumentoExigido({
               Procedimento para obtenção:
             </span>
             <span style={{ color: 'var(--cor-texto-secundario)', lineHeight: 1.5 }}>{documento.como_obter}</span>
+            {documento.dados_solicitacao && (
+              <div
+                style={{
+                  marginTop: '0.5rem',
+                  backgroundColor: '#f8fafc',
+                  padding: '0.5rem 0.75rem',
+                  borderRadius: 'var(--raio-sm)',
+                  border: '1px solid var(--cor-borda)',
+                  fontSize: '0.82rem',
+                }}
+              >
+                <strong style={{ color: 'var(--cor-primaria)' }}>Dados ou documentos necessários para solicitar: </strong>
+                <span style={{ color: 'var(--cor-texto-secundario)' }}>{documento.dados_solicitacao}</span>
+              </div>
+            )}
           </div>
         )}
 
@@ -442,6 +467,108 @@ export function CardDocumentoExigido({
           </div>
         )}
       </div>
+
+      {/* Guias Práticos Expansíveis para Leigos: Preparação & Digitalização */}
+      {(documento.instrucoes_preparacao || documento.como_digitalizar) && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+          {/* Botões de Abertura dos Guias */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
+            {documento.instrucoes_preparacao && (
+              <button
+                type="button"
+                onClick={() => setMostrarGuiaPreparacao(!mostrarGuiaPreparacao)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.45rem',
+                  padding: '0.45rem 0.85rem',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  borderRadius: 'var(--raio-sm)',
+                  border: mostrarGuiaPreparacao ? '1px solid var(--cor-primaria)' : '1px solid var(--cor-borda)',
+                  backgroundColor: mostrarGuiaPreparacao ? '#f1f5f9' : '#ffffff',
+                  color: 'var(--cor-primaria)',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <FileCheck size={15} />
+                <span>Como Preparar e Conferir</span>
+                {mostrarGuiaPreparacao ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+              </button>
+            )}
+
+            {documento.como_digitalizar && (
+              <button
+                type="button"
+                onClick={() => setMostrarGuiaDigitalizacao(!mostrarGuiaDigitalizacao)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.45rem',
+                  padding: '0.45rem 0.85rem',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  borderRadius: 'var(--raio-sm)',
+                  border: mostrarGuiaDigitalizacao ? '1px solid var(--cor-secundaria)' : '1px solid var(--cor-borda)',
+                  backgroundColor: mostrarGuiaDigitalizacao ? '#eff6ff' : '#ffffff',
+                  color: 'var(--cor-secundaria)',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <Smartphone size={15} />
+                <span>Tutorial: Digitalizar no Celular</span>
+                {mostrarGuiaDigitalizacao ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+              </button>
+            )}
+          </div>
+
+          {/* Painel do Guia de Preparação */}
+          {mostrarGuiaPreparacao && documento.instrucoes_preparacao && (
+            <div
+              style={{
+                backgroundColor: '#f8fafc',
+                border: '1px solid var(--cor-borda)',
+                borderRadius: 'var(--raio-sm)',
+                padding: '0.85rem 1rem',
+                fontSize: '0.84rem',
+                color: 'var(--cor-texto-principal)',
+                whiteSpace: 'pre-line',
+                lineHeight: 1.5,
+              }}
+            >
+              <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--cor-primaria)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <FileCheck size={15} />
+                <span>Instruções Práticas de Preparação e Validade:</span>
+              </h4>
+              {documento.instrucoes_preparacao}
+            </div>
+          )}
+
+          {/* Painel do Tutorial de Digitalização */}
+          {mostrarGuiaDigitalizacao && documento.como_digitalizar && (
+            <div
+              style={{
+                backgroundColor: '#eff6ff',
+                border: '1px solid #bfdbfe',
+                borderRadius: 'var(--raio-sm)',
+                padding: '0.85rem 1rem',
+                fontSize: '0.84rem',
+                color: '#1e3a8a',
+                whiteSpace: 'pre-line',
+                lineHeight: 1.5,
+              }}
+            >
+              <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1d4ed8', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <Smartphone size={15} />
+                <span>Tutorial de Digitalização para Leigos (Celular / Scanner):</span>
+              </h4>
+              {documento.como_digitalizar}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Checklist Independente de 5 Etapas do Documento */}
       <div

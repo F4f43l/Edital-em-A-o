@@ -9,11 +9,26 @@ export const repositorioTarefas = {
         a.edital_id,
         e.titulo as edital_titulo,
         r.titulo as requisito_titulo,
-        r.tipo as requisito_tipo
+        r.tipo as requisito_tipo,
+        d.nome as documento_nome,
+        d.nome_simples as documento_nome_simples,
+        d.status_etapa as documento_status_etapa,
+        d.orgao_emissor as documento_orgao_emissor,
+        d.como_obter as documento_como_obter,
+        d.como_digitalizar as documento_como_digitalizar,
+        d.instrucoes_preparacao as documento_instrucoes_preparacao,
+        d.formato_aceito as documento_formato_aceito,
+        d.local_entrega as documento_local_entrega,
+        d.url_entrega as documento_url_entrega,
+        d.checklist_etapas as documento_checklist_etapas,
+        d.protocolo_comprovante as documento_protocolo_comprovante,
+        d.classificacao_fonte as documento_classificacao_fonte,
+        d.link_fonte_oficial as documento_link_fonte_oficial
       FROM tarefas t
       JOIN analises a ON t.analise_id = a.id
       JOIN editais e ON a.edital_id = e.id
       LEFT JOIN requisitos r ON t.requisito_id = r.id
+      LEFT JOIN documentos_exigidos d ON t.documento_id = d.id
       WHERE 1=1
     `;
     const parametros = [];
@@ -44,11 +59,26 @@ export const repositorioTarefas = {
         a.edital_id,
         e.titulo as edital_titulo,
         r.titulo as requisito_titulo,
-        r.tipo as requisito_tipo
+        r.tipo as requisito_tipo,
+        d.nome as documento_nome,
+        d.nome_simples as documento_nome_simples,
+        d.status_etapa as documento_status_etapa,
+        d.orgao_emissor as documento_orgao_emissor,
+        d.como_obter as documento_como_obter,
+        d.como_digitalizar as documento_como_digitalizar,
+        d.instrucoes_preparacao as documento_instrucoes_preparacao,
+        d.formato_aceito as documento_formato_aceito,
+        d.local_entrega as documento_local_entrega,
+        d.url_entrega as documento_url_entrega,
+        d.checklist_etapas as documento_checklist_etapas,
+        d.protocolo_comprovante as documento_protocolo_comprovante,
+        d.classificacao_fonte as documento_classificacao_fonte,
+        d.link_fonte_oficial as documento_link_fonte_oficial
       FROM tarefas t
       JOIN analises a ON t.analise_id = a.id
       JOIN editais e ON a.edital_id = e.id
       LEFT JOIN requisitos r ON t.requisito_id = r.id
+      LEFT JOIN documentos_exigidos d ON t.documento_id = d.id
       WHERE t.id = ?
     `;
     const [linhas] = await pool.query(sql, [id]);
@@ -60,6 +90,7 @@ export const repositorioTarefas = {
     const {
       analise_id,
       requisito_id = null,
+      documento_id = null,
       titulo,
       descricao = null,
       data_limite = null,
@@ -69,11 +100,12 @@ export const repositorioTarefas = {
 
     const [resultado] = await pool.query(
       `INSERT INTO tarefas 
-       (analise_id, requisito_id, titulo, descricao, data_limite, prioridade, status) 
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+       (analise_id, requisito_id, documento_id, titulo, descricao, data_limite, prioridade, status) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         analise_id,
         requisito_id,
+        documento_id,
         titulo,
         descricao,
         data_limite,
@@ -97,11 +129,12 @@ export const repositorioTarefas = {
       for (const item of itens) {
         const [resultado] = await conexao.query(
           `INSERT INTO tarefas 
-           (analise_id, requisito_id, titulo, descricao, data_limite, prioridade, status) 
-           VALUES (?, ?, ?, ?, ?, ?, ?)`,
+           (analise_id, requisito_id, documento_id, titulo, descricao, data_limite, prioridade, status) 
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             item.analise_id,
             item.requisito_id || null,
+            item.documento_id || null,
             item.titulo,
             item.descricao || null,
             item.data_limite || null,
@@ -131,6 +164,7 @@ export const repositorioTarefas = {
 
     const camposPermitidos = [
       'requisito_id',
+      'documento_id',
       'titulo',
       'descricao',
       'data_limite',
