@@ -137,18 +137,19 @@ export function DetalhesEdital() {
       <Cartao>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
           <div style={{ flex: 1, minWidth: '260px' }}>
+            <div className="kicker-editorial">PRONTUÁRIO DO EDITAL</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
               <CrachaStatus tipo="edital_status" valor={edital.status} />
               <span className="cracha cracha-neutro">{edital.categoria}</span>
               <CrachaPrazo dataIso={edital.prazo_inscricao} />
             </div>
 
-            <h1 style={{ fontSize: '1.8rem', color: 'var(--cor-primaria)', marginBottom: '0.35rem' }}>
+            <h1 style={{ fontSize: '1.85rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.35rem' }}>
               {edital.titulo}
             </h1>
 
             {edital.instituicao && (
-              <p style={{ fontSize: '1rem', color: 'var(--cor-texto-secundario)', fontWeight: 500 }}>
+              <p style={{ fontSize: '1rem', color: 'var(--cor-texto-secundario)', fontWeight: 600 }}>
                 {edital.instituicao}
               </p>
             )}
@@ -181,32 +182,44 @@ export function DetalhesEdital() {
         </div>
 
         {/* Metadados e Links */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', padding: '1rem 0', borderTop: '1px solid var(--cor-borda)', borderBottom: '1px solid var(--cor-borda)', fontSize: '0.88rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '1.5rem',
+            padding: '1rem',
+            backgroundColor: 'var(--cor-fundo)',
+            borderRadius: 'var(--raio-sm)',
+            border: '1px solid var(--cor-borda-forte)',
+            fontSize: '0.88rem',
+            margin: '1rem 0',
+          }}
+        >
           <div>
-            <span style={{ color: 'var(--cor-texto-mutado)', display: 'block' }}>Inscrições até:</span>
-            <strong>{formatarDataPtBr(edital.prazo_inscricao)}</strong>
+            <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontFamily: 'var(--fonte-mono)', fontSize: '0.76rem', textTransform: 'uppercase' }}>Inscrições até:</span>
+            <strong style={{ fontFamily: 'var(--fonte-titulos)', color: 'var(--cor-primaria)' }}>{formatarDataPtBr(edital.prazo_inscricao)}</strong>
           </div>
 
           {edital.prazo_recurso && (
             <div>
-              <span style={{ color: 'var(--cor-texto-mutado)', display: 'block' }}>Prazo para Recursos:</span>
-              <strong style={{ color: 'var(--cor-atencao)' }}>{formatarDataPtBr(edital.prazo_recurso)}</strong>
+              <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontFamily: 'var(--fonte-mono)', fontSize: '0.76rem', textTransform: 'uppercase' }}>Prazo para Recursos:</span>
+              <strong style={{ color: 'var(--cor-alerta-texto)', fontFamily: 'var(--fonte-titulos)' }}>{formatarDataPtBr(edital.prazo_recurso)}</strong>
             </div>
           )}
 
           {edital.data_resultado && (
             <div>
-              <span style={{ color: 'var(--cor-texto-mutado)', display: 'block' }}>Divulgação do Resultado:</span>
-              <strong style={{ color: 'var(--cor-info)' }}>{formatarDataPtBr(edital.data_resultado)}</strong>
+              <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontFamily: 'var(--fonte-mono)', fontSize: '0.76rem', textTransform: 'uppercase' }}>Divulgação do Resultado:</span>
+              <strong style={{ color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>{formatarDataPtBr(edital.data_resultado)}</strong>
             </div>
           )}
 
           <div>
-            <span style={{ color: 'var(--cor-texto-mutado)', display: 'block' }}>Documento Anexo:</span>
+            <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontFamily: 'var(--fonte-mono)', fontSize: '0.76rem', textTransform: 'uppercase' }}>Documento Anexo:</span>
             {edital.nome_arquivo ? (
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--cor-secundaria)' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--cor-primaria)' }}>
                 <FileText size={15} />
-                <strong>{edital.nome_arquivo}</strong>
+                <strong style={{ fontFamily: 'var(--fonte-mono)', fontSize: '0.82rem' }}>{edital.nome_arquivo}</strong>
               </span>
             ) : (
               <span style={{ color: 'var(--cor-texto-mutado)' }}>Nenhum PDF enviado</span>
@@ -215,12 +228,12 @@ export function DetalhesEdital() {
 
           {edital.url_origem && (
             <div>
-              <span style={{ color: 'var(--cor-texto-mutado)', display: 'block' }}>Link Oficial:</span>
+              <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontFamily: 'var(--fonte-mono)', fontSize: '0.76rem', textTransform: 'uppercase' }}>Link Oficial:</span>
               <a
                 href={edital.url_origem}
                 target="_blank"
                 rel="noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 700, color: 'var(--cor-primaria)', textDecoration: 'underline' }}
               >
                 <span>Acessar página oficial</span>
                 <ExternalLink size={13} />
@@ -232,7 +245,7 @@ export function DetalhesEdital() {
         {/* Resumo */}
         {edital.resumo && (
           <div style={{ marginTop: '1.25rem' }}>
-            <h4 style={{ fontSize: '1rem', color: 'var(--cor-primaria)', marginBottom: '0.4rem' }}>
+            <h4 style={{ fontSize: '1rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.4rem' }}>
               Resumo do Edital
             </h4>
             <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.95rem', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
@@ -278,8 +291,10 @@ export function DetalhesEdital() {
               <div
                 key={item.id}
                 style={{
-                  border: '1px solid var(--cor-borda)',
-                  borderRadius: 'var(--raio-md)',
+                  border: '1px solid var(--cor-borda-forte)',
+                  borderRadius: 'var(--raio-sm)',
+                  boxShadow: 'var(--sombra-plana-sm)',
+                  backgroundColor: 'var(--cor-superficie)',
                   padding: '1rem',
                   display: 'flex',
                   justifyContent: 'space-between',

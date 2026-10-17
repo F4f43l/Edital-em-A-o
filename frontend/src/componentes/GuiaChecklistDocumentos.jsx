@@ -220,32 +220,31 @@ export function GuiaChecklistDocumentos({
 
         {/* Métricas de Progresso */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.75rem', marginBottom: '1rem' }}>
-          <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#f8fafc', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda)' }}>
-            <span style={{ fontSize: '0.74rem', color: 'var(--cor-texto-mutado)', display: 'block' }}>Obtidos/Conferidos</span>
-            <strong style={{ fontSize: '1.15rem', color: 'var(--cor-primaria)' }}>{docsObtidos} / {totalDocumentos}</strong>
+          <div style={{ padding: '0.75rem 0.85rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+            <span style={{ fontSize: '0.74rem', color: 'var(--cor-texto-mutado)', display: 'block', fontFamily: 'var(--fonte-mono)', textTransform: 'uppercase' }}>Obtidos / Conferidos</span>
+            <strong style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>{docsObtidos} / {totalDocumentos}</strong>
           </div>
-          <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#f0fdf4', borderRadius: 'var(--raio-sm)', border: '1px solid #bbf7d0' }}>
-            <span style={{ fontSize: '0.74rem', color: '#166534', display: 'block' }}>Enviados pelo Canal</span>
-            <strong style={{ fontSize: '1.15rem', color: 'var(--cor-sucesso)' }}>{docsEnviados} / {totalDocumentos}</strong>
+          <div style={{ padding: '0.75rem 0.85rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+            <span style={{ fontSize: '0.74rem', color: 'var(--cor-primaria)', display: 'block', fontFamily: 'var(--fonte-mono)', textTransform: 'uppercase' }}>Enviados pelo Canal</span>
+            <strong style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>{docsEnviados} / {totalDocumentos}</strong>
           </div>
-          <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#eff6ff', borderRadius: 'var(--raio-sm)', border: '1px solid #bfdbfe' }}>
-            <span style={{ fontSize: '0.74rem', color: '#1e40af', display: 'block' }}>Com Protocolo Salvo</span>
-            <strong style={{ fontSize: '1.15rem', color: '#1d4ed8' }}>{docsComProtocolo} / {totalDocumentos}</strong>
+          <div style={{ padding: '0.75rem 0.85rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+            <span style={{ fontSize: '0.74rem', color: 'var(--cor-primaria)', display: 'block', fontFamily: 'var(--fonte-mono)', textTransform: 'uppercase' }}>Com Protocolo Salvo</span>
+            <strong style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>{docsComProtocolo} / {totalDocumentos}</strong>
           </div>
-          <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#faf5ff', borderRadius: 'var(--raio-sm)', border: '1px solid #e9d5ff' }}>
-            <span style={{ fontSize: '0.74rem', color: '#6b21a8', display: 'block' }}>Validados Instituição</span>
-            <strong style={{ fontSize: '1.15rem', color: '#7e22ce' }}>{docsValidados} / {totalDocumentos}</strong>
+          <div style={{ padding: '0.75rem 0.85rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+            <span style={{ fontSize: '0.74rem', color: 'var(--cor-secundaria-escura, #92400e)', display: 'block', fontFamily: 'var(--fonte-mono)', textTransform: 'uppercase' }}>Validados Instituição</span>
+            <strong style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>{docsValidados} / {totalDocumentos}</strong>
           </div>
         </div>
 
         {/* Barra de Progresso Geral */}
-        <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: 'var(--raio-full)', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '10px', backgroundColor: 'var(--cor-borda-suave)', borderRadius: 'var(--raio-xs)', border: '1px solid var(--cor-borda-forte)', overflow: 'hidden' }}>
           <div
             style={{
               width: `${porcentagemEnvio}%`,
               height: '100%',
-              backgroundColor: 'var(--cor-secundaria)',
-              borderRadius: 'var(--raio-full)',
+              backgroundColor: 'var(--cor-primaria)',
               transition: 'width 0.4s ease',
             }}
           />
@@ -259,13 +258,17 @@ export function GuiaChecklistDocumentos({
           onClick={() => setFiltroStatus('todos')}
           className={`botao-filtro ${filtroStatus === 'todos' ? 'ativo' : ''}`}
           style={{
-            padding: '0.35rem 0.85rem',
-            borderRadius: 'var(--raio-full)',
-            border: filtroStatus === 'todos' ? '1px solid var(--cor-secundaria)' : '1px solid var(--cor-borda)',
-            backgroundColor: filtroStatus === 'todos' ? 'var(--cor-secundaria-suave)' : '#ffffff',
-            color: filtroStatus === 'todos' ? 'var(--cor-secundaria)' : 'var(--cor-texto-secundario)',
-            fontWeight: 600,
-            fontSize: '0.82rem',
+            padding: '0.4rem 0.85rem',
+            borderRadius: 'var(--raio-sm)',
+            border: '1px solid var(--cor-borda-forte)',
+            boxShadow: 'var(--sombra-plana-sm)',
+            backgroundColor: filtroStatus === 'todos' ? 'var(--cor-primaria)' : 'var(--cor-superficie)',
+            color: filtroStatus === 'todos' ? 'var(--cor-fundo)' : 'var(--cor-texto-principal)',
+            fontWeight: 700,
+            fontSize: '0.8rem',
+            fontFamily: 'var(--fonte-titulos)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
           }}
         >
@@ -275,13 +278,17 @@ export function GuiaChecklistDocumentos({
           type="button"
           onClick={() => setFiltroStatus('pendentes')}
           style={{
-            padding: '0.35rem 0.85rem',
-            borderRadius: 'var(--raio-full)',
-            border: filtroStatus === 'pendentes' ? '1px solid var(--cor-atencao)' : '1px solid var(--cor-borda)',
-            backgroundColor: filtroStatus === 'pendentes' ? 'var(--cor-atencao-fundo)' : '#ffffff',
-            color: filtroStatus === 'pendentes' ? 'var(--cor-atencao)' : 'var(--cor-texto-secundario)',
-            fontWeight: 600,
-            fontSize: '0.82rem',
+            padding: '0.4rem 0.85rem',
+            borderRadius: 'var(--raio-sm)',
+            border: '1px solid var(--cor-borda-forte)',
+            boxShadow: 'var(--sombra-plana-sm)',
+            backgroundColor: filtroStatus === 'pendentes' ? 'var(--cor-secundaria)' : 'var(--cor-superficie)',
+            color: 'var(--cor-texto-principal)',
+            fontWeight: 700,
+            fontSize: '0.8rem',
+            fontFamily: 'var(--fonte-titulos)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
           }}
         >
@@ -291,13 +298,17 @@ export function GuiaChecklistDocumentos({
           type="button"
           onClick={() => setFiltroStatus('obtidos')}
           style={{
-            padding: '0.35rem 0.85rem',
-            borderRadius: 'var(--raio-full)',
-            border: filtroStatus === 'obtidos' ? '1px solid var(--cor-info)' : '1px solid var(--cor-borda)',
-            backgroundColor: filtroStatus === 'obtidos' ? 'var(--cor-info-fundo)' : '#ffffff',
-            color: filtroStatus === 'obtidos' ? 'var(--cor-info)' : 'var(--cor-texto-secundario)',
-            fontWeight: 600,
-            fontSize: '0.82rem',
+            padding: '0.4rem 0.85rem',
+            borderRadius: 'var(--raio-sm)',
+            border: '1px solid var(--cor-borda-forte)',
+            boxShadow: 'var(--sombra-plana-sm)',
+            backgroundColor: filtroStatus === 'obtidos' ? 'var(--cor-secundaria)' : 'var(--cor-superficie)',
+            color: 'var(--cor-texto-principal)',
+            fontWeight: 700,
+            fontSize: '0.8rem',
+            fontFamily: 'var(--fonte-titulos)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
           }}
         >
@@ -307,13 +318,17 @@ export function GuiaChecklistDocumentos({
           type="button"
           onClick={() => setFiltroStatus('enviados')}
           style={{
-            padding: '0.35rem 0.85rem',
-            borderRadius: 'var(--raio-full)',
-            border: filtroStatus === 'enviados' ? '1px solid var(--cor-sucesso)' : '1px solid var(--cor-borda)',
-            backgroundColor: filtroStatus === 'enviados' ? 'var(--cor-sucesso-fundo)' : '#ffffff',
-            color: filtroStatus === 'enviados' ? 'var(--cor-sucesso)' : 'var(--cor-texto-secundario)',
-            fontWeight: 600,
-            fontSize: '0.82rem',
+            padding: '0.4rem 0.85rem',
+            borderRadius: 'var(--raio-sm)',
+            border: '1px solid var(--cor-borda-forte)',
+            boxShadow: 'var(--sombra-plana-sm)',
+            backgroundColor: filtroStatus === 'enviados' ? 'var(--cor-primaria)' : 'var(--cor-superficie)',
+            color: filtroStatus === 'enviados' ? 'var(--cor-fundo)' : 'var(--cor-texto-principal)',
+            fontWeight: 700,
+            fontSize: '0.8rem',
+            fontFamily: 'var(--fonte-titulos)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
           }}
         >
@@ -323,13 +338,17 @@ export function GuiaChecklistDocumentos({
           type="button"
           onClick={() => setFiltroStatus('validados')}
           style={{
-            padding: '0.35rem 0.85rem',
-            borderRadius: 'var(--raio-full)',
-            border: filtroStatus === 'validados' ? '1px solid #9333ea' : '1px solid var(--cor-borda)',
-            backgroundColor: filtroStatus === 'validados' ? '#faf5ff' : '#ffffff',
-            color: filtroStatus === 'validados' ? '#7e22ce' : 'var(--cor-texto-secundario)',
-            fontWeight: 600,
-            fontSize: '0.82rem',
+            padding: '0.4rem 0.85rem',
+            borderRadius: 'var(--raio-sm)',
+            border: '1px solid var(--cor-borda-forte)',
+            boxShadow: 'var(--sombra-plana-sm)',
+            backgroundColor: filtroStatus === 'validados' ? 'var(--cor-primaria)' : 'var(--cor-superficie)',
+            color: filtroStatus === 'validados' ? 'var(--cor-fundo)' : 'var(--cor-texto-principal)',
+            fontWeight: 700,
+            fontSize: '0.8rem',
+            fontFamily: 'var(--fonte-titulos)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
           }}
         >
@@ -339,7 +358,7 @@ export function GuiaChecklistDocumentos({
 
       {/* Lista Individualizada de Documentos */}
       {documentosFiltrados.length === 0 ? (
-        <div style={{ padding: '2rem', textAlign: 'center', backgroundColor: '#ffffff', borderRadius: 'var(--raio-md)', border: '1px solid var(--cor-borda)' }}>
+        <div style={{ padding: '2rem', textAlign: 'center', backgroundColor: 'var(--cor-superficie)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)', boxShadow: 'var(--sombra-plana-sm)' }}>
           <FileText size={36} style={{ color: 'var(--cor-texto-mutado)', margin: '0 auto 0.5rem' }} />
           <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.95rem' }}>
             Nenhum documento encontrado para o filtro selecionado.

@@ -79,49 +79,82 @@ export function PainelInicio() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      {/* Banner Principal de Boas-Vindas & ODS 10 */}
+      {/* Banner Principal de Boas-Vindas & ODS 10 — Construtivismo Editorial */}
       <div
         className="cartao"
         style={{
-          background: 'linear-gradient(135deg, var(--cor-primaria) 0%, #224364 100%)',
-          color: '#ffffff',
-          padding: '2.25rem',
+          backgroundColor: 'var(--cor-primaria)',
+          color: 'var(--cor-fundo)',
+          padding: '2.5rem 2.25rem',
           position: 'relative',
           overflow: 'hidden',
+          border: '2px solid var(--cor-borda-forte)',
+          boxShadow: 'var(--sombra-lg)',
+          borderRadius: 'var(--raio-sm)',
         }}
       >
+        {/* Detalhe geométrico de fundo editorial */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            right: '-30px',
+            bottom: '-40px',
+            width: '260px',
+            height: '260px',
+            border: '2px solid rgba(214, 184, 90, 0.2)',
+            transform: 'rotate(15deg)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            right: '80px',
+            top: '-20px',
+            width: '90px',
+            height: '90px',
+            backgroundColor: 'rgba(214, 184, 90, 0.12)',
+            pointerEvents: 'none',
+          }}
+        />
+
         <div style={{ maxWidth: '720px', position: 'relative', zIndex: 2 }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.4rem',
-              backgroundColor: 'rgba(40, 122, 114, 0.4)',
-              border: '1px solid rgba(40, 122, 114, 0.6)',
-              padding: '0.25rem 0.75rem',
-              borderRadius: 'var(--raio-full)',
+              gap: '0.45rem',
+              backgroundColor: 'var(--cor-secundaria)',
+              border: '1.5px solid var(--cor-borda-forte)',
+              padding: '0.3rem 0.85rem',
+              borderRadius: 'var(--raio-sm)',
               fontSize: '0.8rem',
-              fontWeight: 600,
-              color: '#a7f3d0',
-              marginBottom: '1rem',
+              fontWeight: 700,
+              color: 'var(--cor-texto-principal)',
+              marginBottom: '1.25rem',
+              boxShadow: '2px 2px 0px #171717',
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
             }}
           >
             <Sparkles size={14} />
             <span>ODS 10 — Redução das Desigualdades</span>
           </div>
 
-          <h1 style={{ color: '#ffffff', fontSize: '2.1rem', lineHeight: 1.2, marginBottom: '0.85rem' }}>
+          <h1 style={{ color: 'var(--cor-fundo)', fontSize: '2.3rem', lineHeight: 1.15, marginBottom: '0.95rem', letterSpacing: '-0.02em' }}>
             Do edital à oportunidade, sem se perder no caminho.
           </h1>
 
-          <p style={{ color: '#d1dfed', fontSize: '1.05rem', lineHeight: 1.5, marginBottom: '1.75rem' }}>
+          <p style={{ color: '#e4dcce', fontSize: '1.05rem', lineHeight: 1.6, marginBottom: '1.85rem' }}>
             Simplifique a leitura de editais de bolsas, auxílios e cursos. Identifique critérios de elegibilidade,
             compare com seu perfil e transforme regras burocráticas em um plano de ação prático.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.85rem' }}>
             <Link to="/editais/novo">
-              <Botao variante="primario" tamanho="lg" icone={<PlusCircle size={18} />}>
+              <Botao variante="destaque" tamanho="lg" icone={<PlusCircle size={18} />}>
                 Cadastrar ou Enviar Edital
               </Botao>
             </Link>
@@ -153,75 +186,75 @@ export function PainelInicio() {
         </div>
       </div>
 
-      {/* Indicadores / Cards Métricos */}
+      {/* Indicadores / Cards Métricos — Construtivismo Editorial */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
         <Cartao>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.88rem', color: 'var(--cor-texto-secundario)', fontWeight: 500 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+            <span className="kicker-editorial" style={{ marginBottom: 0 }}>
               Editais Cadastrados
             </span>
-            <div style={{ color: 'var(--cor-secundaria)' }}>
+            <div style={{ color: 'var(--cor-primaria)' }}>
               <FileText size={22} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--cor-primaria)' }}>
+          <div className="numero-destaque">
             {contadores?.totalEditais || 0}
           </div>
-          <Link to="/editais" style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.3rem', marginTop: '0.5rem' }}>
-            <span>Gerenciar editais</span>
-            <ArrowRight size={13} />
+          <Link to="/editais" style={{ fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '0.65rem', fontWeight: 600 }}>
+            <span>Gerenciar catálogo</span>
+            <ArrowRight size={14} />
           </Link>
         </Cartao>
 
         <Cartao>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.88rem', color: 'var(--cor-texto-secundario)', fontWeight: 500 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+            <span className="kicker-editorial" style={{ marginBottom: 0 }}>
               Análises Realizadas
             </span>
-            <div style={{ color: 'var(--cor-info)' }}>
+            <div style={{ color: 'var(--cor-secundaria-texto)' }}>
               <Sparkles size={22} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--cor-primaria)' }}>
+          <div className="numero-destaque" style={{ color: 'var(--cor-texto-principal)' }}>
             {contadores?.totalAnalises || 0}
           </div>
-          <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', display: 'block', marginTop: '0.5rem' }}>
+          <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', display: 'block', marginTop: '0.65rem' }}>
             Com critérios e evidências
           </span>
         </Cartao>
 
         <Cartao>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.88rem', color: 'var(--cor-texto-secundario)', fontWeight: 500 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+            <span className="kicker-editorial" style={{ marginBottom: 0 }}>
               Tarefas Pendentes
             </span>
             <div style={{ color: 'var(--cor-atencao)' }}>
               <CheckSquare size={22} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--cor-primaria)' }}>
+          <div className="numero-destaque" style={{ color: 'var(--cor-primaria)' }}>
             {contadores?.tarefasPendentes || 0}
           </div>
-          <Link to="/plano-de-acao" style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.3rem', marginTop: '0.5rem' }}>
+          <Link to="/plano-de-acao" style={{ fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '0.65rem', fontWeight: 600 }}>
             <span>Acompanhar checklist</span>
-            <ArrowRight size={13} />
+            <ArrowRight size={14} />
           </Link>
         </Cartao>
 
         <Cartao>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.88rem', color: 'var(--cor-texto-secundario)', fontWeight: 500 }}>
-              Prazos nos Próximos 30 Dias
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+            <span className="kicker-editorial" style={{ marginBottom: 0 }}>
+              Prazos Próximos
             </span>
             <div style={{ color: 'var(--cor-erro)' }}>
               <Clock size={22} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--cor-primaria)' }}>
+          <div className="numero-destaque" style={{ color: 'var(--cor-erro)' }}>
             {contadores?.prazosProximos || 0}
           </div>
-          <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', display: 'block', marginTop: '0.5rem' }}>
-            Inscrições e etapas ativas
+          <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', display: 'block', marginTop: '0.65rem' }}>
+            Inscrições e etapas em 30 dias
           </span>
         </Cartao>
       </div>
@@ -248,31 +281,33 @@ export function PainelInicio() {
                 <div
                   key={edital.id}
                   style={{
-                    padding: '0.85rem',
-                    border: '1px solid var(--cor-borda)',
-                    borderRadius: 'var(--raio-md)',
+                    padding: '0.95rem 1.1rem',
+                    border: '1px solid var(--cor-borda-forte)',
+                    borderRadius: 'var(--raio-sm)',
+                    backgroundColor: 'var(--cor-superficie)',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '0.4rem',
+                    gap: '0.45rem',
+                    boxShadow: '1.5px 1.5px 0px rgba(23, 23, 23, 0.15)',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
                     <Link
                       to={`/editais/${edital.id}`}
-                      style={{ fontWeight: 600, color: 'var(--cor-primaria)', fontSize: '0.95rem' }}
+                      style={{ fontWeight: 700, color: 'var(--cor-primaria)', fontSize: '1rem', letterSpacing: '-0.01em' }}
                     >
                       {edital.titulo}
                     </Link>
                     <CrachaStatus tipo="edital_status" valor={edital.status} />
                   </div>
 
-                  <p style={{ fontSize: '0.82rem', color: 'var(--cor-texto-secundario)' }}>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)', fontWeight: 500 }}>
                     {edital.instituicao || edital.categoria}
                   </p>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.35rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.4rem', borderTop: '1px solid var(--cor-borda)', paddingTop: '0.5rem' }}>
                     <CrachaPrazo dataIso={edital.prazo_inscricao} />
-                    <Link to={`/editais/${edital.id}`} style={{ fontSize: '0.82rem', fontWeight: 600 }}>
+                    <Link to={`/editais/${edital.id}`} style={{ fontSize: '0.85rem', fontWeight: 700 }}>
                       Ver detalhes →
                     </Link>
                   </div>
@@ -302,42 +337,45 @@ export function PainelInicio() {
                 <div
                   key={tarefa.id}
                   style={{
-                    padding: '0.85rem',
-                    border: '1px solid var(--cor-borda)',
-                    borderRadius: 'var(--raio-md)',
+                    padding: '0.95rem 1.1rem',
+                    border: '1px solid var(--cor-borda-forte)',
+                    borderRadius: 'var(--raio-sm)',
+                    backgroundColor: 'var(--cor-superficie)',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '0.35rem',
+                    gap: '0.45rem',
+                    boxShadow: '1.5px 1.5px 0px rgba(23, 23, 23, 0.15)',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
-                    <span style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--cor-primaria)' }}>
+                    <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--cor-texto-principal)' }}>
                       {tarefa.titulo}
                     </span>
                     <CrachaStatus tipo="prioridade" valor={tarefa.prioridade} />
                   </div>
 
                   {tarefa.edital_titulo && (
-                    <span style={{ fontSize: '0.8rem', color: 'var(--cor-texto-mutado)' }}>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', fontWeight: 500 }}>
                       {tarefa.edital_titulo}
                     </span>
                   )}
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.4rem', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.4rem', flexWrap: 'wrap', gap: '0.4rem', borderTop: '1px solid var(--cor-borda)', paddingTop: '0.5rem' }}>
                     <CrachaPrazo dataIso={tarefa.data_limite} />
                     <select
                       value={tarefa.status}
                       onChange={(e) => alterarStatusRapido(tarefa, e.target.value)}
                       aria-label="Status rápido da tarefa"
                       style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        padding: '0.15rem 0.5rem',
-                        borderRadius: 'var(--raio-full)',
-                        border: '1px solid var(--cor-borda)',
-                        backgroundColor: '#f3f4f6',
-                        color: 'var(--cor-texto-secundario)',
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        padding: '0.2rem 0.6rem',
+                        borderRadius: 'var(--raio-sm)',
+                        border: '1.5px solid var(--cor-borda-forte)',
+                        backgroundColor: 'var(--cor-fundo)',
+                        color: 'var(--cor-texto-principal)',
                         cursor: 'pointer',
+                        boxShadow: '1px 1px 0px rgba(23, 23, 23, 0.4)',
                       }}
                     >
                       <option value="pendente">⏳ Pendente</option>

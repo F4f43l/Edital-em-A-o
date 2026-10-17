@@ -36,8 +36,10 @@ export function ItemChecklist({
         display: 'flex',
         alignItems: 'flex-start',
         gap: '1rem',
-        backgroundColor: concluida ? '#f9fafb' : '#ffffff',
-        borderColor: concluida ? '#e5e7eb' : 'var(--cor-borda)',
+        backgroundColor: concluida ? 'var(--cor-fundo)' : 'var(--cor-superficie)',
+        border: '1px solid var(--cor-borda-forte)',
+        borderRadius: 'var(--raio-sm)',
+        boxShadow: 'var(--sombra-plana-sm)',
         transition: 'all 0.2s ease',
       }}
     >
@@ -50,10 +52,10 @@ export function ItemChecklist({
         style={{
           width: '24px',
           height: '24px',
-          borderRadius: '6px',
-          border: concluida ? 'none' : '2px solid var(--cor-borda-foco)',
-          backgroundColor: concluida ? 'var(--cor-secundaria)' : '#ffffff',
-          color: '#ffffff',
+          borderRadius: '2px',
+          border: '2px solid var(--cor-primaria)',
+          backgroundColor: concluida ? 'var(--cor-primaria)' : 'var(--cor-superficie)',
+          color: 'var(--cor-fundo)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -72,7 +74,8 @@ export function ItemChecklist({
           <h4
             style={{
               fontSize: '1rem',
-              fontWeight: 600,
+              fontWeight: 700,
+              fontFamily: 'var(--fonte-titulos)',
               color: concluida ? 'var(--cor-texto-mutado)' : 'var(--cor-primaria)',
               textDecoration: concluida ? 'line-through' : 'none',
               wordBreak: 'break-word',
@@ -94,9 +97,10 @@ export function ItemChecklist({
               style={{
                 fontSize: '0.78rem',
                 fontWeight: 600,
+                fontFamily: 'var(--fonte-mono)',
                 padding: '0.2rem 0.55rem',
-                borderRadius: 'var(--raio-full)',
-                border: '1px solid var(--cor-borda)',
+                borderRadius: 'var(--raio-sm)',
+                border: '1px solid var(--cor-borda-forte)',
                 backgroundColor:
                   tarefa.status === 'concluida'
                     ? 'var(--cor-sucesso-fundo)'
@@ -105,7 +109,7 @@ export function ItemChecklist({
                     : tarefa.status === 'bloqueada'
                     ? 'var(--cor-erro-fundo)'
                     : tarefa.status === 'nao_se_aplica'
-                    ? '#f3f4f6'
+                    ? 'var(--cor-borda-suave)'
                     : 'var(--cor-atencao-fundo)',
                 color:
                   tarefa.status === 'concluida'
@@ -157,7 +161,7 @@ export function ItemChecklist({
           )}
 
           {tarefa.requisito_titulo && (
-            <span style={{ color: 'var(--cor-secundaria)', fontStyle: 'italic' }}>
+            <span style={{ color: 'var(--cor-primaria)', fontWeight: 600, fontStyle: 'italic' }}>
               Requisito: {tarefa.requisito_titulo}
             </span>
           )}
@@ -169,12 +173,13 @@ export function ItemChecklist({
                 alignItems: 'center',
                 gap: '0.3rem',
                 padding: '0.2rem 0.55rem',
-                borderRadius: 'var(--raio-full)',
-                backgroundColor: '#eff6ff',
-                color: '#1d4ed8',
+                borderRadius: 'var(--raio-sm)',
+                backgroundColor: 'var(--cor-fundo)',
+                color: 'var(--cor-primaria)',
                 fontWeight: 600,
-                fontSize: '0.78rem',
-                border: '1px solid #bfdbfe',
+                fontSize: '0.76rem',
+                fontFamily: 'var(--fonte-mono)',
+                border: '1px solid var(--cor-borda-forte)',
               }}
             >
               <FileText size={12} />
@@ -195,11 +200,13 @@ export function ItemChecklist({
                 gap: '0.35rem',
                 padding: '0.35rem 0.75rem',
                 borderRadius: 'var(--raio-sm)',
-                border: '1px solid var(--cor-borda)',
-                backgroundColor: mostrarDetalhesDoc ? '#f1f5f9' : '#ffffff',
+                border: '1px solid var(--cor-borda-forte)',
+                backgroundColor: mostrarDetalhesDoc ? 'var(--cor-fundo)' : 'var(--cor-superficie)',
+                boxShadow: 'var(--sombra-plana-sm)',
                 color: 'var(--cor-primaria)',
                 fontSize: '0.8rem',
-                fontWeight: 600,
+                fontWeight: 700,
+                fontFamily: 'var(--fonte-titulos)',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease',
               }}
@@ -218,8 +225,8 @@ export function ItemChecklist({
                 style={{
                   marginTop: '0.65rem',
                   padding: '0.85rem',
-                  backgroundColor: '#f8fafc',
-                  border: '1px solid var(--cor-borda)',
+                  backgroundColor: 'var(--cor-fundo)',
+                  border: '1px solid var(--cor-borda-forte)',
                   borderRadius: 'var(--raio-sm)',
                   display: 'flex',
                   flexDirection: 'column',
@@ -247,8 +254,9 @@ export function ItemChecklist({
                             alignItems: 'center',
                             gap: '0.25rem',
                             fontSize: '0.78rem',
-                            color: 'var(--cor-secundaria)',
-                            fontWeight: 600,
+                            color: 'var(--cor-primaria)',
+                            fontWeight: 700,
+                            textDecoration: 'underline',
                           }}
                         >
                           <ExternalLink size={12} />
@@ -260,7 +268,7 @@ export function ItemChecklist({
                 )}
 
                 {tarefa.documento_instrucoes_preparacao && (
-                  <div style={{ backgroundColor: '#ffffff', padding: '0.6rem', borderRadius: 'var(--raio-sm)', border: '1px solid #e2e8f0' }}>
+                  <div style={{ backgroundColor: 'var(--cor-superficie)', padding: '0.6rem', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
                     <strong style={{ color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.15rem' }}>
                       📋 Como preparar e conferir:
                     </strong>
@@ -271,12 +279,12 @@ export function ItemChecklist({
                 )}
 
                 {tarefa.documento_como_digitalizar && (
-                  <div style={{ backgroundColor: '#eff6ff', padding: '0.6rem', borderRadius: 'var(--raio-sm)', border: '1px solid #bfdbfe' }}>
-                    <strong style={{ color: '#1d4ed8', display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.15rem' }}>
+                  <div style={{ backgroundColor: 'var(--cor-fundo)', padding: '0.6rem', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)', borderLeft: '4px solid var(--cor-secundaria)' }}>
+                    <strong style={{ color: 'var(--cor-primaria)', display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.15rem' }}>
                       <Smartphone size={14} />
                       <span>Tutorial para digitalizar no celular:</span>
                     </strong>
-                    <span style={{ color: '#1e3a8a', whiteSpace: 'pre-line', lineHeight: 1.4 }}>
+                    <span style={{ color: 'var(--cor-texto-principal)', whiteSpace: 'pre-line', lineHeight: 1.4 }}>
                       {tarefa.documento_como_digitalizar}
                     </span>
                   </div>

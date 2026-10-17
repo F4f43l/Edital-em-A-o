@@ -212,7 +212,10 @@ export function PlanoAcao() {
       {/* Cabeçalho */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.8rem', color: 'var(--cor-primaria)' }}>Plano de Ação & Checklist Operacional</h1>
+          <div className="kicker-editorial">GESTÃO OPERACIONAL DE METAS</div>
+          <h1 style={{ fontSize: '1.85rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, margin: '0.2rem 0' }}>
+            Plano de Ação & Checklist Operacional
+          </h1>
           <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.95rem' }}>
             Acompanhe prazos, documentos e etapas práticas sem perder nenhuma exigência do edital.
           </p>
@@ -231,8 +234,8 @@ export function PlanoAcao() {
         style={{
           display: 'flex',
           gap: '0.5rem',
-          borderBottom: '2px solid var(--cor-borda)',
-          paddingBottom: '0.25rem',
+          borderBottom: '2px solid var(--cor-borda-forte)',
+          paddingBottom: '0',
           flexWrap: 'wrap',
         }}
       >
@@ -244,12 +247,16 @@ export function PlanoAcao() {
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.65rem 1.25rem',
-            border: 'none',
-            borderBottom: abaPlano === 'tarefas' ? '3px solid var(--cor-secundaria)' : '3px solid transparent',
-            backgroundColor: abaPlano === 'tarefas' ? 'var(--cor-secundaria-suave)' : 'transparent',
-            color: abaPlano === 'tarefas' ? 'var(--cor-secundaria)' : 'var(--cor-texto-secundario)',
+            border: '1px solid var(--cor-borda-forte)',
+            borderBottom: abaPlano === 'tarefas' ? '2px solid var(--cor-secundaria)' : '1px solid var(--cor-borda-forte)',
+            marginBottom: '-2px',
+            backgroundColor: abaPlano === 'tarefas' ? 'var(--cor-secundaria)' : 'var(--cor-superficie)',
+            color: 'var(--cor-texto-principal)',
             fontWeight: 700,
-            fontSize: '0.95rem',
+            fontFamily: 'var(--fonte-titulos)',
+            fontSize: '0.9rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
             borderRadius: 'var(--raio-sm) var(--raio-sm) 0 0',
             transition: 'all 0.15s ease',
@@ -267,12 +274,16 @@ export function PlanoAcao() {
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.65rem 1.25rem',
-            border: 'none',
-            borderBottom: abaPlano === 'documentos' ? '3px solid var(--cor-secundaria)' : '3px solid transparent',
-            backgroundColor: abaPlano === 'documentos' ? 'var(--cor-secundaria-suave)' : 'transparent',
-            color: abaPlano === 'documentos' ? 'var(--cor-secundaria)' : 'var(--cor-texto-secundario)',
+            border: '1px solid var(--cor-borda-forte)',
+            borderBottom: abaPlano === 'documentos' ? '2px solid var(--cor-secundaria)' : '1px solid var(--cor-borda-forte)',
+            marginBottom: '-2px',
+            backgroundColor: abaPlano === 'documentos' ? 'var(--cor-secundaria)' : 'var(--cor-superficie)',
+            color: 'var(--cor-texto-principal)',
             fontWeight: 700,
-            fontSize: '0.95rem',
+            fontFamily: 'var(--fonte-titulos)',
+            fontSize: '0.9rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
             borderRadius: 'var(--raio-sm) var(--raio-sm) 0 0',
             transition: 'all 0.15s ease',
@@ -286,7 +297,7 @@ export function PlanoAcao() {
       {/* Filtro por Análise/Edital Global */}
       <Cartao>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          <label htmlFor="filtro_analise_select" style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--cor-primaria)' }}>
+          <label htmlFor="filtro_analise_select" style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
             Filtrar por Edital / Análise:
           </label>
           <select
@@ -316,22 +327,21 @@ export function PlanoAcao() {
           <Cartao>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
               <div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--cor-primaria)' }}>
+                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>
                   Progresso das Atividades: {tarefasConcluidas} de {totalTarefas} concluídas
                 </span>
               </div>
-              <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--cor-secundaria)' }}>
+              <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-mono)' }}>
                 {porcentagemConcluida}%
               </span>
             </div>
 
-            <div style={{ width: '100%', height: '10px', backgroundColor: '#e2e8f0', borderRadius: 'var(--raio-full)', overflow: 'hidden' }}>
+            <div style={{ width: '100%', height: '10px', backgroundColor: 'var(--cor-borda-suave)', borderRadius: 'var(--raio-xs)', border: '1px solid var(--cor-borda-forte)', overflow: 'hidden' }}>
               <div
                 style={{
                   width: `${porcentagemConcluida}%`,
                   height: '100%',
-                  backgroundColor: 'var(--cor-secundaria)',
-                  borderRadius: 'var(--raio-full)',
+                  backgroundColor: 'var(--cor-primaria)',
                   transition: 'width 0.4s ease-in-out',
                 }}
               />

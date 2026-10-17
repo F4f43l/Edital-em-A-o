@@ -79,15 +79,16 @@ export function PainelCustosLogistica({
       {/* Banner de Conformidade ODS 10 e Factualidade */}
       <div
         style={{
-          backgroundColor: '#f0fdf4',
-          border: '1px solid #bbf7d0',
-          borderRadius: 'var(--raio-md)',
-          padding: '0.85rem 1rem',
+          backgroundColor: 'var(--cor-primaria-suave)',
+          border: '1.5px solid var(--cor-primaria)',
+          borderRadius: 'var(--raio-sm)',
+          padding: '0.9rem 1.15rem',
           display: 'flex',
           alignItems: 'flex-start',
-          gap: '0.65rem',
-          fontSize: '0.86rem',
-          color: '#166534',
+          gap: '0.75rem',
+          fontSize: '0.88rem',
+          color: 'var(--cor-primaria)',
+          boxShadow: 'var(--sombra-sm)',
         }}
       >
         <Compass size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
@@ -109,9 +110,9 @@ export function PainelCustosLogistica({
         {/* CARD 1: Taxa de Inscrição & Pagamento */}
         <div
           style={{
-            border: '1px solid var(--cor-borda)',
-            borderRadius: 'var(--raio-md)',
-            backgroundColor: '#ffffff',
+            border: '1.5px solid var(--cor-borda-forte)',
+            borderRadius: 'var(--raio-sm)',
+            backgroundColor: 'var(--cor-superficie)',
             padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
@@ -126,8 +127,9 @@ export function PainelCustosLogistica({
                   width: '32px',
                   height: '32px',
                   borderRadius: 'var(--raio-sm)',
-                  backgroundColor: ehGratuito ? 'var(--cor-sucesso-fundo)' : '#e0f2fe',
-                  color: ehGratuito ? 'var(--cor-sucesso)' : 'var(--cor-info)',
+                  backgroundColor: ehGratuito ? 'var(--cor-sucesso-fundo)' : 'var(--cor-secundaria-suave)',
+                  color: ehGratuito ? 'var(--cor-sucesso)' : 'var(--cor-secundaria-texto)',
+                  border: '1px solid var(--cor-borda-forte)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -135,7 +137,7 @@ export function PainelCustosLogistica({
               >
                 <DollarSign size={18} />
               </div>
-              <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)' }}>Taxa de Inscrição</h3>
+              <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-texto-principal)', fontWeight: 700 }}>Taxa de Inscrição</h3>
             </div>
 
             <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
@@ -188,21 +190,22 @@ export function PainelCustosLogistica({
               {taxa.taxa_perfil_candidato && (
                 <div
                   style={{
-                    backgroundColor: '#eff6ff',
-                    border: '1px solid #bfdbfe',
+                    backgroundColor: 'var(--cor-secundaria-suave)',
+                    border: '1.5px solid var(--cor-secundaria)',
                     borderRadius: 'var(--raio-sm)',
-                    padding: '0.5rem 0.75rem',
+                    padding: '0.65rem 0.85rem',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.5rem',
+                    gap: '0.65rem',
+                    boxShadow: '2px 2px 0px #171717',
                   }}
                 >
-                  <Tag size={16} color="var(--cor-info)" />
+                  <Tag size={16} color="var(--cor-secundaria-texto)" />
                   <div>
-                    <span style={{ fontSize: '0.78rem', color: '#1e40af', display: 'block' }}>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--cor-secundaria-texto)', display: 'block', fontWeight: 600 }}>
                       Taxa aplicável ao seu perfil:
                     </span>
-                    <strong style={{ fontSize: '1.05rem', color: '#1e3a8a' }}>
+                    <strong style={{ fontSize: '1.05rem', color: 'var(--cor-texto-principal)' }}>
                       {taxa.taxa_perfil_candidato}
                     </strong>
                   </div>
@@ -304,9 +307,9 @@ export function PainelCustosLogistica({
         {/* CARD 2: Isenção de Taxa */}
         <div
           style={{
-            border: '1px solid var(--cor-borda)',
-            borderRadius: 'var(--raio-md)',
-            backgroundColor: '#ffffff',
+            border: '1.5px solid var(--cor-borda-forte)',
+            borderRadius: 'var(--raio-sm)',
+            backgroundColor: 'var(--cor-superficie)',
             padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
@@ -321,8 +324,9 @@ export function PainelCustosLogistica({
                   width: '32px',
                   height: '32px',
                   borderRadius: 'var(--raio-sm)',
-                  backgroundColor: '#fef3c7',
-                  color: 'var(--cor-atencao)',
+                  backgroundColor: 'var(--cor-secundaria-suave)',
+                  color: 'var(--cor-secundaria-texto)',
+                  border: '1px solid var(--cor-borda-forte)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -330,7 +334,7 @@ export function PainelCustosLogistica({
               >
                 <Gift size={18} />
               </div>
-              <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)' }}>Isenção de Taxa</h3>
+              <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-texto-principal)', fontWeight: 700 }}>Isenção de Taxa</h3>
             </div>
 
             <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
@@ -423,7 +427,7 @@ export function PainelCustosLogistica({
                   style={{
                     marginTop: '0.4rem',
                     padding: '0.5rem 0.65rem',
-                    backgroundColor: '#f8fafc',
+                    backgroundColor: 'var(--cor-fundo)',
                     borderRadius: 'var(--raio-sm)',
                     borderLeft: '3px solid var(--cor-secundaria)',
                     fontSize: '0.78rem',
@@ -441,9 +445,9 @@ export function PainelCustosLogistica({
         {/* CARD 3: Etapa Presencial & Local de Prova */}
         <div
           style={{
-            border: '1px solid var(--cor-borda)',
-            borderRadius: 'var(--raio-md)',
-            backgroundColor: '#ffffff',
+            border: '1.5px solid var(--cor-borda-forte)',
+            borderRadius: 'var(--raio-sm)',
+            backgroundColor: 'var(--cor-superficie)',
             padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
@@ -458,8 +462,9 @@ export function PainelCustosLogistica({
                   width: '32px',
                   height: '32px',
                   borderRadius: 'var(--raio-sm)',
-                  backgroundColor: '#ede9fe',
-                  color: '#7c3aed',
+                  backgroundColor: 'var(--cor-info-fundo)',
+                  color: 'var(--cor-info)',
+                  border: '1px solid var(--cor-borda-forte)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -467,7 +472,7 @@ export function PainelCustosLogistica({
               >
                 <MapPin size={18} />
               </div>
-              <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)' }}>Etapa / Prova</h3>
+              <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-texto-principal)', fontWeight: 700 }}>Etapa / Prova</h3>
             </div>
 
             <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
@@ -553,7 +558,7 @@ export function PainelCustosLogistica({
                 <span style={{ color: 'var(--cor-texto-mutado)', display: 'block', fontSize: '0.8rem' }}>
                   Necessidade de Deslocamento:
                 </span>
-                <span style={{ color: 'var(--cor-secundaria)', fontWeight: 500, fontSize: '0.84rem' }}>
+                <span style={{ color: 'var(--cor-secundaria-texto)', fontWeight: 600, fontSize: '0.84rem' }}>
                   {etapa.exige_deslocamento || 'Não determinado com as informações disponíveis no edital.'}
                 </span>
               </div>
@@ -563,7 +568,7 @@ export function PainelCustosLogistica({
                   style={{
                     marginTop: '0.4rem',
                     padding: '0.5rem 0.65rem',
-                    backgroundColor: '#f8fafc',
+                    backgroundColor: 'var(--cor-fundo)',
                     borderRadius: 'var(--raio-sm)',
                     borderLeft: '3px solid var(--cor-secundaria)',
                     fontSize: '0.78rem',
@@ -581,9 +586,9 @@ export function PainelCustosLogistica({
         {/* CARD 4: Outros Custos & Informações Logísticas */}
         <div
           style={{
-            border: '1px solid var(--cor-borda)',
-            borderRadius: 'var(--raio-md)',
-            backgroundColor: '#ffffff',
+            border: '1.5px solid var(--cor-borda-forte)',
+            borderRadius: 'var(--raio-sm)',
+            backgroundColor: 'var(--cor-superficie)',
             padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
@@ -598,8 +603,9 @@ export function PainelCustosLogistica({
                   width: '32px',
                   height: '32px',
                   borderRadius: 'var(--raio-sm)',
-                  backgroundColor: '#fee2e2',
-                  color: 'var(--cor-erro)',
+                  backgroundColor: 'var(--cor-superficie-destaque)',
+                  color: 'var(--cor-texto-principal)',
+                  border: '1px solid var(--cor-borda-forte)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -607,7 +613,7 @@ export function PainelCustosLogistica({
               >
                 <Building size={18} />
               </div>
-              <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)' }}>Outros Custos & Logística</h3>
+              <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-texto-principal)', fontWeight: 700 }}>Outros Custos & Logística</h3>
             </div>
           </div>
 
@@ -639,7 +645,7 @@ export function PainelCustosLogistica({
                   style={{
                     marginTop: '0.4rem',
                     padding: '0.5rem 0.65rem',
-                    backgroundColor: '#f8fafc',
+                    backgroundColor: 'var(--cor-fundo)',
                     borderRadius: 'var(--raio-sm)',
                     borderLeft: '3px solid var(--cor-secundaria)',
                     fontSize: '0.78rem',
@@ -659,10 +665,10 @@ export function PainelCustosLogistica({
       {listaTabelaTaxas.length > 0 && (
         <div
           style={{
-            border: '1px solid var(--cor-borda)',
-            borderRadius: 'var(--raio-md)',
-            backgroundColor: '#ffffff',
-            padding: '1.25rem',
+            border: '1.5px solid var(--cor-borda-forte)',
+            borderRadius: 'var(--raio-sm)',
+            backgroundColor: 'var(--cor-superficie)',
+            padding: '1.5rem',
             boxShadow: 'var(--sombra-sm)',
           }}
         >
@@ -679,7 +685,7 @@ export function PainelCustosLogistica({
             }}
           >
             <div>
-              <h4 style={{ fontSize: '1rem', color: 'var(--cor-primaria)', margin: 0 }}>
+              <h4 style={{ fontSize: '1.05rem', color: 'var(--cor-texto-principal)', fontWeight: 700, margin: 0 }}>
                 Quadro de Taxas de Inscrição por Cargo e Categoria ({listaTabelaTaxas.length} cargos)
               </h4>
               <span style={{ fontSize: '0.8rem', color: 'var(--cor-texto-mutado)' }}>
@@ -701,30 +707,32 @@ export function PainelCustosLogistica({
                 onChange={(e) => setFiltroCargo(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '0.4rem 0.65rem 0.4rem 2.1rem',
-                  fontSize: '0.84rem',
-                  border: '1px solid var(--cor-borda)',
+                  padding: '0.45rem 0.65rem 0.45rem 2.1rem',
+                  fontSize: '0.85rem',
+                  border: '1.5px solid var(--cor-borda-forte)',
                   borderRadius: 'var(--raio-sm)',
-                  backgroundColor: '#f8fafc',
+                  backgroundColor: 'var(--cor-fundo)',
+                  color: 'var(--cor-texto-principal)',
+                  boxShadow: '1px 1px 0px rgba(23, 23, 23, 0.2)',
                 }}
               />
             </div>
           </div>
 
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.86rem' }}>
+            <table className="tabela-editorial">
               <thead>
-                <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '2px solid var(--cor-borda)' }}>
-                  <th style={{ padding: '0.6rem 0.75rem', textAlign: 'left', fontWeight: 600, color: '#334155' }}>
+                <tr>
+                  <th>
                     Cargo / Função
                   </th>
-                  <th style={{ padding: '0.6rem 0.75rem', textAlign: 'left', fontWeight: 600, color: '#334155' }}>
+                  <th>
                     Escolaridade / Nível
                   </th>
-                  <th style={{ padding: '0.6rem 0.75rem', textAlign: 'right', fontWeight: 600, color: '#334155' }}>
+                  <th style={{ textAlign: 'right' }}>
                     Taxa de Inscrição
                   </th>
-                  <th style={{ padding: '0.6rem 0.75rem', textAlign: 'center', fontWeight: 600, color: '#334155' }}>
+                  <th style={{ textAlign: 'center' }}>
                     Pág. Origem
                   </th>
                 </tr>
@@ -747,22 +755,23 @@ export function PainelCustosLogistica({
                       <tr
                         key={idx}
                         style={{
-                          borderBottom: '1px solid var(--cor-borda)',
-                          backgroundColor: ehPerfilCandidato ? '#eff6ff' : idx % 2 === 0 ? '#ffffff' : '#f8fafc',
+                          backgroundColor: ehPerfilCandidato ? 'var(--cor-secundaria-suave)' : undefined,
                         }}
                       >
-                        <td style={{ padding: '0.55rem 0.75rem', fontWeight: ehPerfilCandidato ? 600 : 500, color: '#1e293b' }}>
+                        <td style={{ fontWeight: ehPerfilCandidato ? 700 : 500, color: 'var(--cor-texto-principal)' }}>
                           {item.cargo}
                         </td>
-                        <td style={{ padding: '0.55rem 0.75rem', color: '#475569' }}>
+                        <td>
                           <span
                             style={{
                               display: 'inline-block',
-                              padding: '0.15rem 0.45rem',
-                              borderRadius: '4px',
-                              backgroundColor: '#e2e8f0',
+                              padding: '0.15rem 0.5rem',
+                              borderRadius: 'var(--raio-sm)',
+                              backgroundColor: 'var(--cor-superficie-destaque)',
+                              border: '1px solid var(--cor-borda)',
                               fontSize: '0.78rem',
-                              fontWeight: 500,
+                              fontWeight: 600,
+                              color: 'var(--cor-texto-principal)',
                             }}
                           >
                             {item.nivel || 'Geral'}
@@ -770,15 +779,15 @@ export function PainelCustosLogistica({
                         </td>
                         <td
                           style={{
-                            padding: '0.55rem 0.75rem',
                             textAlign: 'right',
                             fontWeight: 700,
                             color: 'var(--cor-primaria)',
+                            fontSize: '0.92rem',
                           }}
                         >
                           {item.valor}
                         </td>
-                        <td style={{ padding: '0.55rem 0.75rem', textAlign: 'center', color: '#64748b', fontSize: '0.8rem' }}>
+                        <td style={{ textAlign: 'center', color: 'var(--cor-texto-mutado)', fontSize: '0.8rem', fontFamily: 'var(--fonte-mono)' }}>
                           {item.pagina || taxa.pagina_origem || '-'}
                         </td>
                       </tr>
@@ -790,22 +799,24 @@ export function PainelCustosLogistica({
           </div>
 
           {listaTabelaTaxas.length > 8 && !filtroCargo.trim() && (
-            <div style={{ textAlign: 'center', marginTop: '0.75rem' }}>
+            <div style={{ textAlign: 'center', marginTop: '1rem' }}>
               <button
                 type="button"
                 onClick={() => setTabelaExpandida(!tabelaExpandida)}
                 style={{
-                  background: 'none',
-                  border: '1px solid var(--cor-borda)',
+                  background: 'var(--cor-superficie)',
+                  border: '1.5px solid var(--cor-borda-forte)',
                   borderRadius: 'var(--raio-sm)',
-                  padding: '0.4rem 0.85rem',
-                  fontSize: '0.82rem',
-                  color: 'var(--cor-primaria)',
+                  padding: '0.45rem 1rem',
+                  fontSize: '0.84rem',
+                  color: 'var(--cor-texto-principal)',
                   cursor: 'pointer',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.35rem',
-                  fontWeight: 600,
+                  gap: '0.4rem',
+                  fontWeight: 700,
+                  boxShadow: '1.5px 1.5px 0px var(--cor-borda-forte)',
+                  transition: 'transform 0.1s ease',
                 }}
               >
                 {tabelaExpandida ? (

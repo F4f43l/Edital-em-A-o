@@ -35,13 +35,14 @@ export function CrachaFonte({
         display: 'inline-flex',
         alignItems: 'center',
         gap: '0.35rem',
-        padding: '0.2rem 0.6rem',
-        borderRadius: 'var(--raio-full)',
-        fontSize: '0.74rem',
-        fontWeight: 600,
+        padding: '0.22rem 0.6rem',
+        borderRadius: 'var(--raio-sm)',
+        fontSize: '0.75rem',
+        fontWeight: 700,
         backgroundColor: config.fundo,
         color: config.cor,
         border: `1px solid ${config.borda}`,
+        boxShadow: '1px 1px 0px rgba(23, 23, 23, 0.3)',
         lineHeight: 1.2,
       }}
     >

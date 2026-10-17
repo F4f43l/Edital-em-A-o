@@ -201,17 +201,18 @@ export function ResultadoAnalise() {
       <Cartao>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
           <div>
+            <div className="kicker-editorial">ANÁLISE EDITORIAL ORIENTATIVA</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.4rem' }}>
               <CrachaStatus tipo="resultado_orientativo" valor={analise.resultado_orientativo} />
               <span className="cracha cracha-neutro" style={{ fontSize: '0.78rem' }}>
                 Origem: {analise.provedor_ia === 'gemini' ? `IA Google Gemini (${analise.modelo_ia})` : 'Extração Heurística / Regras'}
               </span>
-              <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)' }}>
+              <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', fontFamily: 'var(--fonte-mono)' }}>
                 Realizada em: {formatarDataPtBr(analise.created_at)}
               </span>
             </div>
 
-            <h1 style={{ fontSize: '1.75rem', color: 'var(--cor-primaria)', marginBottom: '0.25rem' }}>
+            <h1 style={{ fontSize: '1.85rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.25rem' }}>
               Relatório de Orientação Passo a Passo
             </h1>
             <p style={{ fontSize: '1rem', color: 'var(--cor-texto-secundario)' }}>
@@ -255,8 +256,8 @@ export function ResultadoAnalise() {
 
         {/* Resumo Simples */}
         {analise.resumo && (
-          <div style={{ padding: '1rem', backgroundColor: '#f8fafc', borderRadius: 'var(--raio-md)', border: '1px solid var(--cor-borda)' }}>
-            <h4 style={{ fontSize: '0.95rem', color: 'var(--cor-primaria)', marginBottom: '0.35rem' }}>
+          <div style={{ padding: '1rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)', borderLeft: '4px solid var(--cor-secundaria)' }}>
+            <h4 style={{ fontSize: '0.95rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.35rem' }}>
               Síntese em Linguagem Simples:
             </h4>
             <p style={{ fontSize: '0.92rem', color: 'var(--cor-texto-secundario)', lineHeight: 1.6 }}>
@@ -271,8 +272,8 @@ export function ResultadoAnalise() {
         style={{
           display: 'flex',
           gap: '0.5rem',
-          borderBottom: '2px solid var(--cor-borda)',
-          paddingBottom: '0.25rem',
+          borderBottom: '2px solid var(--cor-borda-forte)',
+          paddingBottom: '0',
           flexWrap: 'wrap',
         }}
       >
@@ -284,12 +285,16 @@ export function ResultadoAnalise() {
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.65rem 1.25rem',
-            border: 'none',
-            borderBottom: abaAtiva === 'requisitos' ? '3px solid var(--cor-secundaria)' : '3px solid transparent',
-            backgroundColor: abaAtiva === 'requisitos' ? 'var(--cor-secundaria-suave)' : 'transparent',
-            color: abaAtiva === 'requisitos' ? 'var(--cor-secundaria)' : 'var(--cor-texto-secundario)',
+            border: '1px solid var(--cor-borda-forte)',
+            borderBottom: abaAtiva === 'requisitos' ? '2px solid var(--cor-secundaria)' : '1px solid var(--cor-borda-forte)',
+            marginBottom: '-2px',
+            backgroundColor: abaAtiva === 'requisitos' ? 'var(--cor-secundaria)' : 'var(--cor-superficie)',
+            color: 'var(--cor-texto-principal)',
             fontWeight: 700,
-            fontSize: '0.95rem',
+            fontFamily: 'var(--fonte-titulos)',
+            fontSize: '0.9rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
             borderRadius: 'var(--raio-sm) var(--raio-sm) 0 0',
             transition: 'all 0.15s ease',
@@ -307,12 +312,16 @@ export function ResultadoAnalise() {
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.65rem 1.25rem',
-            border: 'none',
-            borderBottom: abaAtiva === 'documentos' ? '3px solid var(--cor-secundaria)' : '3px solid transparent',
-            backgroundColor: abaAtiva === 'documentos' ? 'var(--cor-secundaria-suave)' : 'transparent',
-            color: abaAtiva === 'documentos' ? 'var(--cor-secundaria)' : 'var(--cor-texto-secundario)',
+            border: '1px solid var(--cor-borda-forte)',
+            borderBottom: abaAtiva === 'documentos' ? '2px solid var(--cor-secundaria)' : '1px solid var(--cor-borda-forte)',
+            marginBottom: '-2px',
+            backgroundColor: abaAtiva === 'documentos' ? 'var(--cor-secundaria)' : 'var(--cor-superficie)',
+            color: 'var(--cor-texto-principal)',
             fontWeight: 700,
-            fontSize: '0.95rem',
+            fontFamily: 'var(--fonte-titulos)',
+            fontSize: '0.9rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
             borderRadius: 'var(--raio-sm) var(--raio-sm) 0 0',
             transition: 'all 0.15s ease',
@@ -330,12 +339,16 @@ export function ResultadoAnalise() {
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.65rem 1.25rem',
-            border: 'none',
-            borderBottom: abaAtiva === 'custos' ? '3px solid var(--cor-secundaria)' : '3px solid transparent',
-            backgroundColor: abaAtiva === 'custos' ? 'var(--cor-secundaria-suave)' : 'transparent',
-            color: abaAtiva === 'custos' ? 'var(--cor-secundaria)' : 'var(--cor-texto-secundario)',
+            border: '1px solid var(--cor-borda-forte)',
+            borderBottom: abaAtiva === 'custos' ? '2px solid var(--cor-secundaria)' : '1px solid var(--cor-borda-forte)',
+            marginBottom: '-2px',
+            backgroundColor: abaAtiva === 'custos' ? 'var(--cor-secundaria)' : 'var(--cor-superficie)',
+            color: 'var(--cor-texto-principal)',
             fontWeight: 700,
-            fontSize: '0.95rem',
+            fontFamily: 'var(--fonte-titulos)',
+            fontSize: '0.9rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: 'pointer',
             borderRadius: 'var(--raio-sm) var(--raio-sm) 0 0',
             transition: 'all 0.15s ease',

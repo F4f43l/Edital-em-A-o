@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PlusCircle, Search, Filter, Eye, Edit, Trash2, FileText } from 'lucide-react';
 import { api } from '../servicos/api.js';
@@ -66,7 +66,10 @@ export function ListaEditais() {
       {/* Cabeçalho da Página */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.8rem', color: 'var(--cor-primaria)' }}>Catálogo de Editais</h1>
+          <div className="kicker-editorial">PORTFÓLIO DE CONVOCAÇÕES</div>
+          <h1 style={{ fontSize: '1.85rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, margin: '0.2rem 0' }}>
+            Catálogo de Editais
+          </h1>
           <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.95rem' }}>
             Consulte, cadastre e gerencie oportunidades de bolsas, auxílios e capacitações.
           </p>
@@ -141,20 +144,28 @@ export function ListaEditais() {
             <div
               key={edital.id}
               className="cartao cartao-interativo"
-              style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.85rem',
+                border: '1px solid var(--cor-borda-forte)',
+                borderRadius: 'var(--raio-sm)',
+                boxShadow: 'var(--sombra-plana-sm)',
+                backgroundColor: 'var(--cor-superficie)',
+              }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <div style={{ flex: 1, minWidth: '240px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.3rem' }}>
-                    <h3 style={{ fontSize: '1.2rem', color: 'var(--cor-primaria)' }}>
-                      <Link to={`/editais/${edital.id}`}>{edital.titulo}</Link>
+                    <h3 style={{ fontSize: '1.2rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700 }}>
+                      <Link to={`/editais/${edital.id}`} style={{ color: 'var(--cor-primaria)' }}>{edital.titulo}</Link>
                     </h3>
                     <CrachaStatus tipo="edital_status" valor={edital.status} />
                     <span className="cracha cracha-neutro">{edital.categoria}</span>
                   </div>
 
                   {edital.instituicao && (
-                    <p style={{ fontSize: '0.9rem', color: 'var(--cor-texto-secundario)', fontWeight: 500 }}>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--cor-texto-secundario)', fontWeight: 600 }}>
                       Instituição: {edital.instituicao}
                     </p>
                   )}
@@ -172,10 +183,10 @@ export function ListaEditais() {
                 </p>
               )}
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', paddingTop: '0.5rem', borderTop: '1px solid var(--cor-borda)' }}>
-                <div style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', paddingTop: '0.5rem', borderTop: '1px solid var(--cor-borda-suave)' }}>
+                <div style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', fontFamily: 'var(--fonte-mono)' }}>
                   {edital.nome_arquivo ? (
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: 'var(--cor-secundaria)' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: 'var(--cor-primaria)' }}>
                       <FileText size={14} />
                       <span>{edital.nome_arquivo}</span>
                     </span>

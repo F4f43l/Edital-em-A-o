@@ -67,20 +67,20 @@ export function CardRequisitoProcedimento({
     <div
       className="cartao"
       style={{
-        border: '1px solid var(--cor-borda)',
-        borderRadius: 'var(--raio-md)',
+        border: '1px solid var(--cor-borda-forte)',
+        borderRadius: 'var(--raio-sm)',
         padding: '1.25rem',
         display: 'flex',
         flexDirection: 'column',
         gap: '0.85rem',
-        backgroundColor: '#ffffff',
-        boxShadow: 'var(--sombra-sm)',
+        backgroundColor: 'var(--cor-superficie)',
+        boxShadow: 'var(--sombra-plana-sm)',
       }}
     >
       {/* Cabeçalho do Requisito */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <h4 style={{ fontSize: '1.1rem', color: 'var(--cor-primaria)', fontWeight: 700 }}>
+          <h4 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)', fontWeight: 700, fontFamily: 'var(--fonte-titulos)' }}>
             {requisito.titulo}
           </h4>
           <CrachaStatus tipo="criterio" valor={requisito.status_perfil} />
@@ -137,14 +137,14 @@ export function CardRequisitoProcedimento({
       {requisito.observacao_pendencia && (
         <div
           style={{
-            backgroundColor: '#fffbeb',
+            backgroundColor: 'var(--cor-alerta-fundo)',
             padding: '0.65rem 0.85rem',
             borderRadius: 'var(--raio-sm)',
-            border: '1px solid #fde68a',
+            border: '1px solid var(--cor-alerta-borda)',
             display: 'flex',
             alignItems: 'flex-start',
             gap: '0.5rem',
-            color: '#92400e',
+            color: 'var(--cor-alerta-texto)',
             fontSize: '0.84rem',
           }}
         >
@@ -159,18 +159,19 @@ export function CardRequisitoProcedimento({
       {requisito.evidencia_texto && (
         <div
           style={{
-            backgroundColor: '#f1f5f9',
+            backgroundColor: 'var(--cor-fundo)',
             padding: '0.65rem 0.85rem',
             borderRadius: 'var(--raio-sm)',
+            border: '1px solid var(--cor-borda-suave)',
             borderLeft: '4px solid var(--cor-secundaria)',
-            fontSize: '0.84rem',
-            color: '#1e293b',
+            fontSize: '0.82rem',
+            color: 'var(--cor-texto-principal)',
             fontStyle: 'italic',
           }}
         >
           <span>« {requisito.evidencia_texto} »</span>
           {requisito.pagina_origem && (
-            <span style={{ display: 'block', marginTop: '0.25rem', fontWeight: 600, fontStyle: 'normal', color: 'var(--cor-texto-mutado)', fontSize: '0.78rem' }}>
+            <span style={{ display: 'block', marginTop: '0.25rem', fontWeight: 600, fontStyle: 'normal', color: 'var(--cor-texto-mutado)', fontSize: '0.78rem', fontFamily: 'var(--fonte-mono)' }}>
               Fonte no Edital: Página {requisito.pagina_origem} {requisito.secao_edital ? `(Seção ${requisito.secao_edital})` : ''}
             </span>
           )}
@@ -179,8 +180,8 @@ export function CardRequisitoProcedimento({
 
       {/* Documentos vinculados a este requisito */}
       {documentosVinculados.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', backgroundColor: '#f9fafb', padding: '0.75rem', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda)' }}>
-          <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--cor-primaria)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', backgroundColor: 'var(--cor-fundo)', padding: '0.75rem', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
             Documentos Comprobatórios deste Requisito ({documentosVinculados.length}):
           </span>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
@@ -195,9 +196,10 @@ export function CardRequisitoProcedimento({
                   gap: '0.35rem',
                   padding: '0.3rem 0.65rem',
                   borderRadius: 'var(--raio-sm)',
-                  border: '1px solid var(--cor-borda-foco)',
-                  backgroundColor: '#ffffff',
-                  color: 'var(--cor-secundaria)',
+                  border: '1px solid var(--cor-borda-forte)',
+                  backgroundColor: 'var(--cor-superficie)',
+                  boxShadow: 'var(--sombra-plana-sm)',
+                  color: 'var(--cor-primaria)',
                   fontSize: '0.78rem',
                   fontWeight: 600,
                   cursor: aoSelecionarDocumento ? 'pointer' : 'default',
@@ -212,7 +214,7 @@ export function CardRequisitoProcedimento({
       )}
 
       {/* Botão de Expandir / Recolher o Procedimento Completo de 16 Pontos */}
-      <div style={{ borderTop: '1px solid var(--cor-borda)', paddingTop: '0.65rem' }}>
+      <div style={{ borderTop: '1px solid var(--cor-borda-suave)', paddingTop: '0.65rem' }}>
         <button
           type="button"
           onClick={() => setExpandido(!expandido)}
@@ -222,11 +224,12 @@ export function CardRequisitoProcedimento({
             gap: '0.4rem',
             background: 'none',
             border: 'none',
-            color: 'var(--cor-secundaria)',
-            fontWeight: 600,
+            color: 'var(--cor-primaria)',
+            fontWeight: 700,
             fontSize: '0.85rem',
             cursor: 'pointer',
             padding: '0.2rem 0',
+            fontFamily: 'var(--fonte-titulos)',
           }}
         >
           {expandido ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -242,10 +245,10 @@ export function CardRequisitoProcedimento({
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
               gap: '0.75rem',
-              backgroundColor: '#f8fafc',
+              backgroundColor: 'var(--cor-fundo)',
               padding: '1rem',
               borderRadius: 'var(--raio-sm)',
-              border: '1px solid var(--cor-borda)',
+              border: '1px solid var(--cor-borda-forte)',
             }}
           >
             {itensProcedimento.map((item) => (
@@ -258,12 +261,12 @@ export function CardRequisitoProcedimento({
                   fontSize: '0.82rem',
                 }}
               >
-                <span style={{ fontWeight: 700, color: 'var(--cor-primaria)' }}>
-                  {item.numero}. {item.rotulo}:
+                <span style={{ fontWeight: 700, color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-mono)' }}>
+                  [{String(item.numero).padStart(2, '0')}] {item.rotulo}:
                 </span>
                 <span
                   style={{
-                    color: item.valor ? 'var(--cor-texto-secundario)' : 'var(--cor-texto-mutado)',
+                    color: item.valor ? 'var(--cor-texto-principal)' : 'var(--cor-texto-mutado)',
                     fontStyle: item.valor ? 'normal' : 'italic',
                     lineHeight: 1.45,
                   }}

@@ -1,83 +1,121 @@
 /* ==========================================================================
-   EDITAL EM AÇÃO - SISTEMA DE DESIGN & ESTILOS GLOBAIS
-   Paleta: Azul-Marinho (#18324B), Verde-Petróleo (#287A72), Fundo Claro (#F4F6F8)
+   EDITAL EM AÇÃO — CONSTRUTIVISMO EDITORIAL
+   Identidade Visual: Construtivismo Russo Contemporâneo & Design Editorial Modernista
+   Paleta: Verde-Floresta (#244C3A), Creme/Papel (#F3EBDD), Preto Suave (#171717), Amarelo Envelhecido (#D6B85A)
    ========================================================================== */
 
 :root {
-  --cor-primaria: #18324b;
-  --cor-primaria-hover: #102336;
-  --cor-secundaria: #287a72;
-  --cor-secundaria-hover: #1e5e57;
-  --cor-secundaria-suave: #e6f3f2;
-  --cor-fundo: #f4f6f8;
-  --cor-superficie: #ffffff;
-  --cor-superficie-hover: #f9fafb;
+  /* Cores Principais do Construtivismo Editorial */
+  --cor-primaria: #244c3a;               /* Verde-floresta */
+  --cor-primaria-hover: #1b3b2d;
+  --cor-primaria-escura: #132a20;
+  --cor-primaria-suave: #ebf2ed;
   
-  --cor-texto-principal: #111827;
-  --cor-texto-secundario: #4b5563;
-  --cor-texto-mutado: #6b7280;
-  --cor-borda: #e5e7eb;
-  --cor-borda-foco: #287a72;
+  --cor-secundaria: #d6b85a;             /* Amarelo envelhecido / Ocre */
+  --cor-secundaria-hover: #c4a447;
+  --cor-secundaria-suave: #faf4e2;
+  --cor-secundaria-texto: #7d5f10;
+  
+  --cor-fundo: #f3ebdd;                  /* Creme / papel editorial */
+  --cor-superficie: #faf6ee;             /* Superfície de papel mais claro para cards/campos */
+  --cor-superficie-hover: #f4ede1;
+  --cor-superficie-destaque: #f0e6d5;
+  
+  --cor-texto-principal: #171717;        /* Preto suave para títulos, contornos e leitura */
+  --cor-texto-secundario: #383838;       /* Carvão escuro para parágrafos */
+  --cor-texto-mutado: #686258;           /* Neutro quente para dados auxiliares */
+  
+  --cor-borda: #d8cfbf;                  /* Linha de grade editorial suave */
+  --cor-borda-forte: #171717;            /* Contorno estrutural construtivista */
+  --cor-borda-foco: #244c3a;             /* Realce de foco em verde-floresta */
 
-  --cor-sucesso: #059669;
-  --cor-sucesso-fundo: #ecfdf5;
-  --cor-sucesso-borda: #a7f3d0;
+  /* Cores de Estado e Feedback (alinhadas à paleta, sem vermelho na identidade) */
+  --cor-sucesso: #244c3a;
+  --cor-sucesso-fundo: #ebf2ed;
+  --cor-sucesso-borda: #244c3a;
 
-  --cor-atencao: #d97706;
-  --cor-atencao-fundo: #fffbeb;
-  --cor-atencao-borda: #fde68a;
+  --cor-atencao: #7d5f10;
+  --cor-atencao-fundo: #faf4e2;
+  --cor-atencao-borda: #d6b85a;
 
-  --cor-erro: #dc2626;
-  --cor-erro-fundo: #fef2f2;
-  --cor-erro-borda: #fecaca;
+  --cor-erro: #b91c1c;                   /* Vermelho escuro funcional apenas para erros/exclusões */
+  --cor-erro-fundo: #fdf2f2;
+  --cor-erro-borda: #fca5a5;
 
-  --cor-info: #0284c7;
-  --cor-info-fundo: #f0f9ff;
-  --cor-info-borda: #bae6fd;
+  --cor-info: #1e4856;                   /* Azul-ardósia/petróleo para dados informativos neutros */
+  --cor-info-fundo: #edf4f6;
+  --cor-info-borda: #789fa8;
 
-  --sombra-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --sombra-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-  --sombra-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  /* Sombras Construtivistas — Carimbo Plano / Drop Stamp sem desfoque difuso */
+  --sombra-sm: 2px 2px 0px rgba(23, 23, 23, 0.85);
+  --sombra-md: 3px 3px 0px rgba(23, 23, 23, 0.95);
+  --sombra-lg: 4px 4px 0px #171717;
+  --sombra-flutuante: 5px 5px 0px #244c3a;
 
-  --raio-sm: 6px;
-  --raio-md: 10px;
-  --raio-lg: 14px;
+  /* Raios de Borda — Geometria architectural precisa, sem bolhas exageradas */
+  --raio-sm: 2px;
+  --raio-md: 3px;
+  --raio-lg: 4px;
   --raio-full: 9999px;
 
-  --fonte-titulos: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Tipografia Editorial */
+  --fonte-titulos: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --fonte-corpo: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fonte-mono: 'Space Mono', monospace;
 }
 
+/* ==========================================================================
+   RESET & BASE ESTRUTURAL
+   ========================================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  background-color: var(--cor-fundo);
+  color-scheme: light;
+}
+
 body {
   font-family: var(--fonte-corpo);
   background-color: var(--cor-fundo);
   color: var(--cor-texto-principal);
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  /* Textura de papel editorial sutil via micropadrão geométrico suave */
+  background-image: radial-gradient(var(--cor-borda) 0.65px, transparent 0.65px);
+  background-size: 24px 24px;
+  background-position: 0 0;
 }
 
+/* Tipografia */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--fonte-titulos);
-  color: var(--cor-primaria);
+  color: var(--cor-texto-principal);
   font-weight: 700;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+p {
+  color: var(--cor-texto-secundario);
 }
 
 a {
-  color: var(--cor-secundaria);
+  color: var(--cor-primaria);
   text-decoration: none;
-  transition: color 0.15s ease;
+  font-weight: 500;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
 }
 
 a:hover {
-  color: var(--cor-secundaria-hover);
+  color: var(--cor-primaria-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 button, input, select, textarea {
@@ -85,7 +123,15 @@ button, input, select, textarea {
   font-size: inherit;
 }
 
-/* Layout Geral */
+/* Foco Visível para Acessibilidade */
+:focus-visible {
+  outline: 2px solid var(--cor-borda-foco);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   LAYOUT GERAL
+   ========================================================================== */
 .conteiner-aplicacao {
   display: flex;
   flex-direction: column;
@@ -94,24 +140,27 @@ button, input, select, textarea {
 
 .conteudo-principal {
   flex: 1;
-  max-width: 1200px;
+  max-width: 1220px;
   width: 100%;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 2.25rem 1.5rem;
 }
 
-/* Barra de Navegação */
+/* ==========================================================================
+   BARRA DE NAVEGAÇÃO EDITORIAL CONSTRUTIVISTA
+   ========================================================================== */
 .barra-navegacao {
   background-color: var(--cor-primaria);
-  color: #ffffff;
+  color: var(--cor-fundo);
   position: sticky;
   top: 0;
   z-index: 50;
-  box-shadow: var(--sombra-md);
+  border-bottom: 2px solid var(--cor-borda-forte);
+  box-shadow: 0 2px 0px rgba(23, 23, 23, 0.2);
 }
 
 .navegacao-conteudo {
-  max-width: 1200px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0.85rem 1.5rem;
   display: flex;
@@ -122,21 +171,30 @@ button, input, select, textarea {
 .logo-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
   color: #ffffff;
   text-decoration: none;
+  transition: opacity 0.15s ease;
 }
 
+.logo-link:hover {
+  text-decoration: none;
+  opacity: 0.95;
+}
+
+/* Emblema Construtivista do Logo: Forma geométrica sólida com detalhe em ocre */
 .logo-icone {
-  background: linear-gradient(135deg, var(--cor-secundaria) 0%, #3ba99f 100%);
+  background-color: var(--cor-secundaria);
+  color: var(--cor-borda-forte);
   width: 38px;
   height: 38px;
-  border-radius: var(--raio-md);
+  border: 1.5px solid var(--cor-borda-forte);
+  border-radius: var(--raio-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(40, 122, 114, 0.4);
+  box-shadow: 2px 2px 0px #171717;
+  flex-shrink: 0;
 }
 
 .logo-texto {
@@ -145,178 +203,230 @@ button, input, select, textarea {
 }
 
 .logo-titulo {
-  font-size: 1.25rem;
+  font-family: var(--fonte-titulos);
+  font-size: 1.3rem;
   font-weight: 700;
   line-height: 1.1;
-  color: #ffffff;
+  letter-spacing: -0.02em;
+  color: var(--cor-fundo);
+  text-transform: uppercase;
 }
 
 .logo-subtitulo {
   font-size: 0.72rem;
-  color: #9cb5cb;
-  letter-spacing: 0.02em;
+  color: var(--cor-secundaria);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .links-navegacao {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   list-style: none;
 }
 
 .item-navegacao a {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  color: #d1dfed;
+  gap: 0.45rem;
+  color: var(--cor-fundo);
   padding: 0.5rem 0.85rem;
+  border: 1px solid transparent;
   border-radius: var(--raio-sm);
-  font-size: 0.92rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 0.15s ease;
 }
 
 .item-navegacao a:hover {
   color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(243, 235, 221, 0.12);
+  text-decoration: none;
+  border-color: rgba(243, 235, 221, 0.25);
 }
 
+/* Item Ativo: Destaque geométrico em Amarelo Envelhecido com texto preto */
 .item-navegacao a.ativo {
-  color: #ffffff;
+  color: var(--cor-texto-principal);
   background-color: var(--cor-secundaria);
-  font-weight: 600;
+  border: 1.5px solid var(--cor-borda-forte);
+  box-shadow: 2px 2px 0px #171717;
+  font-weight: 700;
 }
 
-/* Cartões (Cards) */
+/* ==========================================================================
+   CARTÕES & SUPERFÍCIES EDITORIAIS
+   ========================================================================== */
 .cartao {
   background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-lg);
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-sm);
   padding: 1.5rem;
   box-shadow: var(--sombra-sm);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cartao-interativo {
+  cursor: pointer;
 }
 
 .cartao-interativo:hover {
   box-shadow: var(--sombra-md);
-  border-color: #cbd5e1;
+  transform: translate(-1px, -1px);
+  border-color: var(--cor-borda-forte);
 }
 
-/* Botões */
+/* ==========================================================================
+   BOTÕES CONSTRUTIVISTAS
+   ========================================================================== */
 .botao {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  border-radius: var(--raio-md);
-  font-weight: 600;
+  padding: 0.62rem 1.25rem;
+  border-radius: var(--raio-sm);
+  font-family: var(--fonte-titulos);
+  font-weight: 700;
   font-size: 0.92rem;
-  border: 1px solid transparent;
+  letter-spacing: -0.01em;
+  border: 1.5px solid var(--cor-borda-forte);
   cursor: pointer;
-  transition: all 0.15s ease-in-out;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
   text-decoration: none;
+  box-shadow: var(--sombra-sm);
+}
+
+.botao:hover:not(:disabled) {
+  text-decoration: none;
+  transform: translate(-1px, -1px);
+  box-shadow: var(--sombra-md);
+}
+
+.botao:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--cor-borda-forte);
 }
 
 .botao:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
+/* Primário: Verde-floresta com texto creme de alto contraste */
 .botao-primario {
-  background-color: var(--cor-secundaria);
-  color: #ffffff;
+  background-color: var(--cor-primaria);
+  color: var(--cor-fundo);
 }
 
 .botao-primario:hover:not(:disabled) {
-  background-color: var(--cor-secundaria-hover);
+  background-color: var(--cor-primaria-hover);
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(40, 122, 114, 0.3);
 }
 
+/* Secundário: Superfície creme de papel com contorno nítido */
 .botao-secundario {
-  background-color: #ffffff;
-  color: var(--cor-primaria);
-  border-color: var(--cor-borda);
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto-principal);
 }
 
 .botao-secundario:hover:not(:disabled) {
-  background-color: #f8fafc;
-  border-color: #cbd5e1;
+  background-color: var(--cor-superficie-hover);
+  color: var(--cor-texto-principal);
 }
 
+/* Destaque: Amarelo envelhecido com texto preto */
+.botao-destaque {
+  background-color: var(--cor-secundaria);
+  color: var(--cor-texto-principal);
+}
+
+.botao-destaque:hover:not(:disabled) {
+  background-color: var(--cor-secundaria-hover);
+  color: var(--cor-texto-principal);
+}
+
+/* Perigo: Vermelho escuro contido exclusivamente para ações destrutivas */
 .botao-perigo {
   background-color: var(--cor-erro);
   color: #ffffff;
 }
 
 .botao-perigo:hover:not(:disabled) {
-  background-color: #b91c1c;
-}
-
-.botao-destaque {
-  background-color: var(--cor-primaria);
+  background-color: #991b1b;
   color: #ffffff;
-}
-
-.botao-destaque:hover:not(:disabled) {
-  background-color: var(--cor-primaria-hover);
 }
 
 .botao-sm {
   padding: 0.35rem 0.75rem;
   font-size: 0.82rem;
-  border-radius: var(--raio-sm);
+  border-width: 1px;
+  box-shadow: 1.5px 1.5px 0px var(--cor-borda-forte);
 }
 
 .botao-lg {
   padding: 0.85rem 1.75rem;
   font-size: 1.05rem;
+  border-width: 2px;
+  box-shadow: var(--sombra-md);
 }
 
-/* Crachás e Badges de Status */
+/* ==========================================================================
+   CRACHÁS E BADGES DE STATUS
+   ========================================================================== */
 .cracha {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: var(--raio-full);
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--raio-sm);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   white-space: nowrap;
+  border: 1px solid var(--cor-borda-forte);
+  box-shadow: 1px 1px 0px rgba(23, 23, 23, 0.4);
 }
 
 .cracha-sucesso {
   background-color: var(--cor-sucesso-fundo);
   color: var(--cor-sucesso);
-  border: 1px solid var(--cor-sucesso-borda);
+  border-color: var(--cor-sucesso-borda);
 }
 
 .cracha-atencao {
   background-color: var(--cor-atencao-fundo);
   color: var(--cor-atencao);
-  border: 1px solid var(--cor-atencao-borda);
+  border-color: var(--cor-atencao-borda);
 }
 
 .cracha-perigo {
   background-color: var(--cor-erro-fundo);
   color: var(--cor-erro);
-  border: 1px solid var(--cor-erro-borda);
+  border-color: var(--cor-erro-borda);
 }
 
 .cracha-info {
   background-color: var(--cor-info-fundo);
   color: var(--cor-info);
-  border: 1px solid var(--cor-info-borda);
+  border-color: var(--cor-info-borda);
 }
 
 .cracha-neutro {
-  background-color: #f3f4f6;
-  color: #4b5563;
-  border: 1px solid #e5e7eb;
+  background-color: var(--cor-superficie-destaque);
+  color: var(--cor-texto-principal);
+  border-color: var(--cor-borda);
 }
 
-/* Formulários */
+/* ==========================================================================
+   FORMULÁRIOS & CAMPOS
+   ========================================================================== */
 .grupo-campo {
   margin-bottom: 1.25rem;
   display: flex;
@@ -325,13 +435,15 @@ button, input, select, textarea {
 }
 
 .rotulo-campo {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--cor-primaria);
+  font-family: var(--fonte-titulos);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--cor-texto-principal);
+  letter-spacing: -0.01em;
 }
 
 .dica-campo {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--cor-texto-mutado);
 }
 
@@ -339,33 +451,38 @@ button, input, select, textarea {
 .entrada-selecao,
 .entrada-area-texto {
   width: 100%;
-  padding: 0.65rem 0.85rem;
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-md);
-  background-color: #ffffff;
+  padding: 0.68rem 0.9rem;
+  border: 1.5px solid var(--cor-borda-forte);
+  border-radius: var(--raio-sm);
+  background-color: var(--cor-superficie);
   color: var(--cor-texto-principal);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-size: 0.92rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-shadow: 1.5px 1.5px 0px rgba(23, 23, 23, 0.15);
 }
 
 .entrada-texto:focus,
 .entrada-selecao:focus,
 .entrada-area-texto:focus {
   outline: none;
-  border-color: var(--cor-secundaria);
-  box-shadow: 0 0 0 3px rgba(40, 122, 114, 0.15);
+  border-color: var(--cor-primaria);
+  background-color: #ffffff;
+  box-shadow: 2px 2px 0px var(--cor-secundaria);
 }
 
 .entrada-area-texto {
-  min-height: 100px;
+  min-height: 105px;
   resize: vertical;
 }
 
-/* Modais */
+/* ==========================================================================
+   MODAIS
+   ========================================================================== */
 .sobreposicao-modal {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
+  background-color: rgba(23, 23, 23, 0.75);
+  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -376,12 +493,12 @@ button, input, select, textarea {
 
 .conteudo-modal {
   background-color: var(--cor-superficie);
-  border-radius: var(--raio-lg);
-  max-width: 520px;
+  border-radius: var(--raio-sm);
+  max-width: 540px;
   width: 100%;
-  padding: 1.75rem;
+  padding: 2rem;
   box-shadow: var(--sombra-lg);
-  border: 1px solid var(--cor-borda);
+  border: 2px solid var(--cor-borda-forte);
   animation: scaleUp 0.15s ease-out;
 }
 
@@ -389,44 +506,52 @@ button, input, select, textarea {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
+  border-top: 1px solid var(--cor-borda);
+  padding-top: 1.25rem;
 }
 
-/* Alertas e Banners */
+/* ==========================================================================
+   ALERTAS E BANNERS ESTRUTURAIS
+   ========================================================================== */
 .alerta {
   padding: 1rem 1.25rem;
-  border-radius: var(--raio-md);
+  border-radius: var(--raio-sm);
+  border: 1.5px solid var(--cor-borda-forte);
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.85rem;
   margin-bottom: 1.25rem;
+  box-shadow: var(--sombra-sm);
 }
 
 .alerta-info {
   background-color: var(--cor-info-fundo);
-  border: 1px solid var(--cor-info-borda);
-  color: #0369a1;
+  border-color: var(--cor-info-borda);
+  color: var(--cor-info);
 }
 
 .alerta-atencao {
   background-color: var(--cor-atencao-fundo);
-  border: 1px solid var(--cor-atencao-borda);
-  color: #b45309;
+  border-color: var(--cor-atencao-borda);
+  color: var(--cor-atencao);
 }
 
 .alerta-sucesso {
   background-color: var(--cor-sucesso-fundo);
-  border: 1px solid var(--cor-sucesso-borda);
-  color: #047857;
+  border-color: var(--cor-sucesso-borda);
+  color: var(--cor-sucesso);
 }
 
 .alerta-erro {
   background-color: var(--cor-erro-fundo);
-  border: 1px solid var(--cor-erro-borda);
-  color: #b91c1c;
+  border-color: var(--cor-erro-borda);
+  color: var(--cor-erro);
 }
 
-/* Estados de Carregamento e Vazio */
+/* ==========================================================================
+   ESTADOS DE CARREGAMENTO E VAZIO
+   ========================================================================== */
 .estado-container {
   display: flex;
   flex-direction: column;
@@ -438,21 +563,111 @@ button, input, select, textarea {
 
 .icone-girando {
   animation: girar 1s linear infinite;
-  color: var(--cor-secundaria);
+  color: var(--cor-primaria);
 }
 
-/* Rodapé */
+/* ==========================================================================
+   RODAPÉ EDITORIAL
+   ========================================================================== */
 .rodape {
-  background-color: #ffffff;
-  border-top: 1px solid var(--cor-borda);
-  padding: 1.5rem;
+  background-color: var(--cor-superficie);
+  border-top: 2px solid var(--cor-borda-forte);
+  padding: 1.75rem 1.5rem;
   margin-top: auto;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--cor-texto-secundario);
 }
 
-/* Animações */
+/* ==========================================================================
+   ELEMENTOS DE IDENTIDADE & RECURSOS CONSTRUTIVISTAS
+   ========================================================================== */
+
+/* Marcador Geométrico para Títulos e Seções */
+.kicker-editorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--fonte-titulos);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cor-primaria);
+  margin-bottom: 0.4rem;
+}
+
+.kicker-editorial::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--cor-secundaria);
+  border: 1px solid var(--cor-borda-forte);
+}
+
+/* Linha Divisória Estrutural */
+.divisor-editorial {
+  height: 1px;
+  background-color: var(--cor-borda);
+  border: none;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.divisor-editorial::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 32px;
+  height: 3px;
+  background-color: var(--cor-primaria);
+}
+
+/* Indicador de Número Construtivista (para métricas e etapas) */
+.numero-destaque {
+  font-family: var(--fonte-titulos);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cor-primaria);
+  letter-spacing: -0.04em;
+}
+
+/* Tabelas Editoriais */
+.tabela-editorial {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabela-editorial th {
+  background-color: var(--cor-superficie-destaque);
+  color: var(--cor-texto-principal);
+  font-family: var(--fonte-titulos);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  padding: 0.75rem 0.9rem;
+  text-align: left;
+  border-bottom: 2px solid var(--cor-borda-forte);
+}
+
+.tabela-editorial td {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid var(--cor-borda);
+  color: var(--cor-texto-secundario);
+}
+
+.tabela-editorial tr:hover td {
+  background-color: var(--cor-superficie-hover);
+}
+
+/* ==========================================================================
+   ANIMAÇÕES
+   ========================================================================== */
 @keyframes girar {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -464,26 +679,48 @@ button, input, select, textarea {
 }
 
 @keyframes scaleUp {
-  from { transform: scale(0.95); opacity: 0; }
+  from { transform: scale(0.97); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Responsividade Mobile */
+/* Respeito a Movimento Reduzido (Acessibilidade) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (MOBILE & TABLET)
+   ========================================================================== */
 @media (max-width: 768px) {
   .navegacao-conteudo {
     flex-direction: column;
     gap: 0.85rem;
     padding: 0.75rem 1rem;
+    align-items: flex-start;
   }
 
   .links-navegacao {
     width: 100%;
     overflow-x: auto;
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.35rem;
     justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
   }
 
   .conteudo-principal {
     padding: 1.25rem 1rem;
+  }
+  
+  .cartao {
+    padding: 1.15rem;
+  }
+  
+  .numero-destaque {
+    font-size: 2rem;
   }
 }

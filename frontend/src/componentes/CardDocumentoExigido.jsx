@@ -134,20 +134,20 @@ export function CardDocumentoExigido({
     <div
       className="cartao"
       style={{
-        border: `1px solid ${statusConfig.borda || 'var(--cor-borda)'}`,
-        backgroundColor: '#ffffff',
-        borderRadius: 'var(--raio-md)',
-        padding: '1.25rem',
+        border: `1.5px solid ${statusConfig.borda || 'var(--cor-borda-forte)'}`,
+        backgroundColor: 'var(--cor-superficie)',
+        borderRadius: 'var(--raio-sm)',
+        padding: '1.35rem',
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
         boxShadow: 'var(--sombra-sm)',
-        transition: 'all 0.2s ease',
+        transition: 'all 0.15s ease',
       }}
     >
       {/* Cabeçalho do Documento */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.75rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
           <div
             style={{
               width: '36px',
@@ -155,17 +155,19 @@ export function CardDocumentoExigido({
               borderRadius: 'var(--raio-sm)',
               backgroundColor: statusConfig.fundo,
               color: statusConfig.cor,
+              border: `1px solid ${statusConfig.borda || 'var(--cor-borda-forte)'}`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
+              boxShadow: '1px 1px 0px rgba(23, 23, 23, 0.3)',
             }}
           >
             <FileText size={20} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-              <h3 style={{ fontSize: '1.15rem', color: 'var(--cor-primaria)', fontWeight: 700 }}>
+              <h3 style={{ fontSize: '1.2rem', color: 'var(--cor-texto-principal)', fontWeight: 700, letterSpacing: '-0.02em' }}>
                 {documento.nome_simples || documento.nome}
               </h3>
               {documento.nome_simples && documento.nome_simples !== documento.nome && (
@@ -182,7 +184,7 @@ export function CardDocumentoExigido({
               />
             </div>
             {requisitoVinculado && (
-              <p style={{ fontSize: '0.8rem', color: 'var(--cor-texto-mutado)', marginTop: '0.15rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <p style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', marginTop: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                 <Link2 size={13} />
                 <span>Comprova o requisito: <strong>{requisitoVinculado.titulo}</strong></span>
               </p>
@@ -225,12 +227,12 @@ export function CardDocumentoExigido({
           padding: '0.75rem 1rem',
           backgroundColor: statusConfig.fundo,
           borderRadius: 'var(--raio-sm)',
-          border: `1px solid ${statusConfig.borda}`,
+          border: `1.5px solid ${statusConfig.borda}`,
           gap: '0.75rem',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: statusConfig.cor }}>
+          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: statusConfig.cor }}>
             Status da Etapa do Documento:
           </span>
           <select
@@ -239,13 +241,14 @@ export function CardDocumentoExigido({
             disabled={bloqueado || salvandoStatus}
             style={{
               fontSize: '0.82rem',
-              fontWeight: 600,
+              fontWeight: 700,
               padding: '0.3rem 0.65rem',
-              borderRadius: 'var(--raio-full)',
-              border: `1px solid ${statusConfig.borda}`,
-              backgroundColor: '#ffffff',
+              borderRadius: 'var(--raio-sm)',
+              border: `1.5px solid ${statusConfig.borda}`,
+              backgroundColor: 'var(--cor-superficie)',
               color: statusConfig.cor,
               cursor: 'pointer',
+              boxShadow: '1px 1px 0px rgba(23, 23, 23, 0.3)',
             }}
           >
             {Object.entries(ROTULOS_STATUS_ETAPA_DOCUMENTO).map(([chave, info]) => (
@@ -275,17 +278,17 @@ export function CardDocumentoExigido({
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '0.85rem',
-          backgroundColor: '#f8fafc',
-          padding: '1rem',
+          backgroundColor: 'var(--cor-fundo)',
+          padding: '1.1rem',
           borderRadius: 'var(--raio-sm)',
-          border: '1px solid var(--cor-borda)',
+          border: '1px solid var(--cor-borda-forte)',
           fontSize: '0.86rem',
         }}
       >
         {/* 1. Por que é necessário */}
         {documento.finalidade && (
           <div>
-            <span style={{ fontWeight: 600, color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.2rem' }}>
+            <span style={{ fontWeight: 700, color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.2rem' }}>
               Finalidade / Por que é necessário:
             </span>
             <span style={{ color: 'var(--cor-texto-secundario)' }}>{documento.finalidade}</span>
@@ -295,7 +298,7 @@ export function CardDocumentoExigido({
         {/* 2. Quem deve fornecer e órgão emissor */}
         {(documento.quem_fornece || documento.orgao_emissor) && (
           <div>
-            <span style={{ fontWeight: 600, color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.2rem' }}>
+            <span style={{ fontWeight: 700, color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.2rem' }}>
               Quem fornece / Órgão emissor:
             </span>
             <span style={{ color: 'var(--cor-texto-secundario)' }}>
@@ -309,7 +312,7 @@ export function CardDocumentoExigido({
         {/* 3. Como obter */}
         {documento.como_obter && (
           <div style={{ gridColumn: '1 / -1' }}>
-            <span style={{ fontWeight: 600, color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.2rem' }}>
+            <span style={{ fontWeight: 700, color: 'var(--cor-primaria)', display: 'block', marginBottom: '0.2rem' }}>
               Procedimento para obtenção:
             </span>
             <span style={{ color: 'var(--cor-texto-secundario)', lineHeight: 1.5 }}>{documento.como_obter}</span>
@@ -317,7 +320,7 @@ export function CardDocumentoExigido({
               <div
                 style={{
                   marginTop: '0.5rem',
-                  backgroundColor: '#f8fafc',
+                  backgroundColor: 'var(--cor-superficie)',
                   padding: '0.5rem 0.75rem',
                   borderRadius: 'var(--raio-sm)',
                   border: '1px solid var(--cor-borda)',
@@ -333,11 +336,11 @@ export function CardDocumentoExigido({
 
         {/* 4. Documentos alternativos aceitos */}
         {documento.documentos_alternativos && (
-          <div style={{ gridColumn: '1 / -1', backgroundColor: '#eff6ff', padding: '0.65rem', borderRadius: 'var(--raio-sm)', border: '1px solid #bfdbfe' }}>
-            <span style={{ fontWeight: 600, color: '#1e40af', display: 'block', marginBottom: '0.2rem' }}>
+          <div style={{ gridColumn: '1 / -1', backgroundColor: 'var(--cor-secundaria-suave)', padding: '0.65rem', borderRadius: 'var(--raio-sm)', border: '1.5px solid var(--cor-secundaria)' }}>
+            <span style={{ fontWeight: 700, color: 'var(--cor-secundaria-texto)', display: 'block', marginBottom: '0.2rem' }}>
               Alternativas aceitas pelo edital:
             </span>
-            <span style={{ color: '#1e3a8a', fontSize: '0.84rem' }}>{documento.documentos_alternativos}</span>
+            <span style={{ color: 'var(--cor-texto-principal)', fontSize: '0.84rem' }}>{documento.documentos_alternativos}</span>
           </div>
         )}
 
@@ -578,22 +581,21 @@ export function CardDocumentoExigido({
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
-          <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--cor-primaria)' }}>
+          <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--cor-texto-principal)' }}>
             Checklist de Cumprimento do Documento ({etapasConcluidas}/{totalEtapas})
           </span>
-          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--cor-secundaria)' }}>
+          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--cor-primaria)' }}>
             {porcentagemChecklist}% concluído
           </span>
         </div>
 
         {/* Barra de Progresso do Documento */}
-        <div style={{ width: '100%', height: '6px', backgroundColor: '#e2e8f0', borderRadius: 'var(--raio-full)', overflow: 'hidden', marginBottom: '0.75rem' }}>
+        <div style={{ width: '100%', height: '8px', backgroundColor: 'var(--cor-fundo)', border: '1px solid var(--cor-borda-forte)', borderRadius: 'var(--raio-sm)', overflow: 'hidden', marginBottom: '0.85rem' }}>
           <div
             style={{
               width: `${porcentagemChecklist}%`,
               height: '100%',
-              backgroundColor: porcentagemChecklist === 100 ? 'var(--cor-sucesso)' : 'var(--cor-secundaria)',
-              borderRadius: 'var(--raio-full)',
+              backgroundColor: 'var(--cor-primaria)',
               transition: 'width 0.3s ease',
             }}
           />
@@ -612,16 +614,16 @@ export function CardDocumentoExigido({
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.6rem',
-                  padding: '0.45rem 0.65rem',
+                  gap: '0.65rem',
+                  padding: '0.5rem 0.75rem',
                   borderRadius: 'var(--raio-sm)',
-                  border: marcada ? '1px solid var(--cor-sucesso-borda)' : '1px solid var(--cor-borda)',
-                  backgroundColor: marcada ? 'var(--cor-sucesso-fundo)' : '#ffffff',
+                  border: marcada ? '1.5px solid var(--cor-sucesso-borda)' : '1px solid var(--cor-borda-forte)',
+                  backgroundColor: marcada ? 'var(--cor-sucesso-fundo)' : 'var(--cor-superficie)',
                   textAlign: 'left',
                   cursor: bloqueado ? 'not-allowed' : 'pointer',
-                  fontSize: '0.82rem',
+                  fontSize: '0.84rem',
                   color: marcada ? 'var(--cor-sucesso)' : 'var(--cor-texto-principal)',
-                  fontWeight: marcada ? 600 : 400,
+                  fontWeight: marcada ? 700 : 500,
                   transition: 'all 0.15s ease',
                 }}
               >
@@ -629,9 +631,9 @@ export function CardDocumentoExigido({
                   style={{
                     width: '18px',
                     height: '18px',
-                    borderRadius: '4px',
-                    border: marcada ? 'none' : '2px solid var(--cor-borda-foco)',
-                    backgroundColor: marcada ? 'var(--cor-sucesso)' : '#ffffff',
+                    borderRadius: 'var(--raio-sm)',
+                    border: marcada ? 'none' : '1.5px solid var(--cor-borda-forte)',
+                    backgroundColor: marcada ? 'var(--cor-primaria)' : 'var(--cor-superficie)',
                     color: '#ffffff',
                     display: 'flex',
                     alignItems: 'center',
@@ -662,13 +664,13 @@ export function CardDocumentoExigido({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <label
             htmlFor={`protocolo_${documento.id}`}
-            style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--cor-primaria)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--cor-texto-principal)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
           >
             <Hash size={14} />
             <span>Número do Protocolo ou Registro do Envio:</span>
           </label>
           {mensagemSucesso && (
-            <span style={{ fontSize: '0.78rem', color: 'var(--cor-sucesso)', fontWeight: 600 }}>
+            <span style={{ fontSize: '0.78rem', color: 'var(--cor-sucesso)', fontWeight: 700 }}>
               {mensagemSucesso}
             </span>
           )}
@@ -684,11 +686,12 @@ export function CardDocumentoExigido({
             disabled={bloqueado || salvandoProtocolo}
             style={{
               flex: 1,
-              padding: '0.45rem 0.75rem',
-              fontSize: '0.84rem',
+              padding: '0.5rem 0.75rem',
+              fontSize: '0.85rem',
               borderRadius: 'var(--raio-sm)',
-              border: '1px solid var(--cor-borda)',
-              backgroundColor: '#ffffff',
+              border: '1.5px solid var(--cor-borda-forte)',
+              backgroundColor: 'var(--cor-fundo)',
+              color: 'var(--cor-texto-principal)',
             }}
           />
           <button
@@ -698,14 +701,15 @@ export function CardDocumentoExigido({
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.35rem',
-              padding: '0.45rem 0.85rem',
-              fontSize: '0.82rem',
-              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              fontSize: '0.85rem',
+              fontWeight: 700,
               borderRadius: 'var(--raio-sm)',
-              border: 'none',
+              border: '1.5px solid var(--cor-borda-forte)',
               backgroundColor: 'var(--cor-primaria)',
-              color: '#ffffff',
+              color: 'var(--cor-fundo)',
               cursor: bloqueado || salvandoProtocolo ? 'not-allowed' : 'pointer',
+              boxShadow: '1.5px 1.5px 0px var(--cor-borda-forte)',
             }}
           >
             <Save size={14} />

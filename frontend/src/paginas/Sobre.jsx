@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { ShieldCheck, HeartHandshake, AlertCircle, FileText, Cpu, CheckCircle2, Lock } from 'lucide-react';
 import { Cartao } from '../componentes/Cartao.jsx';
 
@@ -6,30 +6,34 @@ export function Sobre() {
   return (
     <div style={{ maxWidth: '850px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
       <div>
-        <h1 style={{ fontSize: '2rem', color: 'var(--cor-primaria)', marginBottom: '0.35rem' }}>
+        <div className="kicker-editorial">MANIFESTO & DIRETRIZES</div>
+        <h1 style={{ fontSize: '2rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, margin: '0.2rem 0' }}>
           Sobre o Edital em Ação
         </h1>
-        <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '1.05rem' }}>
+        <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '1.05rem', fontStyle: 'italic' }}>
           “Do edital à oportunidade, sem se perder no caminho.”
         </p>
       </div>
 
       {/* Missão e ODS 10 */}
       <Cartao>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem' }}>
           <div
             style={{
-              backgroundColor: 'var(--cor-secundaria-suave)',
-              color: 'var(--cor-secundaria)',
+              backgroundColor: 'var(--cor-secundaria)',
+              color: 'var(--cor-texto-principal)',
               padding: '0.75rem',
-              borderRadius: 'var(--raio-md)',
+              borderRadius: 'var(--raio-xs)',
+              border: '1px solid var(--cor-borda-forte)',
+              boxShadow: 'var(--sombra-plana-sm)',
               display: 'flex',
+              flexShrink: 0,
             }}
           >
             <HeartHandshake size={28} />
           </div>
           <div>
-            <h2 style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', marginBottom: '0.35rem' }}>
+            <h2 style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.35rem' }}>
               Objetivo Social & ODS 10 (Redução das Desigualdades)
             </h2>
             <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.95rem', lineHeight: 1.6 }}>
@@ -48,20 +52,23 @@ export function Sobre() {
 
       {/* Limitações da IA e Natureza Orientativa */}
       <Cartao>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem' }}>
           <div
             style={{
-              backgroundColor: 'var(--cor-atencao-fundo)',
-              color: 'var(--cor-atencao)',
+              backgroundColor: 'var(--cor-alerta-fundo)',
+              color: 'var(--cor-alerta-texto)',
               padding: '0.75rem',
-              borderRadius: 'var(--raio-md)',
+              borderRadius: 'var(--raio-xs)',
+              border: '1px solid var(--cor-alerta-borda)',
+              boxShadow: 'var(--sombra-plana-sm)',
               display: 'flex',
+              flexShrink: 0,
             }}
           >
             <AlertCircle size={28} />
           </div>
           <div>
-            <h2 style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', marginBottom: '0.35rem' }}>
+            <h2 style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.35rem' }}>
               Limitações da Inteligência Artificial e Termo Orientativo
             </h2>
             <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.95rem', lineHeight: 1.6 }}>
@@ -88,20 +95,23 @@ export function Sobre() {
 
       {/* Privacidade e Minimização de Dados */}
       <Cartao>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem' }}>
           <div
             style={{
-              backgroundColor: 'var(--cor-info-fundo)',
-              color: 'var(--cor-info)',
+              backgroundColor: 'var(--cor-fundo)',
+              color: 'var(--cor-primaria)',
               padding: '0.75rem',
-              borderRadius: 'var(--raio-md)',
+              borderRadius: 'var(--raio-xs)',
+              border: '1px solid var(--cor-borda-forte)',
+              boxShadow: 'var(--sombra-plana-sm)',
               display: 'flex',
+              flexShrink: 0,
             }}
           >
             <Lock size={28} />
           </div>
           <div>
-            <h2 style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', marginBottom: '0.35rem' }}>
+            <h2 style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.35rem' }}>
               Compromisso com a Privacidade e Proteção de Dados
             </h2>
             <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.95rem', lineHeight: 1.6 }}>
@@ -121,47 +131,50 @@ export function Sobre() {
 
       {/* Arquitetura e Tecnologias */}
       <Cartao>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem' }}>
           <div
             style={{
-              backgroundColor: '#f1f5f9',
-              color: 'var(--cor-primaria)',
+              backgroundColor: 'var(--cor-primaria)',
+              color: 'var(--cor-fundo)',
               padding: '0.75rem',
-              borderRadius: 'var(--raio-md)',
+              borderRadius: 'var(--raio-xs)',
+              border: '1px solid var(--cor-borda-forte)',
+              boxShadow: 'var(--sombra-plana-sm)',
               display: 'flex',
+              flexShrink: 0,
             }}
           >
             <Cpu size={28} />
           </div>
           <div>
-            <h2 style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', marginBottom: '0.35rem' }}>
+            <h2 style={{ fontSize: '1.25rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.35rem' }}>
               Tecnologias Utilizadas
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', marginTop: '0.75rem' }}>
-              <div style={{ padding: '0.75rem', backgroundColor: '#f8fafc', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda)' }}>
-                <strong>Frontend:</strong>
-                <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)' }}>
-                  ReactJS com Vite, React Router, Design Responsivo em Vanilla CSS.
+              <div style={{ padding: '0.75rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+                <strong style={{ color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>Frontend:</strong>
+                <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)', marginTop: '0.2rem' }}>
+                  ReactJS com Vite, React Router, Design Modernista / Construtivista Editorial em Vanilla CSS.
                 </p>
               </div>
 
-              <div style={{ padding: '0.75rem', backgroundColor: '#f8fafc', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda)' }}>
-                <strong>Backend:</strong>
-                <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)' }}>
+              <div style={{ padding: '0.75rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+                <strong style={{ color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>Backend:</strong>
+                <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)', marginTop: '0.2rem' }}>
                   Node.js com Express, API RESTful, Multer e extração real de PDF com pdf-parse.
                 </p>
               </div>
 
-              <div style={{ padding: '0.75rem', backgroundColor: '#f8fafc', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda)' }}>
-                <strong>Banco de Dados:</strong>
-                <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)' }}>
+              <div style={{ padding: '0.75rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+                <strong style={{ color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>Banco de Dados:</strong>
+                <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)', marginTop: '0.2rem' }}>
                   MySQL 8.0, InnoDB, utf8mb4, Prepared Statements com mysql2/promise.
                 </p>
               </div>
 
-              <div style={{ padding: '0.75rem', backgroundColor: '#f8fafc', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda)' }}>
-                <strong>Análise Inteligente:</strong>
-                <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)' }}>
+              <div style={{ padding: '0.75rem', backgroundColor: 'var(--cor-fundo)', borderRadius: 'var(--raio-sm)', border: '1px solid var(--cor-borda-forte)' }}>
+                <strong style={{ color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>Análise Inteligente:</strong>
+                <p style={{ fontSize: '0.85rem', color: 'var(--cor-texto-secundario)', marginTop: '0.2rem' }}>
                   Google Gemini SDK (@google/genai) com fallback elegante para motor heurístico local.
                 </p>
               </div>

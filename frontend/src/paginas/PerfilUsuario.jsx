@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, PlusCircle, Edit, Trash2, CheckCircle, ShieldCheck, Info } from 'lucide-react';
 import { api } from '../servicos/api.js';
 import { Cartao } from '../componentes/Cartao.jsx';
@@ -153,7 +153,10 @@ export function PerfilUsuario() {
       {/* Cabeçalho */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.8rem', color: 'var(--cor-primaria)' }}>Meu Perfil de Candidato</h1>
+          <div className="kicker-editorial">DADOS DO CANDIDATO</div>
+          <h1 style={{ fontSize: '1.85rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, margin: '0.2rem 0' }}>
+            Meu Perfil de Candidato
+          </h1>
           <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '0.95rem' }}>
             Gerencie as informações utilizadas pelo sistema para conferir sua compatibilidade com os editais.
           </p>
@@ -168,11 +171,21 @@ export function PerfilUsuario() {
       {erro && <MensagemErro mensagem={erro} aoTentarNovamente={carregarPerfis} />}
 
       {/* Princípio de Privacidade & Minimização de Dados */}
-      <div className="alerta alerta-info" style={{ fontSize: '0.88rem' }}>
+      <div
+        className="alerta"
+        style={{
+          fontSize: '0.88rem',
+          backgroundColor: 'var(--cor-fundo)',
+          border: '1px solid var(--cor-borda-forte)',
+          borderLeft: '4px solid var(--cor-primaria)',
+          borderRadius: 'var(--raio-sm)',
+          padding: '0.85rem 1rem',
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-          <ShieldCheck size={20} style={{ flexShrink: 0, marginTop: '2px' }} />
+          <ShieldCheck size={20} style={{ flexShrink: 0, marginTop: '2px', color: 'var(--cor-primaria)' }} />
           <div>
-            <strong>Privacidade em Primeiro Lugar:</strong> Coletamos apenas os dados indispensáveis para conferência
+            <strong style={{ color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)' }}>Privacidade em Primeiro Lugar:</strong> Coletamos apenas os dados indispensáveis para conferência
             dos critérios de bolsas e auxílios (nível de escolaridade, renda familiar estimada e município).
             Nunca solicitamos CPF, documentos bancários ou dados pessoais sensíveis.
           </div>
@@ -297,11 +310,12 @@ export function PerfilUsuario() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                 <div
                   style={{
-                    backgroundColor: 'var(--cor-secundaria-suave)',
-                    color: 'var(--cor-secundaria)',
+                    backgroundColor: 'var(--cor-secundaria)',
+                    color: 'var(--cor-texto-principal)',
                     width: '38px',
                     height: '38px',
-                    borderRadius: '50%',
+                    borderRadius: 'var(--raio-xs)',
+                    border: '1px solid var(--cor-borda-forte)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -310,10 +324,10 @@ export function PerfilUsuario() {
                   <User size={20} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)' }}>
+                  <h3 style={{ fontSize: '1.05rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700 }}>
                     {perfil.nome_exibicao}
                   </h3>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)' }}>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--cor-texto-mutado)', fontFamily: 'var(--fonte-mono)' }}>
                     {perfil.nivel_ensino || 'Escolaridade não inf.'}
                   </span>
                 </div>

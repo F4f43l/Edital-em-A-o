@@ -591,7 +591,8 @@ export function FormularioEdital() {
            ========================================================================= */
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div>
-            <h1 style={{ fontSize: '1.9rem', color: 'var(--cor-primaria)', marginBottom: '0.35rem' }}>
+            <div className="kicker-editorial">INGESTÃO & CADASTRO DE OPORTUNIDADES</div>
+            <h1 style={{ fontSize: '1.9rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, margin: '0.2rem 0' }}>
               Análise e Extração Inteligente de Edital
             </h1>
             <p style={{ color: 'var(--cor-texto-secundario)', fontSize: '1rem' }}>
@@ -626,9 +627,9 @@ export function FormularioEdital() {
               {/* Dropzone de PDF */}
               <div
                 style={{
-                  border: '2px dashed var(--cor-secundaria)',
-                  backgroundColor: arquivoPdf ? 'var(--cor-secundaria-suave)' : '#fafbfc',
-                  borderRadius: 'var(--raio-lg)',
+                  border: '2px dashed var(--cor-borda-forte)',
+                  backgroundColor: arquivoPdf ? 'var(--cor-superficie)' : 'var(--cor-fundo)',
+                  borderRadius: 'var(--raio-sm)',
                   padding: '2.5rem 1.5rem',
                   textAlign: 'center',
                   cursor: 'pointer',
@@ -655,9 +656,11 @@ export function FormularioEdital() {
                     style={{
                       width: '60px',
                       height: '60px',
-                      borderRadius: '50%',
-                      backgroundColor: arquivoPdf ? 'var(--cor-secundaria)' : '#e2e8f0',
-                      color: arquivoPdf ? '#ffffff' : 'var(--cor-texto-secundario)',
+                      borderRadius: 'var(--raio-xs)',
+                      border: '1px solid var(--cor-borda-forte)',
+                      boxShadow: 'var(--sombra-plana-sm)',
+                      backgroundColor: arquivoPdf ? 'var(--cor-secundaria)' : 'var(--cor-superficie)',
+                      color: arquivoPdf ? 'var(--cor-texto-principal)' : 'var(--cor-primaria)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -668,10 +671,10 @@ export function FormularioEdital() {
 
                   {arquivoPdf ? (
                     <div>
-                      <h3 style={{ fontSize: '1.15rem', color: 'var(--cor-primaria)', marginBottom: '0.2rem' }}>
+                      <h3 style={{ fontSize: '1.15rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.2rem' }}>
                         {arquivoPdf.name}
                       </h3>
-                      <p style={{ fontSize: '0.88rem', color: 'var(--cor-secundaria)', fontWeight: 600 }}>
+                      <p style={{ fontSize: '0.88rem', color: 'var(--cor-primaria)', fontWeight: 700, fontFamily: 'var(--fonte-mono)' }}>
                         PDF pronto para análise ({(arquivoPdf.size / 1024 / 1024).toFixed(2)} MB)
                       </p>
                       <span style={{ fontSize: '0.8rem', color: 'var(--cor-texto-mutado)' }}>
@@ -680,7 +683,7 @@ export function FormularioEdital() {
                     </div>
                   ) : (
                     <div>
-                      <h3 style={{ fontSize: '1.15rem', color: 'var(--cor-primaria)', marginBottom: '0.3rem' }}>
+                      <h3 style={{ fontSize: '1.15rem', color: 'var(--cor-primaria)', fontFamily: 'var(--fonte-titulos)', fontWeight: 700, marginBottom: '0.3rem' }}>
                         Clique para selecionar ou arraste o arquivo PDF aqui
                       </h3>
                       <p style={{ fontSize: '0.9rem', color: 'var(--cor-texto-secundario)' }}>
