@@ -18,8 +18,8 @@ async function iniciarServidor() {
     console.warn('   Verifique as credenciais no arquivo backend/.env e se o serviço MySQL está ativo.');
   }
 
-  const servidor = app.listen(configuracaoAmbiente.PORTA, () => {
-    console.log(`🌐 [API] Servidor Express ativo na porta ${configuracaoAmbiente.PORTA}`);
+  const servidor = app.listen(configuracaoAmbiente.PORTA, configuracaoAmbiente.HOST, () => {
+    console.log(`🌐 [API] Servidor Express ativo em http://${configuracaoAmbiente.HOST}:${configuracaoAmbiente.PORTA}`);
     console.log(`📍 [URL BASE] http://localhost:${configuracaoAmbiente.PORTA}/api`);
     console.log(`🩺 [SAÚDE] http://localhost:${configuracaoAmbiente.PORTA}/api/health`);
     console.log('====================================================');

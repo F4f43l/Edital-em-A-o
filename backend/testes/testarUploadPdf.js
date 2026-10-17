@@ -22,17 +22,25 @@ async function testarUploads() {
       status: 'rascunho',
     });
 
-    // 2. Caminho do PDF real que já existe no projeto
-    const caminhoPdfReal = 'c:/Edital em ação/Guia para geracao/EditalEmAcao.pdf';
-    if (!fs.existsSync(caminhoPdfReal)) {
-      throw new Error(`PDF de teste não encontrado em: ${caminhoPdfReal}`);
+    // 2. Caminho do PDF em EditalTeste
+    const pastaEditalTeste = path.resolve(diretorioAtual, '../../EditalTeste');
+    const arquivosPdf = fs.existsSync(pastaEditalTeste)
+      ? fs.readdirSync(pastaEditalTeste).filter((f) => f.toLowerCase().endsWith('.pdf'))
+      : [];
+    const nomeArquivoPdf = arquivosPdf.includes('edital_teste_editais_em_acao.pdf')
+      ? 'edital_teste_editais_em_acao.pdf'
+      : arquivosPdf[0];
+
+    const caminhoPdfReal = nomeArquivoPdf ? path.join(pastaEditalTeste, nomeArquivoPdf) : null;
+    if (!caminhoPdfReal || !fs.existsSync(caminhoPdfReal)) {
+      throw new Error(`PDF de teste não encontrado na pasta EditalTeste: ${pastaEditalTeste}`);
     }
 
     // 3. Testa envio de PDF válido usando FormData nativo do Node 20+
     const bufferPdf = fs.readFileSync(caminhoPdfReal);
     const blobPdf = new Blob([bufferPdf], { type: 'application/pdf' });
     const formDataValido = new FormData();
-    formDataValido.append('arquivo', blobPdf, 'Edital em Ação.pdf');
+    formDataValido.append('arquivo', blobPdf, nomeArquivoPdf);
 
     const respValida = await fetch(`${urlBase}/editais/${edital.id}/arquivo`, {
       method: 'POST',

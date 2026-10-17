@@ -1,7 +1,7 @@
 /**
  * Cliente centralizado para consumo da API RESTful do Edital em Ação
  */
-const URL_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+const URL_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
 async function requisicao(endpoint, opcoes = {}) {
   const url = `${URL_BASE}${endpoint}`;

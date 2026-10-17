@@ -18,19 +18,47 @@ app.use(helmet({
 }));
 
 // Configuração de CORS restrito ao frontend
-const origensPermitidas = [
-  configuracaoAmbiente.URL_FRONTEND,
+const origensConfiguradas = configuracaoAmbiente.URL_FRONTEND
+  ? configuracaoAmbiente.URL_FRONTEND.split(',').map((url) => url.trim()).filter(Boolean)
+  : [];
+
+const origensPadrao = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
+  'http://localhost:4173',
+  'http://127.0.0.1:4173',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
 ];
+
+const origensPermitidas = Array.from(new Set([...origensConfiguradas, ...origensPadrao]));
+
+function ehOrigemPermitida(origem) {
+  // Permite chamadas sem origem (ferramentas locais de teste, curl ou proxy interno)
+  if (!origem) return true;
+
+  // Lista explícita de origens configuradas/padrão
+  if (origensPermitidas.includes(origem)) {
+    return true;
+  }
+
+  // No ambiente de desenvolvimento, aceita origens de rede local privada (RFC 1918) nas portas do frontend
+  if (configuracaoAmbiente.AMBIENTE === 'development') {
+    const regexRedeLocal = /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3})(:(5173|4173|3000))?$/;
+    if (regexRedeLocal.test(origem)) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 app.use(cors({
   origin: (origem, callback) => {
-    // Permite chamadas sem origem (como ferramentas locais de teste ou curl)
-    if (!origem || origensPermitidas.includes(origem)) {
+    if (ehOrigemPermitida(origem)) {
       return callback(null, true);
     }
-    return callback(new Error('Acesso bloqueado pela política de CORS da aplicação.'));
+    return callback(new Error(`Acesso bloqueado pela política de CORS da aplicação para a origem: ${origem}`));
   },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

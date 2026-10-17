@@ -23,16 +23,24 @@ async function testarNovoFluxoPrincipal() {
   let editalCriadoId = null;
 
   try {
-    const caminhoPdf = "c:/Edital em ação/Guia para geracao/EditalEmAcao.pdf";
-    if (!fs.existsSync(caminhoPdf)) {
-      throw new Error(`PDF não encontrado em: ${caminhoPdf}`);
+    const pastaEditalTeste = path.resolve(diretorioAtual, '../../EditalTeste');
+    const arquivosPdf = fs.existsSync(pastaEditalTeste)
+      ? fs.readdirSync(pastaEditalTeste).filter((f) => f.toLowerCase().endsWith('.pdf'))
+      : [];
+    const nomeArquivoPdf = arquivosPdf.includes('edital_teste_editais_em_acao.pdf')
+      ? 'edital_teste_editais_em_acao.pdf'
+      : arquivosPdf[0];
+
+    const caminhoPdf = nomeArquivoPdf ? path.join(pastaEditalTeste, nomeArquivoPdf) : null;
+    if (!caminhoPdf || !fs.existsSync(caminhoPdf)) {
+      throw new Error(`PDF não encontrado na pasta EditalTeste: ${pastaEditalTeste}`);
     }
 
-    console.log('1️⃣ Enviando PDF para extração e análise inicial (POST /api/editais/processar-pdf)...');
+    console.log(`1️⃣ Enviando PDF (${nomeArquivoPdf}) para extração e análise inicial (POST /api/editais/processar-pdf)...`);
     const bufferPdf = fs.readFileSync(caminhoPdf);
     const blobPdf = new Blob([bufferPdf], { type: 'application/pdf' });
     const formData = new FormData();
-    formData.append('arquivo', blobPdf, 'EditalEmAcao.pdf');
+    formData.append('arquivo', blobPdf, nomeArquivoPdf);
 
     const respProcessar = await fetch(`${urlBase}/editais/processar-pdf`, {
       method: 'POST',

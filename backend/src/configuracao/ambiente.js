@@ -10,6 +10,7 @@ dotenv.config({ path: path.resolve(diretorioAtual, '../../.env') });
 
 export const configuracaoAmbiente = {
   PORTA: process.env.PORT ? parseInt(process.env.PORT, 10) : 3001,
+  HOST: process.env.HOST || '0.0.0.0',
   AMBIENTE: process.env.NODE_ENV || 'development',
   URL_FRONTEND: process.env.FRONTEND_URL || 'http://localhost:5173',
 
